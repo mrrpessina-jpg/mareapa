@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaréaPA — Panama Tides</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean:#0a1628; --deep:#061020; --mid:#0d2240; --surface:#122d52;
+    --teal:#00c9b1; --teal-dim:#00896e; --amber:#f0a500; --coral:#ff6b4a;
+    --white:#e8f4f8; --muted:#6a8fa8; --card:rgba(18,45,82,0.7); --glass:rgba(0,201,177,0.07);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--ocean);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 80%,rgba(0,201,177,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 20%,rgba(0,100,200,.12) 0%,transparent 60%),linear-gradient(180deg,#061020 0%,#0a1628 40%,#0d2240 100%);z-index:0;pointer-events:none;}
+  .app{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 60px;}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 20px;border-bottom:1px solid rgba(0,201,177,.15);flex-wrap:wrap;gap:12px;}
+  .logo-text{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:3px;background:linear-gradient(135deg,var(--teal) 0%,#00e5d0 50%,var(--amber) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+  .logo-sub{font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);font-weight:500;}
+  .header-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .toggle-group{display:flex;background:var(--mid);border-radius:8px;overflow:hidden;border:1px solid rgba(0,201,177,.2);}
+  .toggle-btn{padding:7px 16px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:1px;transition:all .2s;}
+  .toggle-btn.active{background:var(--teal);color:var(--ocean);}
+
+  .sponsors-bar{display:flex;align-items:center;gap:20px;padding:16px 20px;background:rgba(18,45,82,.5);border:1px solid rgba(0,201,177,.1);border-radius:12px;margin:20px 0;flex-wrap:wrap;}
+  .sponsors-label{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap;font-weight:600;}
+  .sponsor-slot{height:36px;min-width:90px;background:rgba(255,255,255,.05);border:1px dashed rgba(0,201,177,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:0 12px;transition:all .2s;}
+  .sponsor-slot:hover{border-color:var(--teal);color:var(--teal);}
+
+  .coast-bar{display:flex;gap:12px;padding:20px 0 16px;align-items:center;flex-wrap:wrap;}
+  .coast-label{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:500;}
+  .coast-btn{padding:9px 22px;border-radius:40px;border:1.5px solid rgba(0,201,177,.3);background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;transition:all .25s;}
+  .coast-btn:hover{border-color:var(--teal);color:var(--teal);}
+  .coast-btn.active{background:var(--teal);border-color:var(--teal);color:var(--ocean);}
+
+  .card{background:var(--card);backdrop-filter:blur(12px);border:1px solid rgba(0,201,177,.12);border-radius:16px;padding:24px;margin-bottom:20px;}
+  .card-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:var(--teal);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+  .card-title .dot{width:6px;height:6px;background:var(--teal);border-radius:50%;display:inline-block;}
+
+  .location-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;}
+  .loc-btn{padding:10px;background:var(--glass);border:1px solid rgba(0,201,177,.15);border-radius:10px;color:var(--white);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;text-align:center;transition:all .2s;line-height:1.3;}
+  .loc-btn:hover{border-color:var(--teal);color:var(--teal);background:rgba(0,201,177,.1);}
+  .loc-btn.active{background:rgba(0,201,177,.15);border-color:var(--teal);color:var(--teal);}
+
+  .main-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;}
+  @media(max-width:800px){.main-grid{grid-template-columns:1fr;}}
+
+  .date-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
+  .location-name{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--white);line-height:1;}
+  .coast-badge{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:600;}
+  .badge-pacific{background:rgba(0,100,200,.2);color:#4db8ff;border:1px solid rgba(0,100,200,.3);}
+  .badge-atlantic{background:rgba(0,160,120,.2);color:#00c896;border:1px solid rgba(0,160,120,.3);}
+  .date-display{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--muted);}
+
+  .tide-now{display:flex;align-items:flex-end;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+  .tide-height{font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:1;background:linear-gradient(135deg,var(--teal),#00e5d0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .tide-unit{font-size:1.2rem;color:var(--muted);margin-bottom:14px;}
+  .tide-status{padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+  .tide-rising{background:rgba(0,201,177,.2);color:var(--teal);border:1px solid var(--teal-dim);}
+  .tide-falling{background:rgba(240,165,0,.15);color:var(--amber);border:1px solid rgba(240,165,0,.4);}
+
+  .tide-chart{display:flex;align-items:flex-end;gap:6px;height:90px;margin:20px 0 8px;padding:0 4px;}
+  .tide-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
+  .tide-bar{width:100%;border-radius:4px 4px 0 0;transition:height .6s cubic-bezier(.4,0,.2,1);min-height:4px;}
+  .tide-bar.now{box-shadow:0 0 12px rgba(0,201,177,.6);}
+  .tide-bar-time{font-size:.6rem;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap;}
+
+  .hl-table{width:100%;border-collapse:collapse;}
+  .hl-table td{padding:10px 8px;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.05);}
+  .hl-table td:first-child{color:var(--muted);font-size:.75rem;letter-spacing:1px;text-transform:uppercase;}
+  .hl-table td:nth-child(2){font-family:'DM Mono',monospace;font-weight:500;}
+  .hl-table td:last-child{text-align:right;}
+  .badge-high{color:var(--teal);font-weight:700;font-size:.75rem;letter-spacing:1px;}
+  .badge-low{color:var(--amber);font-weight:700;font-size:.75rem;letter-spacing:1px;}
+
+  .moon-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+  .moon-icon{font-size:2.5rem;line-height:1;}
+  .moon-info h3{font-size:1rem;font-weight:600;margin-bottom:2px;}
+  .moon-info p{font-size:.78rem;color:var(--muted);}
+  .solunar-bars{display:flex;flex-direction:column;gap:10px;}
+  .sol-item label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
+  .sol-bar-track{height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;}
+  .sol-bar-fill{height:100%;border-radius:3px;transition:width 1s ease;}
+  .sol-time{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--white);margin-top:3px;}
+
+  .alert-tabs{display:flex;gap:4px;margin-bottom:16px;background:rgba(255,255,255,.04);border-radius:10px;padding:4px;}
+  .alert-tab{flex:1;padding:7px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:600;border-radius:7px;transition:all .2s;}
+  .alert-tab.active{background:var(--surface);color:var(--teal);}
+  .alert-list{display:flex;flex-direction:column;gap:10px;max-height:260px;overflow-y:auto;}
+  .alert-list::-webkit-scrollbar{width:4px;}
+  .alert-list::-webkit-scrollbar-thumb{background:var(--surface);border-radius:2px;}
+  .alert-item{background:var(--glass);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px 14px;animation:fadeIn .3s ease;}
+  .alert-item.type-alert{border-left:3px solid var(--coral);}
+  .alert-item.type-report{border-left:3px solid var(--teal);}
+  .alert-item.type-news{border-left:3px solid var(--amber);}
+  .alert-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;gap:8px;}
+  .alert-user{font-size:.78rem;font-weight:600;color:var(--teal);}
+  .alert-time{font-size:.68rem;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap;}
+  .alert-text{font-size:.82rem;color:rgba(232,244,248,.85);line-height:1.5;}
+  .alert-tag{display:inline-block;font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:4px;font-weight:700;margin-bottom:5px;}
+  .tag-alert{background:rgba(255,107,74,.2);color:var(--coral);}
+  .tag-report{background:rgba(0,201,177,.15);color:var(--teal);}
+  .tag-news{background:rgba(240,165,0,.15);color:var(--amber);}
+
+  .post-form input,.post-form textarea,.post-form select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(0,201,177,.2);border-radius:8px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.82rem;padding:9px 12px;margin-bottom:8px;outline:none;transition:border-color .2s;}
+  .post-form input:focus,.post-form textarea:focus,.post-form select:focus{border-color:var(--teal);}
+  .post-form textarea{resize:vertical;min-height:70px;}
+  .post-form select option{background:var(--ocean);}
+  .post-btn{width:100%;padding:10px;background:var(--teal);color:var(--ocean);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .2s;}
+  .post-btn:hover{background:#00e5d0;transform:translateY(-1px);}
+
+  .pending-notice{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:8px;padding:10px 14px;font-size:.78rem;color:var(--amber);margin-top:8px;display:none;}
+  .pending-notice.show{display:block;}
+
+  .admin-toggle{margin-top:14px;text-align:center;}
+  .admin-link{font-size:.7rem;color:var(--muted);cursor:pointer;letter-spacing:1px;text-decoration:underline;text-underline-offset:3px;}
+  .admin-link:hover{color:var(--teal);}
+  .admin-panel{margin-top:14px;background:rgba(255,107,74,.05);border:1px solid rgba(255,107,74,.2);border-radius:12px;padding:16px;display:none;}
+  .admin-panel.open{display:block;}
+  .admin-title{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:12px;}
+  .admin-queue{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;}
+  .queue-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;}
+  .queue-meta{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-bottom:5px;}
+  .queue-text{font-size:.8rem;color:var(--white);margin-bottom:8px;line-height:1.4;}
+  .queue-actions{display:flex;gap:6px;}
+  .btn-approve{padding:4px 12px;background:rgba(0,201,177,.2);border:1px solid var(--teal-dim);color:var(--teal);border-radius:5px;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;}
+  .btn-approve:hover{background:rgba(0,201,177,.35);}
+  .btn-reject{padding:4px 12px;background:rgba(255,107,74,.15);border:1px solid rgba(255,107,74,.3);color:var(--coral);border-radius:5px;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;}
+  .btn-reject:hover{background:rgba(255,107,74,.3);}
+  .admin-pw-form{display:flex;gap:8px;margin-bottom:10px;}
+  .admin-pw-form input{margin:0;flex:1;}
+  .admin-pw-form button{padding:9px 14px;background:var(--coral);color:white;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .queue-empty{font-size:.78rem;color:var(--muted);text-align:center;padding:16px;}
+  .notif-badge{background:var(--coral);color:white;border-radius:50%;width:16px;height:16px;font-size:.6rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-left:4px;vertical-align:middle;}
+
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media(max-width:600px){.logo-text{font-size:2rem;}.tide-height{font-size:3.5rem;}.location-grid{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div>
+      <div class="logo-text">MaréaPA</div>
+      <div class="logo-sub">Panama Tide Tracker</div>
+    </div>
+    <div class="header-controls">
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setUnit('m')" id="btn-m">M</button>
+        <button class="toggle-btn" onclick="setUnit('ft')" id="btn-ft">FT</button>
+      </div>
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+        <button class="toggle-btn" onclick="setLang('es')" id="btn-es">ES</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sponsors-bar">
+    <span class="sponsors-label" id="txt-sponsors">Sponsors</span>
+    <div class="sponsor-slot">Your Logo</div>
+    <div class="sponsor-slot">Your Logo</div>
+    <div class="sponsor-slot">Your Logo</div>
+  </div>
+
+  <div class="coast-bar">
+    <span class="coast-label" id="txt-coast">Coast</span>
+    <button class="coast-btn active" onclick="selectCoast('pacific')" id="btn-pacific">🌊 Pacific</button>
+    <button class="coast-btn" onclick="selectCoast('atlantic')" id="btn-atlantic">🌊 Atlantic / Caribbean</button>
+  </div>
+
+  <div class="card" style="padding:18px 20px;">
+    <div class="card-title"><span class="dot"></span><span id="txt-selectloc">Select Location</span></div>
+    <div class="location-grid" id="location-grid"></div>
+  </div>
+
+  <div class="main-grid">
+    <div>
+      <div class="card">
+        <div class="date-row">
+          <div>
+            <div class="location-name" id="loc-name">Balboa</div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:4px;">
+              <span class="coast-badge badge-pacific" id="coast-badge">Pacific</span>
+              <span class="date-display" id="date-display"></span>
+            </div>
+          </div>
+        </div>
+        <div id="tide-content"><div style="padding:40px;text-align:center;color:var(--muted);">Loading...</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span><span id="txt-solunar">Solunar / Best Fishing Times</span></div>
+        <div class="moon-row">
+          <div class="moon-icon" id="moon-icon">🌓</div>
+          <div class="moon-info"><h3 id="moon-phase-name">First Quarter</h3><p id="moon-phase-sub">Good feeding activity expected</p></div>
+        </div>
+        <div class="solunar-bars" id="solunar-bars"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span><span id="txt-community">Community Board</span></div>
+        <div class="alert-tabs">
+          <button class="alert-tab active" onclick="setAlertTab('all')" id="tab-all">All</button>
+          <button class="alert-tab" onclick="setAlertTab('report')" id="tab-report">Reports</button>
+          <button class="alert-tab" onclick="setAlertTab('alert')" id="tab-alert">Alerts</button>
+          <button class="alert-tab" onclick="setAlertTab('news')" id="tab-news">News</button>
+        </div>
+        <div class="alert-list" id="alert-list"></div>
+
+        <div class="post-form" style="margin-top:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;">
+          <div class="card-title" style="font-size:.85rem;margin-bottom:12px;"><span class="dot"></span><span id="txt-post">Post Update</span></div>
+          <input type="text" id="post-user" placeholder="Your name / username" maxlength="30">
+          <input type="password" id="post-pw" placeholder="Community password" maxlength="30">
+          <select id="post-type">
+            <option value="report">🎣 Fishing Report</option>
+            <option value="alert">⚠️ Alert</option>
+            <option value="news">📢 News / Season</option>
+          </select>
+          <textarea id="post-text" placeholder="Share your report, alert, or news..." maxlength="280"></textarea>
+          <button class="post-btn" onclick="postAlert()" id="txt-postbtn">Post</button>
+          <div class="pending-notice" id="pending-notice">
+            ✅ <span id="txt-pending">Your post is pending admin review and will appear once approved.</span>
+          </div>
+        </div>
+
+        <div class="admin-toggle">
+          <span class="admin-link" onclick="toggleAdmin()">Admin</span>
+          <span id="admin-badge"></span>
+        </div>
+        <div class="admin-panel" id="admin-panel">
+          <div class="admin-title" id="txt-admin-title">🛡️ Moderation Queue</div>
+          <div id="admin-auth">
+            <div class="admin-pw-form">
+              <input type="password" id="admin-pw-input" placeholder="Admin password">
+              <button onclick="authAdmin()">Unlock</button>
+            </div>
+          </div>
+          <div id="admin-queue-wrap" style="display:none;">
+            <div class="admin-queue" id="admin-queue"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const COMMUNITY_PASSWORD = 'anglerPA2024';
+const ADMIN_PASSWORD = 'mareapa_admin';
+const BAD_WORDS = ['fuck','shit','ass','bitch','crap','puta','mierda','coño','joder','pendejo','cabron','cabrón'];
+function hasBadWords(t){ const l=t.toLowerCase(); return BAD_WORDS.some(w=>l.includes(w)); }
+
+let lang='en', unit='m', currentCoast='pacific', currentLoc=null, alertFilter='all', adminUnlocked=false;
+
+const i18n={
+  en:{
+    'txt-sponsors':'Sponsors','txt-coast':'Coast','txt-selectloc':'Select Location',
+    'txt-solunar':'Solunar / Best Fishing Times','txt-community':'Community Board',
+    'txt-post':'Post Update','txt-postbtn':'Post','txt-admin-title':'🛡️ Moderation Queue',
+    'tab-all':'All','tab-report':'Reports','tab-alert':'Alerts','tab-news':'News',
+    'rising':'Rising','falling':'Falling','high':'high','low':'low','next':'Next',
+    'coast-pacific':'Pacific','coast-atlantic':'Caribbean',
+    'moon-good':'Good feeding activity expected','moon-great':'Excellent fishing conditions',
+    'major-feeding':'Major Feeding Window','minor-feeding':'Minor Feeding Window',
+    'txt-pending':'Your post is pending admin review and will appear once approved.',
+    'empty-queue':'No posts pending. ✅','no-posts':'No posts yet.',
+    'wrong-pw':'Incorrect community password.','empty-fields':'Please fill in your name and message.',
+    'filtered-msg':'Your message contains inappropriate language and cannot be submitted.',
+  },
+  es:{
+    'txt-sponsors':'Patrocinadores','txt-coast':'Costa','txt-selectloc':'Seleccionar Ubicación',
+    'txt-solunar':'Solunar / Mejores Horas de Pesca','txt-community':'Tablero Comunitario',
+    'txt-post':'Publicar','txt-postbtn':'Publicar','txt-admin-title':'🛡️ Cola de Moderación',
+    'tab-all':'Todo','tab-report':'Reportes','tab-alert':'Alertas','tab-news':'Noticias',
+    'rising':'Subiendo','falling':'Bajando','high':'alta','low':'baja','next':'Próx.',
+    'coast-pacific':'Pacífico','coast-atlantic':'Caribe',
+    'moon-good':'Buena actividad de alimentación','moon-great':'Excelentes condiciones de pesca',
+    'major-feeding':'Ventana Principal de Alimentación','minor-feeding':'Ventana Secundaria de Alimentación',
+    'txt-pending':'Tu publicación está pendiente de revisión y aparecerá cuando sea aprobada.',
+    'empty-queue':'Sin publicaciones pendientes. ✅','no-posts':'Sin publicaciones aún.',
+    'wrong-pw':'Contraseña incorrecta.','empty-fields':'Por favor completa nombre y mensaje.',
+    'filtered-msg':'Tu mensaje contiene lenguaje inapropiado y no puede enviarse.',
+  }
+};
+function tr(k){ return (i18n[lang]||i18n.en)[k]||k; }
+
+const locations={
+  pacific:[
+    {name:'Balboa',lat:8.95,lon:-79.57},
+    {name:'Pedasí',lat:7.53,lon:-80.02},
+    {name:'Morro Negrito',lat:7.85,lon:-81.15},
+    {name:'Coiba',lat:7.45,lon:-81.75},
+    {name:'Punta Mala',lat:7.47,lon:-80.00},
+    {name:'Cambutal',lat:7.39,lon:-80.46},
+    {name:'Las Perlas',lat:8.58,lon:-79.05},
+  ],
+  atlantic:[
+    {name:'Colón',lat:9.35,lon:-79.90},
+    {name:'Bocas del Toro',lat:9.34,lon:-82.24},
+    {name:'Portobelo',lat:9.55,lon:-79.65},
+    {name:'San Blas',lat:9.56,lon:-78.97},
+    {name:'La Palma',lat:8.40,lon:-78.15},
+    {name:'Nombre de Dios',lat:9.58,lon:-79.47},
+  ]
+};
+
+function toDisplay(m){ return unit==='ft'?(m*3.28084).toFixed(2):parseFloat(m).toFixed(2); }
+function unitLabel(){ return unit==='ft'?'ft':'m'; }
+
+function setUnit(u){
+  unit=u;
+  document.getElementById('btn-m').classList.toggle('active',u==='m');
+  document.getElementById('btn-ft').classList.toggle('active',u==='ft');
+  renderTideContent();
+}
+
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  updateAllText(); renderTideContent(); renderSolunar(); renderAlerts(); renderAdminQueue();
+}
+
+function updateAllText(){
+  ['txt-sponsors','txt-coast','txt-selectloc','txt-solunar','txt-community','txt-post',
+   'txt-postbtn','txt-admin-title','tab-all','tab-report','tab-alert','tab-news','txt-pending'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.textContent=tr(id);
+  });
+  const cb=document.getElementById('coast-badge');
+  if(cb) cb.textContent=tr(currentCoast==='pacific'?'coast-pacific':'coast-atlantic');
+}
+
+function selectCoast(coast){
+  currentCoast=coast; currentLoc=null;
+  document.getElementById('btn-pacific').classList.toggle('active',coast==='pacific');
+  document.getElementById('btn-atlantic').classList.toggle('active',coast==='atlantic');
+  const cb=document.getElementById('coast-badge');
+  cb.className=`coast-badge ${coast==='pacific'?'badge-pacific':'badge-atlantic'}`;
+  cb.textContent=tr(coast==='pacific'?'coast-pacific':'coast-atlantic');
+  renderLocationGrid();
+}
+
+function renderLocationGrid(){
+  const locs=locations[currentCoast];
+  document.getElementById('location-grid').innerHTML=locs.map((loc,i)=>
+    `<button class="loc-btn ${i===0?'active':''}" onclick="selectLocation(${i})">${loc.name}</button>`
+  ).join('');
+  selectLocation(0);
+}
+
+function selectLocation(idx){
+  currentLoc=locations[currentCoast][idx];
+  document.querySelectorAll('.loc-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  document.getElementById('loc-name').textContent=currentLoc.name;
+  renderTideContent(); renderSolunar();
+}
+
+// ── REAL WorldTides API ──────────────────────────────
+// Cache to avoid repeat API calls for same location
+const tideCache = {};
+
+async function fetchTideData(lat, lon) {
+  const cacheKey = `${lat},${lon}`;
+  const now = Date.now();
+
+  // Use cache if fresh (under 30 minutes)
+  if (tideCache[cacheKey] && (now - tideCache[cacheKey].ts) < 30 * 60 * 1000) {
+    return tideCache[cacheKey].data;
+  }
+
+  // Call our Netlify proxy function (keeps API key safe)
+  const res = await fetch(`/api/tides?lat=${lat}&lon=${lon}&days=7`);
+  if (!res.ok) throw new Error('Tide API error: ' + res.status);
+  const raw = await res.json();
+
+  tideCache[cacheKey] = { ts: now, data: raw };
+  return raw;
+}
+
+function parseTideData(raw) {
+  const now = new Date();
+  const nowTs = Math.floor(now.getTime() / 1000);
+
+  // ── Current height from heights array ──
+  const heights = raw.heights?.heights || [];
+  let currentHeight = 0;
+  let prevH = null;
+  for (let i = 0; i < heights.length; i++) {
+    if (heights[i].dt >= nowTs) {
+      currentHeight = heights[i].height;
+      prevH = i > 0 ? heights[i-1].height : heights[i].height;
+      break;
+    }
+  }
+  const rising = prevH !== null ? currentHeight >= prevH : true;
+
+  // ── Build 24-bar chart (next 24 half-hour slots) ──
+  const bars = [];
+  for (let i = 0; i < 24; i++) {
+    const targetTs = nowTs - (12 * 1800) + (i * 1800);
+    const closest = heights.reduce((a, b) =>
+      Math.abs(b.dt - targetTs) < Math.abs(a.dt - targetTs) ? b : a, heights[0] || {height:1});
+    const slotDate = new Date(targetTs * 1000);
+    bars.push({ hour: slotDate.getHours(), height: Math.max(0.05, closest?.height || 1) });
+  }
+
+  // ── Next 4 high/low events ──
+  const extremes = raw.extremes?.extremes || [];
+  const schedule = extremes
+    .filter(e => e.dt > nowTs)
+    .slice(0, 4)
+    .map(e => ({
+      type: e.type === 'High' ? 'high' : 'low',
+      time: new Date(e.dt * 1000),
+      height: e.height
+    }));
+
+  return { currentHeight, rising, bars, schedule };
+}
+
+// Fallback simulation if API is unavailable
+function simulateTides(lat) {
+  const now=new Date(); const h=now.getHours()+now.getMinutes()/60;
+  const base=Math.sin((h/12.42)*Math.PI)*2.1+2.4+(lat-8)*0.1;
+  const currentHeight=Math.max(0.1,base);
+  const rising=Math.cos((h/12.42)*Math.PI)>0;
+  const bars=[];
+  for(let i=0;i<24;i++){
+    const bh=Math.sin(((h-12+i)/12.42)*Math.PI)*2.1+2.4;
+    bars.push({hour:(now.getHours()-12+i+24)%24,height:Math.max(0.1,bh)});
+  }
+  const schedule=[]; let phase=rising?'high':'low'; let nextIn=6.21-(h%6.21);
+  for(let i=0;i<4;i++){
+    const tDate=new Date(now.getTime()+nextIn*3600000);
+    const ht=phase==='high'?(4.3+Math.random()*.3):(0.3+Math.random()*.2);
+    schedule.push({type:phase,time:tDate,height:ht});
+    phase=phase==='high'?'low':'high'; nextIn+=6.21;
+  }
+  return {currentHeight,rising,bars,schedule};
+}
+
+function getMoonPhase(){
+  const diff=(new Date()-new Date('2000-01-06'))/86400000;
+  const cycle=diff%29.53;
+  if(cycle<1.85)  return{icon:'🌑',name:lang==='es'?'Luna Nueva':'New Moon',quality:'great'};
+  if(cycle<7.38)  return{icon:'🌒',name:lang==='es'?'Creciente':'Waxing Crescent',quality:'good'};
+  if(cycle<9.22)  return{icon:'🌓',name:lang==='es'?'Cuarto Creciente':'First Quarter',quality:'good'};
+  if(cycle<14.76) return{icon:'🌔',name:lang==='es'?'Gibosa Creciente':'Waxing Gibbous',quality:'great'};
+  if(cycle<16.61) return{icon:'🌕',name:lang==='es'?'Luna Llena':'Full Moon',quality:'great'};
+  if(cycle<22.15) return{icon:'🌖',name:lang==='es'?'Gibosa Menguante':'Waning Gibbous',quality:'good'};
+  if(cycle<23.99) return{icon:'🌗',name:lang==='es'?'Último Cuarto':'Last Quarter',quality:'good'};
+  return{icon:'🌘',name:lang==='es'?'Menguante':'Waning Crescent',quality:'good'};
+}
+
+async function renderTideContent(){
+  if(!currentLoc) return;
+  document.getElementById('tide-content').innerHTML=
+    '<div style="padding:40px;text-align:center;color:var(--muted);font-size:.8rem;letter-spacing:2px;">LOADING TIDES...</div>';
+  let data;
+  try {
+    const raw = await fetchTideData(currentLoc.lat, currentLoc.lon);
+    data = parseTideData(raw);
+  } catch(e) {
+    console.warn('WorldTides API unavailable, using simulation:', e.message);
+    data = simulateTides(currentLoc.lat);
+  }
+  const now=new Date();
+  document.getElementById('date-display').textContent=now.toLocaleDateString(
+    lang==='es'?'es-PA':'en-US',{weekday:'long',month:'long',day:'numeric'}
+  );
+  const maxH=Math.max(...data.bars.map(b=>b.height));
+  const barsHTML=data.bars.map((b,i)=>{
+    const pct=(b.height/maxH)*100; const isNow=i===12;
+    const grad=isNow?'linear-gradient(180deg,#00e5d0,#00c9b1)':
+      b.height>maxH*.6?'linear-gradient(180deg,rgba(0,201,177,.6),rgba(0,201,177,.3))':
+      'linear-gradient(180deg,rgba(0,100,200,.5),rgba(0,100,200,.2))';
+    return `<div class="tide-bar-wrap">
+      <div class="tide-bar ${isNow?'now':''}" style="height:${pct}%;background:${grad};"></div>
+      ${i%4===0?`<div class="tide-bar-time">${String(b.hour).padStart(2,'0')}h</div>`:'<div class="tide-bar-time"> </div>'}
+    </div>`;
+  }).join('');
+  const schedHTML=data.schedule.map(s=>{
+    const timeStr=s.time.toLocaleTimeString(lang==='es'?'es-PA':'en-US',{hour:'2-digit',minute:'2-digit'});
+    return `<tr>
+      <td>${tr('next')} ${tr(s.type)}</td>
+      <td>${timeStr}</td>
+      <td><span class="badge-${s.type==='high'?'high':'low'}">${toDisplay(s.height)} ${unitLabel()} — ${tr(s.type).toUpperCase()}</span></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tide-content').innerHTML=`
+    <div class="tide-now">
+      <div class="tide-height">${toDisplay(data.currentHeight)}</div>
+      <div class="tide-unit">${unitLabel()}</div>
+      <div class="tide-status ${data.rising?'tide-rising':'tide-falling'}">
+        ${data.rising?'▲ '+tr('rising'):'▼ '+tr('falling')}
+      </div>
+    </div>
+    <div class="tide-chart">${barsHTML}</div>
+    <div style="font-size:.65rem;color:var(--muted);text-align:right;margin-bottom:16px;letter-spacing:1px;">Tide data via WorldTides API</div>
+    <table class="hl-table">${schedHTML}</table>
+  `;
+}
+
+function renderSolunar(){
+  const moon=getMoonPhase();
+  document.getElementById('moon-icon').textContent=moon.icon;
+  document.getElementById('moon-phase-name').textContent=moon.name;
+  document.getElementById('moon-phase-sub').textContent=tr(moon.quality==='great'?'moon-great':'moon-good');
+  const h=new Date().getHours();
+  const sol=[
+    {label:tr('major-feeding'),start:(h+1)%24,duration:90,strength:.85,color:'var(--teal)'},
+    {label:tr('minor-feeding'),start:(h+7)%24,duration:45,strength:.50,color:'var(--amber)'},
+  ];
+  document.getElementById('solunar-bars').innerHTML=sol.map(s=>{
+    const startStr=`${String(s.start).padStart(2,'0')}:00`;
+    const endH=(s.start+Math.floor(s.duration/60))%24;
+    const endStr=`${String(endH).padStart(2,'0')}:${String(s.duration%60).padStart(2,'0')}`;
+    return `<div class="sol-item">
+      <label>${s.label}</label>
+      <div class="sol-bar-track"><div class="sol-bar-fill" style="width:${s.strength*100}%;background:${s.color};"></div></div>
+      <div class="sol-time">${startStr} – ${endStr}</div>
+    </div>`;
+  }).join('');
+}
+
+// Storage
+function loadApproved(){ try{return JSON.parse(localStorage.getItem('marea_approved'))||getDefaults();}catch(e){return getDefaults();} }
+function loadPending(){  try{return JSON.parse(localStorage.getItem('marea_pending'))||[];}catch(e){return[];} }
+function saveApproved(d){ localStorage.setItem('marea_approved',JSON.stringify(d)); }
+function savePending(d){  localStorage.setItem('marea_pending',JSON.stringify(d)); }
+
+function getDefaults(){
+  return [
+    {user:'FisherKing_PA',type:'report',time:'2h ago',text:'Great roosterfish bite at Punta Mala this morning! 6 fish landed before noon. Water temp 28°C.'},
+    {user:'TidesPA_Admin',type:'news',time:'1d ago',text:'🎣 Marlin season opens April 15. All boats register with ARAP before departure.'},
+    {user:'MarineroViejo',type:'alert',time:'3h ago',text:'⚠️ Strong current near Coiba north passage. Use caution with small vessels today.'},
+    {user:'PescadorBocas',type:'report',time:'5h ago',text:'Tarpon running at Bocas del Toro inlet! Best on live mullet. Incoming tide was key.'},
+    {user:'CoibaCharters',type:'news',time:'2d ago',text:'Catch-and-release only for sailfish inside Coiba National Park zone starting June 1.'},
+  ];
+}
+
+function setAlertTab(tab){
+  alertFilter=tab;
+  document.querySelectorAll('.alert-tab').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById(`tab-${tab}`); if(el) el.classList.add('active');
+  renderAlerts();
+}
+
+function renderAlerts(){
+  const approved=loadApproved();
+  const filtered=alertFilter==='all'?approved:approved.filter(a=>a.type===alertFilter);
+  const list=document.getElementById('alert-list');
+  if(!filtered.length){ list.innerHTML=`<div style="text-align:center;padding:20px;color:var(--muted);font-size:.8rem;">${tr('no-posts')}</div>`; return; }
+  list.innerHTML=filtered.map(a=>`
+    <div class="alert-item type-${a.type}">
+      <span class="alert-tag tag-${a.type}">${a.type.toUpperCase()}</span>
+      <div class="alert-header"><span class="alert-user">@${a.user}</span><span class="alert-time">${a.time}</span></div>
+      <div class="alert-text">${a.text}</div>
+    </div>
+  `).join('');
+}
+
+function postAlert(){
+  const user=document.getElementById('post-user').value.trim();
+  const pw=document.getElementById('post-pw').value;
+  const type=document.getElementById('post-type').value;
+  const text=document.getElementById('post-text').value.trim();
+  const notice=document.getElementById('pending-notice');
+  notice.classList.remove('show');
+  if(!user||!text){ alert(tr('empty-fields')); return; }
+  if(hasBadWords(text)||hasBadWords(user)){ alert(tr('filtered-msg')); return; }
+  if(pw!==COMMUNITY_PASSWORD){ alert(tr('wrong-pw')); return; }
+  const pending=loadPending();
+  pending.unshift({user,type,time:'just now',text,ts:Date.now()});
+  savePending(pending);
+  document.getElementById('post-user').value='';
+  document.getElementById('post-pw').value='';
+  document.getElementById('post-text').value='';
+  notice.classList.add('show');
+  updateAdminBadge();
+}
+
+function toggleAdmin(){
+  const panel=document.getElementById('admin-panel');
+  panel.classList.toggle('open');
+  if(panel.classList.contains('open')) renderAdminQueue();
+}
+
+function authAdmin(){
+  const pw=document.getElementById('admin-pw-input').value;
+  if(pw===ADMIN_PASSWORD){
+    adminUnlocked=true;
+    document.getElementById('admin-auth').style.display='none';
+    document.getElementById('admin-queue-wrap').style.display='block';
+    renderAdminQueue();
+  } else { alert('Wrong admin password.'); }
+}
+
+function renderAdminQueue(){
+  if(!adminUnlocked) return;
+  const pending=loadPending();
+  const wrap=document.getElementById('admin-queue');
+  if(!pending.length){ wrap.innerHTML=`<div class="queue-empty">${tr('empty-queue')}</div>`; updateAdminBadge(); return; }
+  wrap.innerHTML=pending.map((p,i)=>`
+    <div class="queue-item">
+      <div class="queue-meta"><span>@${p.user} · <span class="alert-tag tag-${p.type}" style="margin:0;">${p.type}</span></span><span>${p.time}</span></div>
+      <div class="queue-text">${p.text}</div>
+      <div class="queue-actions">
+        <button class="btn-approve" onclick="approvePost(${i})">✅ Approve</button>
+        <button class="btn-reject" onclick="rejectPost(${i})">🗑 Reject</button>
+      </div>
+    </div>
+  `).join('');
+  updateAdminBadge();
+}
+
+function approvePost(idx){
+  const pending=loadPending(); const approved=loadApproved();
+  const post=pending.splice(idx,1)[0];
+  approved.unshift(post);
+  savePending(pending); saveApproved(approved);
+  renderAdminQueue(); renderAlerts();
+}
+
+function rejectPost(idx){
+  const pending=loadPending(); pending.splice(idx,1); savePending(pending); renderAdminQueue();
+}
+
+function updateAdminBadge(){
+  const count=loadPending().length;
+  const badge=document.getElementById('admin-badge');
+  badge.innerHTML=count>0?`<span class="notif-badge">${count}</span>`:'';
+}
+
+function init(){
+  updateAllText(); renderLocationGrid(); renderAlerts(); updateAdminBadge();
+  setInterval(()=>renderTideContent(),5*60*1000);
+}
+init();
+</script>
+</body>
+</html>

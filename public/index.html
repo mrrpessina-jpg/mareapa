@@ -435,12 +435,11 @@ function parseTideData(raw) {
   const heights = raw.heights?.heights || [];
   const extremes = raw.extremes?.extremes || [];
 
-  // Balboa MLLW datum correction
-  // WorldTides MSL vs MLLW difference for Panama Pacific = +2.52m (8.27ft)
+  // Balboa MLLW datum correction for Panama Pacific
   const DATUM_M = 2.52;
 
-  // Time correction: WorldTides reference point is 44 minutes ahead of EST station
-  const TIME_CORRECTION_SEC = -3 * 60; // -3 min correction to match EST tide stations
+  // Fine-tuned time correction: -3 minutes
+  const TIME_CORRECTION_SEC = -3 * 60;
 
   // Current height with datum correction
   let currentHeight = 0;
@@ -528,7 +527,7 @@ async function renderTideContent(){
   }
   const now=new Date();
   document.getElementById('date-display').textContent=now.toLocaleDateString(
-    lang==='es'?'es-PA':'en-US',{weekday:'long',month:'long',day:'numeric'}
+    lang==='es'?'es-PA':'en-US',{weekday:'long',month:'long',day:'numeric',timeZone:'America/Panama'}
   );
   const maxH=Math.max(...data.bars.map(b=>b.height));
   const barsHTML=data.bars.map((b,i)=>{
@@ -542,7 +541,7 @@ async function renderTideContent(){
     </div>`;
   }).join('');
   const schedHTML=data.schedule.map(s=>{
-    const timeStr=s.time.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'America/Panama'});
+    const timeStr=s.time.toLocaleTimeString(lang==='es'?'es-PA':'en-US',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'America/Panama'});
     return `<tr>
       <td>${tr('next')} ${tr(s.type)}</td>
       <td>${timeStr}</td>

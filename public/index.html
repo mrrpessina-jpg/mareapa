@@ -138,6 +138,33 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   @media(max-width:600px){.logo-text{font-size:2rem;}.tide-height{font-size:3.5rem;}.location-grid{grid-template-columns:repeat(3,1fr);}}
+
+  /* DAY/NIGHT MODE */
+  body.day-mode{--ocean:#c8e6f5;--deep:#a8d4ed;--mid:#d8eef8;--surface:#e8f4fc;--card:rgba(200,230,245,0.85);--glass:rgba(0,100,180,0.07);--white:#0a2a4a;--muted:#2a6a9a;}
+  body.day-mode .logo-text{background:linear-gradient(135deg,#0077b6,#00b4d8,#f0a500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  body.day-mode::before{background:radial-gradient(ellipse 80% 50% at 20% 80%,rgba(0,150,220,.15) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 20%,rgba(255,200,50,.15) 0%,transparent 60%),linear-gradient(180deg,#87ceeb 0%,#c8e6f5 40%,#d8eef8 100%);}
+
+  /* DATE DISPLAY BIG */
+  .date-big{margin-bottom:16px;}
+  .date-day-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--teal);text-transform:uppercase;}
+  .date-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1;color:var(--white);letter-spacing:2px;}
+  .date-month-year{font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+
+  /* CALENDAR PICKER */
+  .cal-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .cal-label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  .cal-input{background:rgba(255,255,255,.06);border:1px solid rgba(0,201,177,.25);border-radius:8px;color:var(--white);font-family:'DM Mono',monospace;font-size:.82rem;padding:7px 12px;outline:none;cursor:pointer;}
+  .cal-input:focus{border-color:var(--teal);}
+  .cal-today-btn{padding:6px 14px;background:rgba(0,201,177,.15);border:1px solid var(--teal-dim);border-radius:8px;color:var(--teal);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;}
+  .cal-today-btn:hover{background:rgba(0,201,177,.3);}
+
+  /* TIDE TABLE ARROWS */
+  .arrow-up{color:#00c9b1;font-size:1rem;margin-right:4px;}
+  .arrow-down{color:#f0a500;font-size:1rem;margin-right:4px;}
+
+  /* THEME TOGGLE BTN */
+  .theme-btn{padding:7px 12px;background:none;border:1px solid rgba(0,201,177,.2);border-radius:8px;cursor:pointer;font-size:1rem;transition:all .2s;background:var(--mid);}
+  .theme-btn:hover{border-color:var(--teal);}
 </style>
 </head>
 <body>
@@ -162,9 +189,18 @@
 
   <div class="sponsors-bar">
     <span class="sponsors-label" id="txt-sponsors">Sponsors</span>
-    <div class="sponsor-slot">Your Logo</div>
-    <div class="sponsor-slot">Your Logo</div>
-    <div class="sponsor-slot">Your Logo</div>
+    <div class="sponsor-slot" id="sp1" onclick="document.getElementById('sp1-info').style.display='block'">
+      <img id="sp1-img" src="" alt="" style="display:none;height:28px;object-fit:contain;">
+      <span id="sp1-txt">Your Logo</span>
+    </div>
+    <div class="sponsor-slot" id="sp2" onclick="document.getElementById('sp2-info').style.display='block'">
+      <img id="sp2-img" src="" alt="" style="display:none;height:28px;object-fit:contain;">
+      <span id="sp2-txt">Your Logo</span>
+    </div>
+    <div class="sponsor-slot" id="sp3" onclick="document.getElementById('sp3-info').style.display='block'">
+      <img id="sp3-img" src="" alt="" style="display:none;height:28px;object-fit:contain;">
+      <span id="sp3-txt">Your Logo</span>
+    </div>
   </div>
 
   <div class="coast-bar">
@@ -186,9 +222,18 @@
             <div class="location-name" id="loc-name">Balboa</div>
             <div style="display:flex;gap:8px;align-items:center;margin-top:4px;">
               <span class="coast-badge badge-pacific" id="coast-badge">Pacific</span>
-              <span class="date-display" id="date-display"></span>
             </div>
           </div>
+          <div class="date-big" style="text-align:right;">
+            <div class="date-day-name" id="date-day-name">Friday</div>
+            <div class="date-num" id="date-num">20</div>
+            <div class="date-month-year" id="date-month-year">March 2026</div>
+          </div>
+        </div>
+        <div class="cal-row">
+          <span class="cal-label" id="txt-selectdate">📅 Select Date</span>
+          <input type="date" class="cal-input" id="cal-input" onchange="onDateChange()">
+          <button class="cal-today-btn" onclick="goToday()" id="cal-today-btn">Today</button>
         </div>
         <div id="tide-content"><div style="padding:40px;text-align:center;color:var(--muted);">Loading...</div></div>
       </div>
@@ -395,7 +440,7 @@ function parseTideData(raw) {
   const DATUM_M = 2.52;
 
   // Time correction: WorldTides reference point is 44 minutes ahead of EST station
-  const TIME_CORRECTION_SEC = 0; // No correction — browser handles UTC to local automatically
+  const TIME_CORRECTION_SEC = -44 * 60; // -44 min correction to match EST tide stations
 
   // Current height with datum correction
   let currentHeight = 0;
@@ -497,7 +542,7 @@ async function renderTideContent(){
     </div>`;
   }).join('');
   const schedHTML=data.schedule.map(s=>{
-    const timeStr=s.time.toLocaleTimeString(lang==='es'?'es-PA':'en-US',{hour:'2-digit',minute:'2-digit'});
+    const timeStr=s.time.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'America/Panama'});
     return `<tr>
       <td>${tr('next')} ${tr(s.type)}</td>
       <td>${timeStr}</td>

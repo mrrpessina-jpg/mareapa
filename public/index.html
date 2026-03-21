@@ -395,7 +395,7 @@ function parseTideData(raw) {
   const DATUM_M = 2.52;
 
   // Time correction: WorldTides reference point is 44 minutes ahead of EST station
-  const TIME_CORRECTION_SEC = -3 * 60; // -3 minutes in seconds
+  const TIME_CORRECTION_SEC = 0; // No correction — browser handles UTC to local automatically
 
   // Current height with datum correction
   let currentHeight = 0;

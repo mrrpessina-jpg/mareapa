@@ -39,8 +39,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:24p
 /* SPONSORS */
 .sponsors-bar{display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(18,45,82,.5);border:1px solid rgba(0,201,177,.1);border-radius:12px;margin:18px 0;flex-wrap:wrap;}
 .sponsors-label{font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap;font-weight:600;}
-.sponsor-slot{height:34px;min-width:90px;background:rgba(255,255,255,.05);border:1px dashed rgba(0,201,177,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:0 12px;transition:all .2s;text-decoration:none;}
-.sponsor-slot:hover{border-color:var(--teal);color:var(--teal);}
+.sponsor-slot{height:52px;min-width:52px;max-width:140px;background:rgba(255,255,255,.05);border:1px dashed rgba(0,201,177,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:6px 10px;transition:all .2s;text-decoration:none;}
+.sponsor-slot:hover{border-color:var(--teal);}
+.sponsor-slot img{max-height:40px;max-width:120px;width:auto;height:auto;object-fit:contain;filter:brightness(.9);transition:filter .2s;}
+.sponsor-slot:hover img{filter:brightness(1);}
 
 /* COAST */
 .coast-bar{display:flex;gap:10px;padding:18px 0 14px;align-items:center;flex-wrap:wrap;}
@@ -161,9 +163,9 @@ input[type=date]{background:rgba(255,255,255,.06);border:1px solid rgba(0,201,17
 <!-- SPONSORS -->
 <div class="sponsors-bar">
   <span class="sponsors-label" id="txt-sponsors">Sponsors</span>
-  <a href="#" class="sponsor-slot" id="sp1">Your Logo</a>
-  <a href="#" class="sponsor-slot" id="sp2">Your Logo</a>
-  <a href="#" class="sponsor-slot" id="sp3">Your Logo</a>
+  <div class="sponsor-slot" id="sp1"><span id="sp1-txt">Your Logo</span></div>
+  <div class="sponsor-slot" id="sp2"><span id="sp2-txt">Your Logo</span></div>
+  <div class="sponsor-slot" id="sp3"><span id="sp3-txt">Your Logo</span></div>
 </div>
 
 <!-- COAST -->

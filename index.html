@@ -818,20 +818,37 @@ function setLang(l){
   renderLocationBar();
   renderTide();
   renderSolunar();
+  // Update loc-name
+  const loc=locations[currentCoast].find(x=>x.id===currentLoc);
+  if(loc){
+    const el=document.getElementById('loc-name');
+    if(el) el.textContent=lang==='es'?loc.namEs:loc.name;
+  }
 }
 
 function updateText(){
-  document.getElementById('txt-sub').textContent=tr('sub');
-  const sp=document.getElementById('txt-sponsors');
-  if(sp) sp.textContent=tr('sponsors');
-  document.getElementById('txt-coast').textContent=tr('coast');
-  document.getElementById('txt-today').textContent=tr('today');
-  document.getElementById('txt-solunar').textContent=tr('solunar');
-  document.getElementById('txt-links').textContent=tr('links');
-  document.getElementById('btn-pacific').textContent=tr('btn-pacific');
-  document.getElementById('btn-atlantic').textContent=tr('btn-atlantic');
+  // Safe helper — only update if element exists
+  const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
+  set('txt-sponsors', tr('sponsors'));
+  set('txt-coast',    tr('coast'));
+  set('txt-today',    tr('today'));
+  set('txt-solunar',  tr('solunar'));
+  set('txt-links',    tr('links'));
+  // Coast buttons
+  const pb=document.getElementById('btn-pacific');
+  if(pb) pb.innerHTML='🌊 '+(lang==='es'?'Pacífico':'Pacific');
+  const ab=document.getElementById('btn-atlantic');
+  if(ab) ab.innerHTML='🌊 '+(lang==='es'?'Atlántico / Caribe':'Atlantic / Caribbean');
+  // Coast badge
   const cb=document.getElementById('coast-badge');
   if(cb) cb.textContent=tr(currentCoast==='pacific'?'coast-pacific':'coast-atlantic');
+  // Logo tagline SVG text elements
+  document.querySelectorAll('.logo-tag-night,.logo-tag-day').forEach(el=>{
+    el.textContent = lang==='es'?'MONITOR DE MAREAS · PANAMÁ':'PANAMA TIDE TRACKER';
+  });
+  // Loading text
+  const ll=document.getElementById('txt-links-loading');
+  if(ll) ll.textContent=tr('links-loading');
 }
 
 function toggleDayNight(){
@@ -899,12 +916,16 @@ function initDatePicker(){
   const now=new Date();
   const str=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
   p.value=str;
+  selectedDate=null; // always start on today
   p.addEventListener('change',function(){
     if(this.value){
       const parts=this.value.split('-');
       selectedDate=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+    } else {
+      selectedDate=null;
     }
     renderTide();
+    renderSolunar();
   });
 }
 function goToToday(){
@@ -1092,30 +1113,39 @@ const DEMO_LINKS = [
 ];
 
 async function loadLinks(){
-  const list=document.getElementById('links-list');
-  // If no sheet configured, show demo links
   if(SHEET_CSV_URL.includes('YOUR_SHEET_ID')){
     renderLinks(DEMO_LINKS);
     return;
   }
-  try{
-    const res=await fetch(SHEET_CSV_URL);
-    const csv=await res.text();
-    const rows=csv.trim().split('\n').slice(1); // skip header
-    const links=rows.map(row=>{
-      // Handle CSV with possible commas inside quoted fields
-      const cols=row.match(/(".*?"|[^,]+)(?=,|$)/g)||row.split(',');
-      const clean=cols.map(c=>(c||'').trim().replace(/^"|"$/g,''));
-      return{tag:(clean[0]||'news'),
-             title:(clean[1]||''),
-             url:(clean[2]||'#'),
-             source:(clean[3]||''),
-             image:(clean[4]||'')};
-    }).filter(l=>l.title);
-    renderLinks(links.length?links:DEMO_LINKS);
-  }catch(e){
-    renderLinks(DEMO_LINKS);
+  // Try direct fetch first, fallback to CORS proxy
+  const urls=[
+    SHEET_CSV_URL,
+    'https://corsproxy.io/?'+encodeURIComponent(SHEET_CSV_URL),
+    'https://api.allorigins.win/raw?url='+encodeURIComponent(SHEET_CSV_URL)
+  ];
+  for(const url of urls){
+    try{
+      const res=await fetch(url);
+      if(!res.ok) continue;
+      const csv=await res.text();
+      if(!csv||csv.length<10) continue;
+      const rows=csv.trim().split('\n').slice(1);
+      const links=rows.map(row=>{
+        const cols=row.match(/(".*?"|[^,]+)(?=,|$)/g)||row.split(',');
+        const clean=cols.map(c=>(c||'').trim().replace(/^"|"$/g,''));
+        return{tag:(clean[0]||'news'),
+               title:(clean[1]||''),
+               url:(clean[2]||'#'),
+               source:(clean[3]||''),
+               image:(clean[4]||'')};
+      }).filter(l=>l.title);
+      if(links.length){
+        renderLinks(links);
+        return;
+      }
+    }catch(e){ continue; }
   }
+  renderLinks(DEMO_LINKS);
 }
 
 function renderLinks(links){

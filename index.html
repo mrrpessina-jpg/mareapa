@@ -173,23 +173,24 @@ input[type=date]{background:rgba(255,255,255,.06);border:1px solid rgba(0,201,17
     <svg width="240" height="64" viewBox="0 0 680 160" xmlns="http://www.w3.org/2000/svg" style="display:block;">
       <defs>
         <linearGradient id="lw1" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#29aae1" stop-opacity="0.2"/>
-          <stop offset="35%" stop-color="#00cfff"/>
-          <stop offset="70%" stop-color="#29aae1"/>
-          <stop offset="100%" stop-color="#1a7ab0" stop-opacity="0.2"/>
+          <stop offset="0%" stop-color="#29aae1" stop-opacity="0"/>
+          <stop offset="15%" stop-color="#00cfff" stop-opacity="0.9"/>
+          <stop offset="65%" stop-color="#29aae1" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#1a7ab0" stop-opacity="0"/>
         </linearGradient>
         <linearGradient id="lw2" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#1a3a8a" stop-opacity="0.2"/>
-          <stop offset="40%" stop-color="#2255c0"/>
-          <stop offset="72%" stop-color="#1a3a8a"/>
-          <stop offset="100%" stop-color="#0d2060" stop-opacity="0.2"/>
+          <stop offset="0%" stop-color="#1a3a8a" stop-opacity="0"/>
+          <stop offset="15%" stop-color="#2255c0" stop-opacity="0.9"/>
+          <stop offset="65%" stop-color="#1a3a8a" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#0d2060" stop-opacity="0"/>
         </linearGradient>
       </defs>
-      <!-- Wave 1 celeste -->
-      <path d="M 0 108 C 70 84,165 74,285 94 C 368 108,428 112,515 90 C 568 74,615 60,680 46 L 680 74 C 615 90,565 106,510 124 C 420 148,355 144,268 122 C 145 94,45 112,0 138 Z" fill="url(#lw1)" opacity="0.88"/>
-      <path d="M 55 80 C 175 57,318 70,448 92 C 500 102,558 88,628 65" fill="none" stroke="#7ae8ff" stroke-width="7" stroke-linecap="round" opacity="0.42"/>
-      <!-- Wave 2 navy -->
-      <path d="M 0 132 C 72 110,168 100,290 120 C 374 135,434 140,520 117 C 572 101,618 86,680 70 L 680 96 C 616 114,568 133,515 150 L 0 160 Z" fill="url(#lw2)" opacity="0.84"/>
+      <!-- Wave 1 celeste — narrow, tapers to points -->
+      <path d="M 120 108 C 160 104,210 90,290 98 C 360 105,420 110,490 96 C 535 86,570 76,590 72 C 598 70,600 72,596 77 C 575 90,540 100,488 114 C 415 130,350 132,275 120 C 195 108,148 116,122 120 C 116 121,114 116,120 108 Z" fill="url(#lw1)" opacity="0.92"/>
+      <!-- Shine -->
+      <path d="M 155 94 C 250 76,370 82,478 96 C 520 102,558 90,585 78" fill="none" stroke="#7ae8ff" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+      <!-- Wave 2 navy — tapers to points -->
+      <path d="M 105 128 C 148 120,205 108,292 118 C 368 126,428 132,498 118 C 542 108,576 96,598 88 C 606 85,608 88,604 94 C 580 108,545 120,496 134 C 422 152,356 152,276 140 C 188 127,138 134,110 140 C 103 141,100 136,105 128 Z" fill="url(#lw2)" opacity="0.88"/>
       <!-- Text shadow -->
       <text x="341" y="72" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
       <!-- Text night -->
@@ -197,8 +198,8 @@ input[type=date]{background:rgba(255,255,255,.06);border:1px solid rgba(0,201,17
       <!-- Text day -->
       <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
       <!-- Tagline -->
-      <text class="logo-tag-night" x="340" y="155" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#29aae1" letter-spacing="6" opacity="0.75">PANAMA TIDE TRACKER</text>
-      <text class="logo-tag-day" x="340" y="155" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#0d2868" letter-spacing="6" opacity="0.6" style="display:none;">PANAMA TIDE TRACKER</text>
+      <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.8">PANAMA  TIDE  TRACKER</text>
+      <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#0d2868" letter-spacing="5" opacity="0.7" style="display:none;">PANAMA  TIDE  TRACKER</text>
     </svg>
   </div>
   <div class="header-controls">
@@ -1184,10 +1185,10 @@ function renderLinks(links){
 // url: sponsor website (optional, use '#' if none)
 // ═══════════════════════════════════════════════
 const SPONSORS = [
-  { name:'PescaYa',      image:'https://cdn.pescaya.com/upload/1752594855_cec30f6900c518d4b3fe.png', url:'https://pescaya.com/' },
-  { name:'FF507',        image:'https://flyfishing507.com/wp-content/uploads/2025/11/Untitled-design-20.png', url:'https://flyfishing507.com/' },
-  { name:'Sponsor 3',    image:'', url:'#' },
-  { name:'Sponsor 4',    image:'', url:'#' },
+  { name:'PescaYa',           image:'https://cdn.pescaya.com/upload/1752594855_cec30f6900c518d4b3fe.png', url:'https://pescaya.com/' },
+  { name:'FF507',             image:'https://flyfishing507.com/wp-content/uploads/2025/11/Untitled-design-20.png', url:'https://flyfishing507.com/' },
+  { name:'Isthmus Gin',       image:'sp3.jpg', url:'#' },
+  { name:'Gatún Sport Fishing', image:'sp4.jpg', url:'#' },
 ];
 
 let carouselIndex = 0;

@@ -141,7 +141,7 @@ input[type=date]{background:rgba(255,255,255,.06);border:1px solid rgba(0,201,17
 .link-item{display:flex;flex-direction:column;background:var(--glass);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;text-decoration:none;transition:all .2s;animation:fadeIn .3s ease;}
 .link-item:hover{border-color:var(--teal);background:rgba(0,201,177,.06);}
 .link-top{display:flex;gap:12px;padding:12px 14px;align-items:center;}
-.link-img-wrap{width:90px;max-width:40%;flex-shrink:0;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;padding:6px;}
+.link-img-wrap{width:90px;max-width:40%;flex-shrink:0;border-radius:10px;overflow:hidden;background:#1a2e44;display:flex;align-items:center;justify-content:center;padding:8px;border:1px solid rgba(0,201,177,.15);}body.day-mode .link-img-wrap{background:#1a2e44;}
 .link-img{width:100%;height:auto;max-height:120px;object-fit:contain;display:block;}
 .link-img-placeholder{font-size:1.8rem;line-height:1;padding:10px;}
 .link-info{flex:1;min-width:0;}
@@ -1184,10 +1184,10 @@ function renderLinks(links){
 // url: sponsor website (optional, use '#' if none)
 // ═══════════════════════════════════════════════
 const SPONSORS = [
-  { name:'Your Logo', image:'', url:'#' },
-  { name:'Your Logo', image:'', url:'#' },
-  { name:'Your Logo', image:'', url:'#' },
-  { name:'Your Logo', image:'', url:'#' },
+  { name:'PescaYa',      image:'https://cdn.pescaya.com/upload/1752594855_cec30f6900c518d4b3fe.png', url:'https://pescaya.com/' },
+  { name:'FF507',        image:'https://flyfishing507.com/wp-content/uploads/2025/11/Untitled-design-20.png', url:'https://flyfishing507.com/' },
+  { name:'Sponsor 3',    image:'', url:'#' },
+  { name:'Sponsor 4',    image:'', url:'#' },
 ];
 
 let carouselIndex = 0;

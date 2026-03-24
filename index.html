@@ -170,46 +170,36 @@ input[type=date]{background:rgba(255,255,255,.06);border:1px solid rgba(0,201,17
 
 <header>
   <div>
-    <svg width="220" height="58" viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+    <svg width="240" height="64" viewBox="0 0 680 160" xmlns="http://www.w3.org/2000/svg" style="display:block;">
       <defs>
         <linearGradient id="lw1" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#29aae1" stop-opacity="0.15"/>
+          <stop offset="0%" stop-color="#29aae1" stop-opacity="0.2"/>
           <stop offset="35%" stop-color="#00cfff"/>
           <stop offset="70%" stop-color="#29aae1"/>
-          <stop offset="100%" stop-color="#1a7ab0" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#1a7ab0" stop-opacity="0.2"/>
         </linearGradient>
         <linearGradient id="lw2" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#1a3a8a" stop-opacity="0.15"/>
+          <stop offset="0%" stop-color="#1a3a8a" stop-opacity="0.2"/>
           <stop offset="40%" stop-color="#2255c0"/>
           <stop offset="72%" stop-color="#1a3a8a"/>
-          <stop offset="100%" stop-color="#0d2060" stop-opacity="0.15"/>
-        </linearGradient>
-        <linearGradient id="lwd" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#0077bb" stop-opacity="0.15"/>
-          <stop offset="35%" stop-color="#0099dd"/>
-          <stop offset="70%" stop-color="#0077bb"/>
-          <stop offset="100%" stop-color="#004488" stop-opacity="0.15"/>
-        </linearGradient>
-        <linearGradient id="lwd2" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#003377" stop-opacity="0.15"/>
-          <stop offset="40%" stop-color="#1a3a8a"/>
-          <stop offset="72%" stop-color="#003377"/>
-          <stop offset="100%" stop-color="#001144" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#0d2060" stop-opacity="0.2"/>
         </linearGradient>
       </defs>
-      <!-- Wave 1 -->
-      <path class="logo-wave1" d="M 0 95 C 60 75,145 68,248 85 C 322 97,378 99,452 83 C 498 73,536 64,600 55 L 600 75 C 536 87,496 98,450 112 C 374 130,316 128,240 110 C 135 88,48 100,0 122 Z" fill="url(#lw1)" opacity="0.85"/>
-      <path class="logo-wave1-shine" d="M 55 72 C 165 52,305 62,432 80 C 482 90,538 76,590 60" fill="none" stroke="#5dd8ff" stroke-width="6" stroke-linecap="round" opacity="0.4"/>
-      <!-- Wave 2 -->
-      <path class="logo-wave2" d="M 0 112 C 62 95,148 88,252 105 C 328 118,384 122,458 105 C 504 93,540 83,600 72 L 600 92 C 538 105,500 118,454 132 C 378 152,322 150,246 130 C 140 105,52 120,0 142 Z" fill="url(#lw2)" opacity="0.82"/>
+      <!-- Wave 1 celeste -->
+      <path d="M 0 108 C 70 84,165 74,285 94 C 368 108,428 112,515 90 C 568 74,615 60,680 46 L 680 74 C 615 90,565 106,510 124 C 420 148,355 144,268 122 C 145 94,45 112,0 138 Z" fill="url(#lw1)" opacity="0.88"/>
+      <path d="M 55 80 C 175 57,318 70,448 92 C 500 102,558 88,628 65" fill="none" stroke="#7ae8ff" stroke-width="7" stroke-linecap="round" opacity="0.42"/>
+      <!-- Wave 2 navy -->
+      <path d="M 0 132 C 72 110,168 100,290 120 C 374 135,434 140,520 117 C 572 101,618 86,680 70 L 680 96 C 616 114,568 133,515 150 L 0 160 Z" fill="url(#lw2)" opacity="0.84"/>
       <!-- Text shadow -->
-      <text x="301" y="110" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#000" opacity="0.12" letter-spacing="2">MareasPro</text>
+      <text x="341" y="72" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
       <!-- Text night -->
-      <text class="logo-text-night" x="300" y="108" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
-      <!-- Text day (hidden by default) -->
-      <text class="logo-text-day" x="300" y="108" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
+      <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
+      <!-- Text day -->
+      <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
+      <!-- Tagline -->
+      <text class="logo-tag-night" x="340" y="155" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#29aae1" letter-spacing="6" opacity="0.75">PANAMA TIDE TRACKER</text>
+      <text class="logo-tag-day" x="340" y="155" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#0d2868" letter-spacing="6" opacity="0.6" style="display:none;">PANAMA TIDE TRACKER</text>
     </svg>
-    <div class="logo-sub" id="txt-sub" style="margin-top:-4px;">Panama Tide Tracker</div>
   </div>
   <div class="header-controls">
     <button class="daynight-btn" id="daynight-btn" onclick="toggleDayNight()">🌙</button>
@@ -851,12 +841,8 @@ function toggleDayNight(){
   updateLogoMode();
 }
 function updateLogoMode(){
-  const night=document.querySelectorAll('.logo-text-night');
-  const day=document.querySelectorAll('.logo-text-day');
-  const w1=document.querySelectorAll('.logo-wave1');
-  const w2=document.querySelectorAll('.logo-wave2');
-  night.forEach(el=>el.style.display=isDayMode?'none':'block');
-  day.forEach(el=>el.style.display=isDayMode?'block':'none');
+  document.querySelectorAll('.logo-text-night,.logo-tag-night').forEach(el=>el.style.display=isDayMode?'none':'block');
+  document.querySelectorAll('.logo-text-day,.logo-tag-day').forEach(el=>el.style.display=isDayMode?'block':'none');
 }
 function autoSetDayNight(){
   const h=new Date().getHours();

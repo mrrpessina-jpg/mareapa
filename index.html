@@ -1157,8 +1157,14 @@ function renderLinks(links){
   }
   list.innerHTML=links.map(l=>{
     const tagEmoji={fishing:'🎣',news:'📰',boating:'⛵',sponsor:'⭐',pescaya:'🎣',tfs:'🛒',ff507:'🪰'}[l.tag]||'🔗';
+    const proxyImg=(url)=>{
+      if(!url) return '';
+      // Try direct first, fallback to proxy on error
+      return url;
+    };
     const imgHTML=l.image
-      ? `<img class="link-img" src="${l.image}" alt="${l.title}" onerror="this.parentElement.innerHTML='<div class=\'link-img-placeholder\'>${tagEmoji}</div>'">`
+      ? `<img class="link-img" src="${l.image}" alt="${l.title}"
+           onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='https://corsproxy.io/?'+encodeURIComponent(this.src);}else{this.parentElement.innerHTML='<div class=\'link-img-placeholder\'>${tagEmoji}</div>';}">`
       : `<div class="link-img-placeholder">${tagEmoji}</div>`;
     const shortUrl=l.url.replace(/^https?:\/\/(www\.)?/,'').split('/')[0];
     return `<a href="${l.url}" target="_blank" rel="noopener" class="link-item">

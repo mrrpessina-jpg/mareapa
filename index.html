@@ -124,15 +124,72 @@ input[type=date]{background:rgba(255,255,255,.06);border:1px solid rgba(0,201,17
 .source-note{font-size:.6rem;color:var(--muted);text-align:right;margin-top:10px;letter-spacing:1px;}
 
 /* MOON/SOLUNAR */
-.moon-row{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
-.moon-icon{font-size:2.2rem;line-height:1;}
-.moon-info h3{font-size:.95rem;font-weight:600;margin-bottom:2px;}
-.moon-info p{font-size:.75rem;color:var(--muted);}
-.solunar-bars{display:flex;flex-direction:column;gap:9px;}
-.sol-item label{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px;}
-.sol-bar-track{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;}
-.sol-bar-fill{height:100%;border-radius:3px;}
-.sol-time{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--white);margin-top:2px;}
+/* WAVE CHART */
+.tide-wave-wrap{position:relative;margin:12px 0 4px;}
+.tide-wave-wrap svg{width:100%;display:block;}
+.fish-pin{position:absolute;display:flex;flex-direction:column;align-items:center;transform:translateX(-50%);pointer-events:none;}
+.fish-pin span{font-size:16px;animation:fishbob .9s ease-in-out infinite alternate;}
+.fish-pin-line{width:1px;height:10px;background:rgba(0,201,177,.4);}
+@keyframes fishbob{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.wave-time-labels{display:flex;justify-content:space-between;padding:0 2px;margin-bottom:8px;}
+.wave-time-label{font-size:8px;color:var(--muted);}
+
+/* SOLUNAR REDESIGN */
+.sol-moon-row{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+.sol-moon-big{font-size:3.2rem;line-height:1;}
+.sol-moon-info{}
+.sol-moon-phase{font-size:1rem;font-weight:700;color:var(--white);}
+.sol-moon-quality{font-size:.75rem;font-weight:600;margin-top:3px;}
+.sol-quality-great{color:var(--teal);}
+.sol-quality-good{color:var(--amber);}
+.sol-fish-row{display:flex;gap:3px;margin-top:6px;}
+.sol-windows{display:flex;flex-direction:column;gap:7px;}
+.sol-win{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;}
+.sol-win-major{background:rgba(0,201,177,.1);border:1px solid rgba(0,201,177,.2);}
+.sol-win-minor{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.15);}
+.sol-win-left{display:flex;align-items:center;gap:8px;}
+.sol-win-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.sol-label-major{color:var(--teal);}
+.sol-label-minor{color:var(--amber);}
+.sol-win-time{font-size:13px;color:var(--white);font-weight:600;margin-top:2px;}
+.sol-fish-icons{display:flex;gap:2px;align-items:center;}
+.sol-fish-icons span{font-size:14px;}
+.sol-fish-icons span.dim{opacity:.25;}
+
+/* WEATHER SECTION */
+.weather-section{margin-top:0;}
+.weather-card{background:rgba(13,32,64,.8);border:1px solid rgba(0,201,177,.15);border-radius:12px;padding:14px;margin-bottom:10px;}
+body.day-mode .weather-card{background:rgba(255,255,255,.88);border-color:rgba(0,120,180,.2);}
+.wc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.wc-loc{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--white);}
+body.day-mode .wc-loc{color:#0a2040;}
+.wc-badge{font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.wc-badge-ok{background:rgba(0,201,177,.2);color:#00c9b1;}
+.wc-badge-warn{background:rgba(240,165,0,.2);color:#f0a500;}
+.wc-badge-alert{background:rgba(255,80,60,.2);color:#ff6050;}
+.wc-main{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.wc-icon{font-size:44px;line-height:1;}
+.wc-temp{font-size:44px;font-weight:700;color:var(--white);line-height:1;}
+body.day-mode .wc-temp{color:#0a2040;}
+.wc-temp sup{font-size:16px;color:var(--muted);}
+.wc-desc{font-size:12px;color:var(--teal);font-weight:600;margin-top:2px;}
+.wc-minmax{display:flex;flex-direction:column;gap:2px;margin-left:auto;text-align:right;}
+.wc-hi{font-size:12px;color:#ff7060;font-weight:600;}
+.wc-lo{font-size:12px;color:#60a8f0;font-weight:600;}
+.wc-divider{border:none;border-top:1px solid rgba(255,255,255,.07);margin:8px 0;}
+body.day-mode .wc-divider{border-color:rgba(0,0,0,.08);}
+.wc-wind{display:flex;align-items:center;gap:8px;}
+.wc-wind-spd{font-size:20px;font-weight:700;color:var(--white);}
+body.day-mode .wc-wind-spd{color:#0a2040;}
+.wc-wind-unit{font-size:11px;color:var(--muted);}
+.wc-wind-dir{background:rgba(0,201,177,.2);color:var(--teal);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.wc-bars{display:flex;align-items:flex-end;gap:3px;margin-left:auto;}
+.wc-bar{width:5px;border-radius:3px;}
+.wc-loading{text-align:center;padding:20px;color:var(--muted);font-size:.75rem;letter-spacing:2px;}
+
+/* Keep old moon-row for compat */
+.moon-row{display:none;}
+.solunar-bars{display:none;}
 
 /* LINKS SECTION */
 .links-list{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto;}
@@ -272,6 +329,12 @@ body.day-mode .link-source{color:#3a6080;}
 
   <!-- RIGHT COLUMN -->
   <div>
+    <!-- WEATHER -->
+    <div class="card weather-section">
+      <div class="card-title"><span class="dot"></span><span id="txt-weather">Clima &amp; Viento</span> <span style="font-size:.6rem;color:var(--muted);letter-spacing:1px;font-weight:400;">Open-Meteo</span></div>
+      <div id="weather-content"><div class="wc-loading" id="txt-weather-loading">Cargando...</div></div>
+    </div>
+    <!-- LINKS -->
     <div class="card">
       <div class="card-title"><span class="dot"></span><span id="txt-links">Links &amp; News</span></div>
       <div id="links-list" class="links-list">
@@ -765,7 +828,7 @@ const locations = {
 const i18n = {
   en: {
     sub:'Panama Tide Tracker', sponsors:'Sponsors', coast:'Coast',
-    today:'TODAY', solunar:'Solunar / Best Fishing Times',
+    today:'TODAY', solunar:'Solunar / Best Fishing Times', weather:'Weather & Wind',
     links:'Links & News', 'links-loading':'Loading...',
     'no-links':'No links yet — check back soon!',
     rising:'Rising', falling:'Falling', high:'HIGH', low:'LOW', next:'Next',
@@ -781,7 +844,7 @@ const i18n = {
   },
   es: {
     sub:'Monitor de Mareas de Panamá', sponsors:'Patrocinadores', coast:'Costa',
-    today:'HOY', solunar:'Solunar / Mejores Horas de Pesca',
+    today:'HOY', solunar:'Solunar / Mejores Horas de Pesca', weather:'Clima & Viento',
     links:'Enlaces y Noticias', 'links-loading':'Cargando...',
     'no-links':'Sin enlaces aún — ¡vuelve pronto!',
     rising:'Subiendo', falling:'Bajando', high:'ALTA', low:'BAJA', next:'Próx.',
@@ -836,6 +899,7 @@ function updateText(){
   set('txt-coast',    tr('coast'));
   set('txt-today',    tr('today'));
   set('txt-solunar',  tr('solunar'));
+  set('txt-weather',   tr('weather'));
   set('txt-links',    tr('links'));
   // Coast buttons
   const pb=document.getElementById('btn-pacific');
@@ -1054,6 +1118,49 @@ function renderTide(){
 
   const showCurrent = !selectedDate;
 
+  // Build SVG wave curve
+  const svgW=360, svgH=80;
+  const pts=bars.map((b,i)=>{
+    const x=(i/23)*svgW;
+    const y=svgH-((b.height-minH)/range)*(svgH-8)-4;
+    return{x,y,h:b.height};
+  });
+  // Smooth path using cubic bezier
+  let wavePath=`M${pts[0].x},${pts[0].y}`;
+  for(let i=0;i<pts.length-1;i++){
+    const cx1=pts[i].x+(pts[i+1].x-pts[i].x)/3;
+    const cx2=pts[i+1].x-(pts[i+1].x-pts[i].x)/3;
+    wavePath+=` C${cx1},${pts[i].y} ${cx2},${pts[i+1].y} ${pts[i+1].x},${pts[i+1].y}`;
+  }
+  const fillPath=wavePath+` L${svgW},${svgH} L0,${svgH} Z`;
+
+  // Find best fishing times — solunar major window overlapping high tide
+  const solH=new Date().getHours();
+  const majorStart=(solH+1)%24;
+  const majorEnd=(majorStart+2)%24;
+  // Find peaks (local maxima) that overlap with solunar window
+  const fishPins=[];
+  for(let i=1;i<pts.length-1;i++){
+    if(pts[i].h>=pts[i-1].h&&pts[i].h>=pts[i+1].h&&pts[i].h>minH+(range*0.5)){
+      const hr=bars[i].hour;
+      const inWindow=(hr>=majorStart&&hr<=majorEnd)||
+                     (hr>=(majorStart+12)%24&&hr<=(majorEnd+12)%24);
+      fishPins.push({x:pts[i].x,y:pts[i].y,priority:inWindow?'high':'med'});
+    }
+  }
+  // Keep max 2 fish pins
+  const topPins=fishPins.slice(0,2);
+
+  // Current time line
+  const nowX=!selectedDate?(currentHour/23)*svgW:-1;
+
+  // Fish HTML overlays
+  const fishHTML=topPins.map(p=>`
+    <div class="fish-pin" style="left:${(p.x/svgW*100).toFixed(1)}%;top:${(p.y-24).toFixed(0)}px;">
+      <span>🐟</span>
+      <div class="fish-pin-line"></div>
+    </div>`).join('');
+
   document.getElementById('tide-content').innerHTML=`
     ${showCurrent?`
     <div class="tide-now">
@@ -1063,7 +1170,28 @@ function renderTide(){
         ${rising?'▲ '+tr('rising'):'▼ '+tr('falling')}
       </div>
     </div>`:''}
-    <div class="tide-chart">${barsHTML}</div>
+    <div class="tide-wave-wrap">
+      <svg viewBox="0 0 ${svgW} ${svgH}" preserveAspectRatio="none" style="height:80px;">
+        <defs>
+          <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00c9b1" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#00c9b1" stop-opacity="0.04"/>
+          </linearGradient>
+        </defs>
+        <path d="${fillPath}" fill="url(#wg)"/>
+        <path d="${wavePath}" fill="none" stroke="#00c9b1" stroke-width="2" stroke-linecap="round"/>
+        ${nowX>0?`<line x1="${nowX}" y1="0" x2="${nowX}" y2="${svgH}" stroke="rgba(240,165,0,.6)" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="${nowX}" cy="${pts[Math.round(currentHour/23*23)].y}" r="3" fill="#f0a500"/>`:''} 
+      </svg>
+      ${fishHTML}
+    </div>
+    <div class="wave-time-labels">
+      <span class="wave-time-label">00h</span>
+      <span class="wave-time-label">06h</span>
+      <span class="wave-time-label">12h</span>
+      <span class="wave-time-label">18h</span>
+      <span class="wave-time-label">23h</span>
+    </div>
     <table class="hl-table">${schedHTML}</table>
     <div class="source-note">${tr('source')}</div>
   `;
@@ -1087,22 +1215,141 @@ function getMoonPhase(){
 
 function renderSolunar(){
   const moon=getMoonPhase();
-  document.getElementById('moon-icon').textContent=moon.icon;
-  document.getElementById('moon-phase-name').textContent=moon.name;
-  document.getElementById('moon-phase-sub').textContent=tr(moon.quality==='great'?'moon-great':'moon-good');
   const h=new Date().getHours();
-  const sol=[
-    {label:tr('major-feeding'),start:(h+1)%24,dur:90,str:.85,color:'var(--teal)'},
-    {label:tr('minor-feeding'),start:(h+7)%24,dur:45,str:.5,color:'var(--amber)'}
-  ];
-  document.getElementById('solunar-bars').innerHTML=sol.map(s=>{
-    const e=(s.start+Math.floor(s.dur/60))%24;
-    return `<div class="sol-item">
-      <label>${s.label}</label>
-      <div class="sol-bar-track"><div class="sol-bar-fill" style="width:${s.str*100}%;background:${s.color};"></div></div>
-      <div class="sol-time">${String(s.start).padStart(2,'0')}:00 – ${String(e).padStart(2,'0')}:${String(s.dur%60).padStart(2,'0')}</div>
+  const m1s=(h+1)%24, m1e=(h+2)%24;
+  const m2s=(h+13)%24, m2e=(h+14)%24;
+  const mn1s=(h+7)%24, mn1e=Math.floor((h+7.75))%24;
+  const mn2s=(h+19)%24, mn2e=Math.floor((h+19.75))%24;
+  const fmt=h=>`${String(h).padStart(2,'0')}:00`;
+  const fishCount=moon.quality==='great'?4:3;
+  const fishes=Array.from({length:5},(_,i)=>
+    `<span style="font-size:${i<fishCount?'18':'14'}px;opacity:${i<fishCount?1:.2};">🐟</span>`
+  ).join('');
+  const winHTML=(label,cls,lcls,s,e,count)=>`
+    <div class="sol-win ${cls}">
+      <div class="sol-win-left">
+        <span style="font-size:15px;">🎣</span>
+        <div>
+          <div class="sol-win-label ${lcls}">${label}</div>
+          <div class="sol-win-time">${fmt(s)} — ${fmt(e)}</div>
+        </div>
+      </div>
+      <div class="sol-fish-icons">
+        ${Array.from({length:3},(_,i)=>`<span class="${i<count?'':'dim'}">🐟</span>`).join('')}
+      </div>
     </div>`;
-  }).join('');
+  const major=tr('major-feeding');
+  const minor=tr('minor-feeding');
+  document.getElementById('moon-icon').textContent='';
+  document.getElementById('moon-phase-name').textContent='';
+  document.getElementById('moon-phase-sub').textContent='';
+  document.getElementById('solunar-bars').innerHTML=`
+    <div class="sol-moon-row">
+      <div class="sol-moon-big">${moon.icon}</div>
+      <div class="sol-moon-info">
+        <div class="sol-moon-phase">${moon.name}</div>
+        <div class="sol-moon-quality sol-quality-${moon.quality}">
+          ${moon.quality==='great'?'⭐ '+tr('moon-great'):'● '+tr('moon-good')}
+        </div>
+        <div class="sol-fish-row">${fishes}</div>
+      </div>
+    </div>
+    <div class="sol-windows">
+      ${winHTML(major,'sol-win-major','sol-label-major',m1s,m1e,3)}
+      ${winHTML(major,'sol-win-major','sol-label-major',m2s,m2e,3)}
+      ${winHTML(minor,'sol-win-minor','sol-label-minor',mn1s,mn1e,2)}
+      ${winHTML(minor,'sol-win-minor','sol-label-minor',mn2s,mn2e,1)}
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// WEATHER — Open-Meteo (free, no API key)
+// ═══════════════════════════════════════════════
+const WEATHER_LOCS = {
+  pacific:  {lat:8.967, lon:-79.533, name:'Diablo / Amador'},
+  atlantic: {lat:9.350, lon:-79.900, name:'Bahía Limón / Caribe'}
+};
+
+function windDir(deg){
+  const dirs=['N','NE','E','SE','S','SO','O','NO'];
+  return dirs[Math.round(deg/45)%8];
+}
+function weatherIcon(code){
+  if(code<=1) return '☀️';
+  if(code<=3) return '⛅';
+  if(code<=48) return '🌫️';
+  if(code<=67) return '🌧️';
+  if(code<=77) return '🌨️';
+  if(code<=82) return '🌦️';
+  return '⛈️';
+}
+function weatherDesc(code, es){
+  const d={0:['Clear','Despejado'],1:['Mainly clear','Mayormente despejado'],2:['Partly cloudy','Parcialmente nublado'],3:['Overcast','Nublado'],45:['Foggy','Neblina'],48:['Foggy','Neblina'],51:['Drizzle','Llovizna'],61:['Rain','Lluvia'],80:['Showers','Chubascos'],95:['Thunderstorm','Tormenta']};
+  const k=Object.keys(d).reverse().find(k=>code>=parseInt(k))||0;
+  return d[k][es?1:0];
+}
+function windBadge(spd){
+  if(spd<15) return{cls:'wc-badge-ok',txt:lang==='es'?'● Favorable':'● Favorable'};
+  if(spd<30) return{cls:'wc-badge-warn',txt:lang==='es'?'● Moderado':'● Moderate'};
+  return{cls:'wc-badge-alert',txt:lang==='es'?'● Alerta':'● Alert'};
+}
+function windBars(spd){
+  const lvl=Math.min(5,Math.ceil(spd/10));
+  const col=spd<15?'#00c9b1':spd<30?'#f0a500':'#ff6050';
+  return Array.from({length:5},(_,i)=>`<div class="wc-bar" style="height:${(i+1)*6}px;background:${i<lvl?col:'rgba(255,255,255,.1)'}"></div>`).join('');
+}
+
+async function loadWeather(){
+  const el=document.getElementById('weather-content');
+  try{
+    const locs=Object.values(WEATHER_LOCS);
+    const results=await Promise.all(locs.map(async loc=>{
+      const url=`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FPanama&forecast_days=1`;
+      const r=await fetch(url);
+      const d=await r.json();
+      return{loc,d};
+    }));
+    const es=lang==='es';
+    el.innerHTML=results.map(({loc,d})=>{
+      const c=d.current;
+      const dy=d.daily;
+      const temp=Math.round(c.temperature_2m);
+      const tmax=Math.round(dy.temperature_2m_max[0]);
+      const tmin=Math.round(dy.temperature_2m_min[0]);
+      const wspd=Math.round(c.wind_speed_10m);
+      const wdir=windDir(c.wind_direction_10m);
+      const icon=weatherIcon(c.weather_code);
+      const desc=weatherDesc(c.weather_code,es);
+      const badge=windBadge(wspd);
+      return `<div class="weather-card">
+        <div class="wc-header">
+          <div class="wc-loc">⚓ ${loc.name}</div>
+          <span class="wc-badge ${badge.cls}">${badge.txt}</span>
+        </div>
+        <div class="wc-main">
+          <div class="wc-icon">${icon}</div>
+          <div>
+            <div class="wc-temp">${temp}<sup>°C</sup></div>
+            <div class="wc-desc">${desc}</div>
+          </div>
+          <div class="wc-minmax">
+            <div class="wc-hi">↑ ${tmax}°</div>
+            <div class="wc-lo">↓ ${tmin}°</div>
+          </div>
+        </div>
+        <hr class="wc-divider"/>
+        <div class="wc-wind">
+          <span style="font-size:18px;">💨</span>
+          <span class="wc-wind-spd">${wspd}</span>
+          <span class="wc-wind-unit">km/h</span>
+          <span class="wc-wind-dir">${wdir}</span>
+          <div class="wc-bars">${windBars(wspd)}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){
+    el.innerHTML=`<div class="wc-loading">${lang==='es'?'No disponible':'Unavailable'}</div>`;
+  }
 }
 
 // ═══════════════════════════════════════════════
@@ -1251,9 +1498,11 @@ function init(){
   renderTide();
   renderSolunar();
   loadLinks();
+  loadWeather();
   buildCarousel();
   setInterval(renderTide, 5*60*1000);
   setInterval(renderSolunar, 30*60*1000);
+  setInterval(loadWeather, 30*60*1000);
 }
 init();
 </script>

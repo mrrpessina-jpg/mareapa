@@ -189,7 +189,7 @@ body.day-mode .wc-wind-spd{color:#0a2040;}
 
 /* Keep old moon-row for compat */
 .moon-row{display:none;}
-.solunar-bars{display:none;}
+.solunar-bars{display:block;}
 
 /* LINKS SECTION */
 .links-list{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto;}
@@ -947,6 +947,7 @@ function selectCoast(coast){
   renderLocationBar();
   updateCoastBadge();
   renderTide();
+  loadWeather();
 }
 
 function updateCoastBadge(){
@@ -1257,8 +1258,6 @@ function renderSolunar(){
     <div class="sol-windows">
       ${winHTML(major,'sol-win-major','sol-label-major',m1s,m1e,3)}
       ${winHTML(major,'sol-win-major','sol-label-major',m2s,m2e,3)}
-      ${winHTML(minor,'sol-win-minor','sol-label-minor',mn1s,mn1e,2)}
-      ${winHTML(minor,'sol-win-minor','sol-label-minor',mn2s,mn2e,1)}
     </div>`;
 }
 
@@ -1266,8 +1265,8 @@ function renderSolunar(){
 // WEATHER — Open-Meteo (free, no API key)
 // ═══════════════════════════════════════════════
 const WEATHER_LOCS = {
-  pacific:  {lat:8.967, lon:-79.533, name:'Diablo / Amador'},
-  atlantic: {lat:9.350, lon:-79.900, name:'Bahía Limón / Caribe'}
+  pacific:  {lat:8.967, lon:-79.533, nameEs:'Diablo / Amador', nameEn:'Diablo / Amador'},
+  atlantic: {lat:9.350, lon:-79.900, nameEs:'Bahía Limón / Caribe', nameEn:'Limón Bay / Caribbean'}
 };
 
 function windDir(deg){
@@ -1301,52 +1300,71 @@ function windBars(spd){
 
 async function loadWeather(){
   const el=document.getElementById('weather-content');
+  if(!el) return;
+  el.innerHTML=`<div class="wc-loading">${lang==='es'?'Cargando...':'Loading...'}</div>`;
   try{
-    const locs=Object.values(WEATHER_LOCS);
-    const results=await Promise.all(locs.map(async loc=>{
-      const url=`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FPanama&forecast_days=1`;
-      const r=await fetch(url);
-      const d=await r.json();
-      return{loc,d};
-    }));
+    const loc=WEATHER_LOCS[currentCoast];
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=America%2FPanama&forecast_days=1`;
+    const r=await fetch(url);
+    const d=await r.json();
+    const c=d.current, dy=d.daily;
     const es=lang==='es';
-    el.innerHTML=results.map(({loc,d})=>{
-      const c=d.current;
-      const dy=d.daily;
-      const temp=Math.round(c.temperature_2m);
-      const tmax=Math.round(dy.temperature_2m_max[0]);
-      const tmin=Math.round(dy.temperature_2m_min[0]);
-      const wspd=Math.round(c.wind_speed_10m);
-      const wdir=windDir(c.wind_direction_10m);
-      const icon=weatherIcon(c.weather_code);
-      const desc=weatherDesc(c.weather_code,es);
-      const badge=windBadge(wspd);
-      return `<div class="weather-card">
-        <div class="wc-header">
-          <div class="wc-loc">⚓ ${loc.name}</div>
-          <span class="wc-badge ${badge.cls}">${badge.txt}</span>
+    const temp=Math.round(c.temperature_2m);
+    const tmax=Math.round(dy.temperature_2m_max[0]);
+    const tmin=Math.round(dy.temperature_2m_min[0]);
+    const wspd=Math.round(c.wind_speed_10m);
+    const wdir=windDir(c.wind_direction_10m);
+    const icon=weatherIcon(c.weather_code);
+    const desc=weatherDesc(c.weather_code,es);
+    const badge=windBadge(wspd);
+    const locName=es?loc.nameEs:loc.nameEn;
+    const locIcon=currentCoast==='pacific'?'⚓':'🌊';
+    // Format sunrise/sunset
+    const fmtTime=iso=>iso?iso.split('T')[1].substring(0,5):'--:--';
+    const sunrise=fmtTime(dy.sunrise&&dy.sunrise[0]);
+    const sunset=fmtTime(dy.sunset&&dy.sunset[0]);
+    el.innerHTML=`<div class="weather-card">
+      <div class="wc-header">
+        <div class="wc-loc">${locIcon} ${locName}</div>
+        <span class="wc-badge ${badge.cls}">${badge.txt}</span>
+      </div>
+      <div class="wc-main">
+        <div class="wc-icon">${icon}</div>
+        <div>
+          <div class="wc-temp">${temp}<sup>°C</sup></div>
+          <div class="wc-desc">${desc}</div>
         </div>
-        <div class="wc-main">
-          <div class="wc-icon">${icon}</div>
+        <div class="wc-minmax">
+          <div class="wc-hi">↑ ${tmax}°</div>
+          <div class="wc-lo">↓ ${tmin}°</div>
+        </div>
+      </div>
+      <hr class="wc-divider"/>
+      <div class="wc-wind">
+        <span style="font-size:18px;">💨</span>
+        <span class="wc-wind-spd">${wspd}</span>
+        <span class="wc-wind-unit">km/h</span>
+        <span class="wc-wind-dir">${wdir}</span>
+        <div class="wc-bars">${windBars(wspd)}</div>
+      </div>
+      <hr class="wc-divider"/>
+      <div style="display:flex;gap:20px;padding-top:2px;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:16px;">🌅</span>
           <div>
-            <div class="wc-temp">${temp}<sup>°C</sup></div>
-            <div class="wc-desc">${desc}</div>
-          </div>
-          <div class="wc-minmax">
-            <div class="wc-hi">↑ ${tmax}°</div>
-            <div class="wc-lo">↓ ${tmin}°</div>
+            <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'AMANECER':'SUNRISE'}</div>
+            <div style="font-size:13px;font-weight:700;color:var(--white);">${sunrise}</div>
           </div>
         </div>
-        <hr class="wc-divider"/>
-        <div class="wc-wind">
-          <span style="font-size:18px;">💨</span>
-          <span class="wc-wind-spd">${wspd}</span>
-          <span class="wc-wind-unit">km/h</span>
-          <span class="wc-wind-dir">${wdir}</span>
-          <div class="wc-bars">${windBars(wspd)}</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:16px;">🌇</span>
+          <div>
+            <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'ATARDECER':'SUNSET'}</div>
+            <div style="font-size:13px;font-weight:700;color:var(--white);">${sunset}</div>
+          </div>
         </div>
-      </div>`;
-    }).join('');
+      </div>
+    </div>`;
   }catch(e){
     el.innerHTML=`<div class="wc-loading">${lang==='es'?'No disponible':'Unavailable'}</div>`;
   }

@@ -1358,19 +1358,55 @@ async function loadWeather(){
         <div class="wc-bars">${windBars(wspd)}</div>
       </div>
       <hr class="wc-divider"/>
-      <div style="display:flex;gap:20px;padding-top:2px;">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="font-size:16px;">🌅</span>
+      <div style="display:flex;gap:24px;padding-top:4px;align-items:center;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg width="36" height="36" viewBox="-30 -30 60 60">
+            <circle cx="0" cy="0" r="13" fill="#f5d000"/>
+            <circle cx="0" cy="0" r="8" fill="#ffe040"/>
+            <g stroke="#f5d000" stroke-linecap="round" stroke-width="2.5">
+              <line x1="0" y1="-18" x2="0" y2="-23"/>
+              <line x1="13" y1="-13" x2="16" y2="-17"/>
+              <line x1="18" y1="0" x2="23" y2="0"/>
+              <line x1="13" y1="13" x2="16" y2="17"/>
+              <line x1="0" y1="18" x2="0" y2="23"/>
+              <line x1="-13" y1="13" x2="-16" y2="17"/>
+              <line x1="-18" y1="0" x2="-23" y2="0"/>
+              <line x1="-13" y1="-13" x2="-16" y2="-17"/>
+            </g>
+            <g stroke="#f5d000" stroke-linecap="round" stroke-width="1.5" opacity="0.5">
+              <line x1="9" y1="-16" x2="11" y2="-20"/>
+              <line x1="-9" y1="-16" x2="-11" y2="-20"/>
+              <line x1="16" y1="9" x2="20" y2="11"/>
+              <line x1="-16" y1="9" x2="-20" y2="11"/>
+              <line x1="16" y1="-9" x2="20" y2="-11"/>
+              <line x1="-16" y1="-9" x2="-20" y2="-11"/>
+              <line x1="9" y1="16" x2="11" y2="20"/>
+              <line x1="-9" y1="16" x2="-11" y2="20"/>
+            </g>
+          </svg>
           <div>
             <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'AMANECER':'SUNRISE'}</div>
-            <div style="font-size:14px;font-weight:700;color:#f0a500;">${sunrise}</div>
+            <div style="font-size:15px;font-weight:700;color:#f5d000;">${sunrise}</div>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="font-size:16px;">🌇</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg width="36" height="36" viewBox="-32 -32 64 64">
+            <circle cx="0" cy="0" r="15" fill="#ff7020"/>
+            <circle cx="0" cy="0" r="9" fill="#ffaa40"/>
+            <g stroke="#ff7020" stroke-linecap="round" stroke-width="3">
+              <line x1="0" y1="-20" x2="0" y2="-26"/>
+              <line x1="14" y1="-14" x2="18" y2="-18"/>
+              <line x1="20" y1="0" x2="26" y2="0"/>
+              <line x1="14" y1="14" x2="18" y2="18"/>
+              <line x1="0" y1="20" x2="0" y2="26"/>
+              <line x1="-14" y1="14" x2="-18" y2="18"/>
+              <line x1="-20" y1="0" x2="-26" y2="0"/>
+              <line x1="-14" y1="-14" x2="-18" y2="-18"/>
+            </g>
+          </svg>
           <div>
             <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'ATARDECER':'SUNSET'}</div>
-            <div style="font-size:14px;font-weight:700;color:#f0a500;">${sunset}</div>
+            <div style="font-size:15px;font-weight:700;color:#ff8030;">${sunset}</div>
           </div>
         </div>
       </div>

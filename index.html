@@ -1319,10 +1319,20 @@ async function loadWeather(){
     const badge=windBadge(wspd);
     const locName=es?loc.nameEs:loc.nameEn;
     const locIcon=currentCoast==='pacific'?'⚓':'🌊';
-    // Format sunrise/sunset
-    const fmtTime=iso=>iso?iso.split('T')[1].substring(0,5):'--:--';
-    const sunrise=fmtTime(dy.sunrise&&dy.sunrise[0]);
-    const sunset=fmtTime(dy.sunset&&dy.sunset[0]);
+    // Format sunrise/sunset — robust parser
+    const fmtTime=iso=>{
+      if(!iso) return '--:--';
+      try{
+        // iso can be "2026-03-26T06:12" or "06:12"
+        const t=iso.includes('T')?iso.split('T')[1]:iso;
+        return t.substring(0,5);
+      }catch(e){return '--:--';}
+    };
+    const sunriseRaw=Array.isArray(dy.sunrise)?dy.sunrise[0]:dy.sunrise;
+    const sunsetRaw=Array.isArray(dy.sunset)?dy.sunset[0]:dy.sunset;
+    const sunrise=fmtTime(sunriseRaw);
+    const sunset=fmtTime(sunsetRaw);
+    console.log('sunrise raw:',sunriseRaw,'parsed:',sunrise);
     el.innerHTML=`<div class="weather-card">
       <div class="wc-header">
         <div class="wc-loc">${locIcon} ${locName}</div>
@@ -1353,14 +1363,14 @@ async function loadWeather(){
           <span style="font-size:16px;">🌅</span>
           <div>
             <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'AMANECER':'SUNRISE'}</div>
-            <div style="font-size:13px;font-weight:700;color:var(--white);">${sunrise}</div>
+            <div style="font-size:14px;font-weight:700;color:#f0a500;">${sunrise}</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:16px;">🌇</span>
           <div>
             <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'ATARDECER':'SUNSET'}</div>
-            <div style="font-size:13px;font-weight:700;color:var(--white);">${sunset}</div>
+            <div style="font-size:14px;font-weight:700;color:#f0a500;">${sunset}</div>
           </div>
         </div>
       </div>

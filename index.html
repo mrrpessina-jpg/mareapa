@@ -41,19 +41,19 @@ body.day-mode .toggle-btn.active{background:var(--teal);color:#061428;}
 .daynight-btn:hover{border-color:var(--teal);}
 body.day-mode .daynight-btn{background:rgba(255,255,255,0.88);border-color:rgba(0,120,180,.4);}
 
-/* SPONSORS CAROUSEL */
-.sponsors-bar{display:flex;align-items:center;gap:14px;padding:12px 18px;background:rgba(18,45,82,.5);border:1px solid rgba(0,201,177,.1);border-radius:12px;margin:18px 0;overflow:hidden;}
-.sponsors-label{font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);white-space:nowrap;font-weight:600;flex-shrink:0;}
-.carousel-track-wrap{flex:1;overflow:hidden;position:relative;}
-.carousel-track{display:flex;gap:20px;align-items:center;transition:transform .6s cubic-bezier(.4,0,.2,1);}
-.carousel-slide{flex-shrink:0;height:52px;min-width:80px;max-width:140px;background:rgba(255,255,255,.05);border:1px solid rgba(0,201,177,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;padding:6px 10px;transition:all .3s;cursor:pointer;}
-.carousel-slide:hover{border-color:var(--teal);background:rgba(0,201,177,.08);}
-.carousel-slide img{max-height:38px;max-width:120px;width:auto;height:auto;object-fit:contain;filter:brightness(.85);transition:filter .3s;}
-.carousel-slide:hover img{filter:brightness(1);}
-.carousel-slide span{font-size:.6rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
-.carousel-dots{display:flex;gap:5px;justify-content:center;margin-top:6px;}
-.carousel-dot{width:5px;height:5px;border-radius:50%;background:rgba(0,201,177,.3);cursor:pointer;transition:all .3s;}
-.carousel-dot.active{background:var(--teal);width:14px;border-radius:3px;}
+/* SPONSORS GRID */
+.sponsors-section{margin:18px 0;}
+.sponsors-title{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal);font-weight:700;text-align:center;margin-bottom:10px;}
+.sponsors-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sponsor-cell{background:#0d2040;border:1px solid rgba(0,201,177,.15);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:center;min-height:72px;cursor:pointer;transition:all .3s;text-decoration:none;}
+.sponsor-cell:hover{border-color:var(--teal);}
+.sponsor-cell img{max-width:100%;max-height:44px;object-fit:contain;filter:brightness(.88);transition:all .3s;}
+.sponsor-cell:hover img{filter:brightness(1);}
+.sponsor-cell span{font-size:.6rem;color:rgba(0,201,177,.3);letter-spacing:2px;text-transform:uppercase;}
+body.day-mode .sponsor-cell{background:rgba(255,255,255,.85);border-color:rgba(0,120,180,.2);}
+/* fade transition for rotation */
+.sponsor-cell.fade{opacity:0;transition:opacity .3s;}
+.sponsor-cell.visible{opacity:1;transition:opacity .4s;}
 
 /* COAST */
 .coast-bar{display:flex;gap:10px;padding:18px 0 14px;align-items:center;flex-wrap:wrap;}
@@ -199,9 +199,9 @@ body.day-mode .wc-wind-spd{color:#0a2040;}
 .link-item:hover{border-color:var(--teal);background:rgba(22,50,88,.95);}
 body.day-mode .link-item{background:rgba(255,255,255,.88);border-color:rgba(0,120,180,.15);}
 body.day-mode .link-item:hover{border-color:var(--teal);background:rgba(240,252,255,.95);}
-.link-img-wrap{width:58px;height:58px;flex-shrink:0;border-radius:8px;background:#0d1f3c;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,201,177,.15);}
+.link-img-wrap{width:64px;height:64px;flex-shrink:0;border-radius:8px;background:#0d1f3c;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,201,177,.15);padding:4px;}
 body.day-mode .link-img-wrap{background:#1a2e44;}
-.link-img{width:100%;height:100%;object-fit:cover;display:block;}
+.link-img{width:100%;height:100%;object-fit:contain;display:block;}
 .link-img-placeholder{font-size:1.4rem;line-height:1;}
 .link-info{flex:1;min-width:0;}
 .link-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-bottom:5px;}
@@ -274,14 +274,11 @@ body.day-mode .link-source{color:#3a6080;}
   </div>
 </header>
 
-<!-- SPONSORS CAROUSEL -->
-<div class="sponsors-bar">
-  <span class="sponsors-label" id="txt-sponsors">Sponsors</span>
-  <div class="carousel-track-wrap">
-    <div class="carousel-track" id="carousel-track"></div>
-  </div>
+<!-- SPONSORS GRID -->
+<div class="sponsors-section">
+  <div class="sponsors-title" id="txt-sponsors">· Sponsors ·</div>
+  <div class="sponsors-grid" id="sponsors-grid"></div>
 </div>
-<div class="carousel-dots" id="carousel-dots"></div>
 
 <!-- COAST -->
 <div class="coast-bar">
@@ -1499,55 +1496,55 @@ const SPONSORS = [
   { name:'Gatún Sport Fishing', image:'sponsor 4 gatunSF.jpg', url:'#' },
 ];
 
-let carouselIndex = 0;
-let carouselTimer = null;
-const CAROUSEL_DELAY = 3500;
+// ═══════════════════════════════════════════════
+// SPONSORS GRID — 2x2 with auto-rotation if >4
+// ═══════════════════════════════════════════════
+let gridOffset = 0;
+let gridTimer = null;
+const GRID_DELAY = 4000;
+const GRID_SLOTS = 4;
 
 function buildCarousel(){
-  const track = document.getElementById('carousel-track');
-  const dots  = document.getElementById('carousel-dots');
-  if(!track || !dots) return;
+  const grid = document.getElementById('sponsors-grid');
+  if(!grid) return;
+  renderGrid();
+  if(SPONSORS.length > GRID_SLOTS) startGridRotation();
+}
 
-  track.innerHTML = SPONSORS.map((s,i) => {
+function renderGrid(){
+  const grid = document.getElementById('sponsors-grid');
+  if(!grid) return;
+  const visible = [];
+  for(let i=0;i<GRID_SLOTS;i++){
+    visible.push(SPONSORS[(gridOffset+i) % SPONSORS.length]);
+  }
+  grid.innerHTML = visible.map(s => {
     const inner = s.image
       ? `<img src="${s.image}" alt="${s.name}" onerror="this.parentElement.innerHTML='<span>${s.name}</span>'">`
       : `<span>${s.name}</span>`;
-    const tag = s.url && s.url !== '#' ? `a href="${s.url}" target="_blank" rel="noopener"` : 'div';
-    const closeTag = s.url && s.url !== '#' ? 'a' : 'div';
-    return `<${tag} class="carousel-slide" style="text-decoration:none;">${inner}</${closeTag}>`;
+    const tag    = s.url&&s.url!=='#'?`a href="${s.url}" target="_blank" rel="noopener"`:'div';
+    const close  = s.url&&s.url!=='#'?'a':'div';
+    return `<${tag} class="sponsor-cell visible" style="text-decoration:none;">${inner}</${close}>`;
   }).join('');
-
-  dots.innerHTML = SPONSORS.map((_,i) =>
-    `<div class="carousel-dot ${i===0?'active':''}" onclick="goToSlide(${i})"></div>`
-  ).join('');
-
-  startCarousel();
 }
 
-function goToSlide(idx){
-  carouselIndex = idx;
-  const track = document.getElementById('carousel-track');
-  const slides = track.querySelectorAll('.carousel-slide');
-  const slideW = slides[0] ? slides[0].offsetWidth + 20 : 160;
-  track.style.transform = `translateX(-${idx * slideW}px)`;
-  document.querySelectorAll('.carousel-dot').forEach((d,i) => {
-    d.classList.toggle('active', i === idx);
+function rotateGrid(){
+  const grid = document.getElementById('sponsors-grid');
+  if(!grid) return;
+  // fade out
+  grid.querySelectorAll('.sponsor-cell').forEach(c=>{
+    c.classList.remove('visible');
+    c.classList.add('fade');
   });
+  setTimeout(()=>{
+    gridOffset = (gridOffset + GRID_SLOTS) % SPONSORS.length;
+    renderGrid();
+  }, 320);
 }
 
-function nextSlide(){
-  carouselIndex = (carouselIndex + 1) % SPONSORS.length;
-  goToSlide(carouselIndex);
-}
-
-function startCarousel(){
-  if(carouselTimer) clearInterval(carouselTimer);
-  carouselTimer = setInterval(nextSlide, CAROUSEL_DELAY);
-  const wrap = document.querySelector('.carousel-track-wrap');
-  if(wrap){
-    wrap.addEventListener('mouseenter', () => clearInterval(carouselTimer));
-    wrap.addEventListener('mouseleave', () => { carouselTimer = setInterval(nextSlide, CAROUSEL_DELAY); });
-  }
+function startGridRotation(){
+  if(gridTimer) clearInterval(gridTimer);
+  gridTimer = setInterval(rotateGrid, GRID_DELAY);
 }
 
 // ═══════════════════════════════════════════════

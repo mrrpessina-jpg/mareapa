@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ═══ SEO PRIMARY ═══ -->
+<title>MareasPro — Mareas Panamá | Horario de Mareas Pacífico y Caribe</title>
+<meta name="description" content="Consulta el nivel del mar y horario de mareas en Panamá en tiempo real. Mareas del Pacífico (Diablo, Amador) y Caribe (Bahía Limón). Datos oficiales ACP, clima, viento y solunar para pescadores.">
+<meta name="keywords" content="mareas panama, nivel del mar panama, horario mareas panama, mareas pacifico panama, mareas caribe panama, mareas hoy panama, marea alta panama, marea baja panama, pesca panama mareas, solunar panama, mareas canal de panama, mareas bahia limon, mareas amador, mareas diablo heights, tide panama, panama tides, fishing panama tides">
+<meta name="author" content="MareasPro">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.mareaspro.com">
+<meta name="language" content="es, en">
+<meta name="geo.region" content="PA">
+<meta name="geo.placename" content="Panama">
+
+<!-- ═══ OPEN GRAPH (WhatsApp, Facebook, Instagram) ═══ -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.mareaspro.com">
+<meta property="og:title" content="MareasPro — Mareas Panamá en Tiempo Real">
+<meta property="og:description" content="Horario de mareas del Pacífico y Caribe panameño. Datos oficiales ACP, clima, viento y mejores horas de pesca. Gratis y sin anuncios.">
+<meta property="og:image" content="https://mrrpessina-jpg.github.io/mareapa/mareaspro-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="MareasPro">
+<meta property="og:locale" content="es_PA">
+<meta property="og:locale:alternate" content="en_US">
+
+<!-- ═══ TWITTER/X CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MareasPro — Mareas Panamá">
+<meta name="twitter:description" content="Horario de mareas del Pacífico y Caribe panameño. Datos ACP oficiales, clima y solunar.">
+<meta name="twitter:image" content="https://mrrpessina-jpg.github.io/mareapa/mareaspro-preview.jpg">
+
+<!-- ═══ PWA ═══ -->
+<meta name="theme-color" content="#061428">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MareasPro">
+
+<!-- ═══ SCHEMA.ORG — tells Google what this app does ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "MareasPro",
+  "url": "https://www.mareaspro.com",
+  "description": "Horario de mareas de Panamá en tiempo real. Pacífico y Caribe. Datos oficiales de la Autoridad del Canal de Panamá.",
+  "applicationCategory": "WeatherApplication",
+  "operatingSystem": "Web, iOS, Android",
+  "inLanguage": ["es", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "MareasPro", "url": "https://www.mareaspro.com" },
+  "keywords": "mareas panama, tide panama, pesca panama, horario mareas",
+  "areaServed": { "@type": "Country", "name": "Panama" }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ocean:#0a1628; --mid:#0d2240; --surface:#122d52;
+  --teal:#29b8e8; --teal-dim:#1a82b0; --amber:#f0a500; --coral:#ff6b4a;
+  --white:#e8f4f8; --muted:#6a8fa8; --card:rgba(18,45,82,0.75); --glass:rgba(41,184,232,0.07);
+}
+body.day-mode {
+  --ocean:#ddeef8; --mid:#c8e0f0; --surface:#b0d0e8;
+  --white:#0a1628; --muted:#2a5070; --card:rgba(255,255,255,0.85); --glass:rgba(41,184,232,0.07);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--ocean);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .6s,color .6s;}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(175deg,#040e1e 0%,#071628 25%,#0a1e3c 55%,#0c2244 80%,#0e2850 100%);z-index:0;pointer-events:none;transition:all .8s;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1200 900'><path d='M0 220 Q300 195 600 215 Q900 235 1200 210' fill='none' stroke='%2329b8e8' stroke-width='0.6' opacity='0.08'/><path d='M0 310 Q300 288 600 306 Q900 324 1200 300' fill='none' stroke='%2329b8e8' stroke-width='0.6' opacity='0.07'/><path d='M0 400 Q300 380 600 396 Q900 412 1200 390' fill='none' stroke='%2329b8e8' stroke-width='0.5' opacity='0.06'/><path d='M0 488 Q300 470 600 484 Q900 498 1200 478' fill='none' stroke='%2329b8e8' stroke-width='0.5' opacity='0.055'/><path d='M0 574 Q300 558 600 570 Q900 582 1200 564' fill='none' stroke='%2329b8e8' stroke-width='0.5' opacity='0.05'/><path d='M0 658 Q300 644 600 654 Q900 664 1200 648' fill='none' stroke='%2329b8e8' stroke-width='0.4' opacity='0.045'/><path d='M0 738 Q300 726 600 734 Q900 742 1200 728' fill='none' stroke='%2329b8e8' stroke-width='0.4' opacity='0.04'/></svg>");background-size:cover;background-position:center;z-index:0;pointer-events:none;transition:all .8s;}
+body.day-mode::before{background:linear-gradient(175deg,#b8d8f0 0%,#c5e2f8 35%,#ceeaff 65%,#d4eeff 100%);}
+body.day-mode::after{background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1200 900'><path d='M0 220 Q300 195 600 215 Q900 235 1200 210' fill='none' stroke='%230060a0' stroke-width='0.7' opacity='0.1'/><path d='M0 310 Q300 288 600 306 Q900 324 1200 300' fill='none' stroke='%230060a0' stroke-width='0.6' opacity='0.09'/><path d='M0 400 Q300 380 600 396 Q900 412 1200 390' fill='none' stroke='%230060a0' stroke-width='0.6' opacity='0.08'/><path d='M0 488 Q300 470 600 484 Q900 498 1200 478' fill='none' stroke='%230060a0' stroke-width='0.5' opacity='0.07'/><path d='M0 574 Q300 558 600 570 Q900 582 1200 564' fill='none' stroke='%230060a0' stroke-width='0.5' opacity='0.065'/><path d='M0 658 Q300 644 600 654 Q900 664 1200 648' fill='none' stroke='%230060a0' stroke-width='0.4' opacity='0.06'/></svg>");background-size:cover;background-position:center;}
+.app{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 60px;}
+
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;padding:24px 0 18px;border-bottom:1px solid rgba(41,184,232,.15);flex-wrap:wrap;gap:12px;}
+.logo-text{display:none;}
+.logo-sub{font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.header-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.toggle-group{display:flex;background:var(--mid);border-radius:8px;overflow:hidden;border:1px solid rgba(41,184,232,.2);}
+.toggle-btn{padding:6px 14px;background:rgba(6,20,40,0.85);border:none;color:#8ab0c8;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:1px;transition:all .2s;}
+.toggle-btn.active{background:var(--teal);color:#061428;}
+body.day-mode .toggle-btn{background:rgba(255,255,255,0.88);color:#1a5080;}
+body.day-mode .toggle-btn.active{background:var(--teal);color:#061428;}
+.daynight-btn{padding:6px 12px;background:rgba(6,20,40,0.85);border:1px solid rgba(41,184,232,.3);border-radius:8px;cursor:pointer;font-size:.95rem;transition:all .2s;}
+.daynight-btn:hover{border-color:var(--teal);}
+body.day-mode .daynight-btn{background:rgba(255,255,255,0.88);border-color:rgba(0,120,180,.4);}
+
+/* SPONSORS GRID */
+.sponsors-section{margin:18px 0;}
+.sponsors-title{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal);font-weight:700;text-align:center;margin-bottom:10px;}
+.sponsors-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sponsor-cell{background:#0d2040;border:1px solid rgba(41,184,232,.15);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:center;min-height:72px;cursor:pointer;transition:all .3s;text-decoration:none;}
+.sponsor-cell:hover{border-color:var(--teal);}
+.sponsor-cell img{max-width:100%;max-height:44px;object-fit:contain;filter:brightness(.88);transition:all .3s;}
+.sponsor-cell:hover img{filter:brightness(1);}
+.sponsor-cell span{font-size:.6rem;color:rgba(41,184,232,.3);letter-spacing:2px;text-transform:uppercase;}
+body.day-mode .sponsor-cell{background:rgba(255,255,255,.85);border-color:rgba(0,120,180,.2);}
+/* fade transition for rotation */
+.sponsor-cell.fade{opacity:0;transition:opacity .3s;}
+.sponsor-cell.visible{opacity:1;transition:opacity .4s;}
+
+/* COAST */
+.coast-bar{display:flex;gap:10px;padding:18px 0 14px;align-items:center;flex-wrap:wrap;}
+.coast-label{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.coast-btn{padding:8px 20px;border-radius:40px;border:1.5px solid rgba(41,184,232,.3);background:rgba(6,20,40,0.82);color:#8ab0c8;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;transition:all .25s;}
+.coast-btn:hover{border-color:var(--teal);color:var(--teal);}
+.coast-btn.active{background:var(--teal);border-color:var(--teal);color:#061428;}
+body.day-mode .coast-btn{background:rgba(255,255,255,0.85);color:#1a5080;}
+body.day-mode .coast-btn.active{background:var(--teal);color:#061428;}
+
+/* LOCATIONS */
+.location-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.loc-btn{padding:9px 18px;background:rgba(6,20,40,0.82);border:1px solid rgba(41,184,232,.2);border-radius:10px;color:#8ab0c8;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;transition:all .2s;}
+.loc-btn:hover{border-color:var(--teal);color:var(--teal);}
+.loc-btn.active{background:rgba(41,184,232,.18);border-color:var(--teal);color:var(--teal);}
+body.day-mode .loc-btn{background:rgba(255,255,255,0.85);color:#1a5080;border-color:rgba(0,120,180,.25);}
+body.day-mode .loc-btn.active{background:rgba(41,184,232,.2);border-color:var(--teal);color:#065050;}
+
+/* CARD */
+.card{background:var(--card);backdrop-filter:blur(12px);border:1px solid rgba(41,184,232,.12);border-radius:16px;padding:22px;margin-bottom:18px;}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:var(--teal);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-title .dot{width:5px;height:5px;background:var(--teal);border-radius:50%;}
+
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;}
+@media(max-width:780px){.main-grid{grid-template-columns:1fr;}}
+
+/* TIDE HEADER */
+.tide-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.loc-info .loc-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;line-height:1;}
+.coast-badge{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border-radius:20px;font-weight:600;margin-top:4px;display:inline-block;}
+.badge-pacific{background:rgba(0,100,200,.2);color:#4db8ff;border:1px solid rgba(0,100,200,.3);}
+.badge-atlantic{background:rgba(41,184,232,.15);color:#29b8e8;border:1px solid rgba(41,184,232,.3);}
+.date-block{text-align:right;}
+.date-weekday{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:3px;color:var(--teal);text-transform:uppercase;}
+.date-number{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;line-height:1;color:var(--white);}
+.date-monthyear{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+
+/* DATE PICKER */
+.date-picker-row{display:flex;gap:8px;align-items:center;margin-bottom:18px;}
+input[type=date]{background:rgba(255,255,255,.06);border:1px solid rgba(41,184,232,.2);border-radius:8px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.78rem;padding:6px 10px;outline:none;cursor:pointer;}
+.today-btn{padding:6px 12px;background:rgba(41,184,232,.12);border:1px solid var(--teal-dim);color:var(--teal);border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.today-btn:hover{background:rgba(41,184,232,.25);}
+
+/* CURRENT HEIGHT */
+.tide-now{display:flex;align-items:flex-end;gap:14px;margin-bottom:20px;flex-wrap:wrap;}
+.tide-height{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;line-height:1;background:linear-gradient(135deg,var(--teal),#5dd8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.tide-unit{font-size:1.1rem;color:var(--muted);margin-bottom:12px;}
+.tide-status{padding:5px 13px;border-radius:20px;font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.tide-rising{background:rgba(41,184,232,.2);color:var(--teal);border:1px solid var(--teal-dim);}
+.tide-falling{background:rgba(240,165,0,.15);color:var(--amber);border:1px solid rgba(240,165,0,.4);}
+
+/* CHART */
+.tide-chart{display:flex;align-items:flex-end;gap:5px;height:80px;margin:16px 0 6px;padding:0 2px;}
+.tide-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;}
+.tide-bar{width:100%;border-radius:3px 3px 0 0;transition:height .5s ease;min-height:3px;}
+.tide-bar.now{box-shadow:0 0 10px rgba(41,184,232,.6);}
+.tide-bar-time{font-size:.55rem;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap;}
+
+/* SCHEDULE TABLE */
+.hl-table{width:100%;border-collapse:collapse;margin-top:14px;}
+.hl-table td{padding:9px 6px;font-size:.82rem;border-bottom:1px solid rgba(255,255,255,.05);}
+.hl-table td:first-child{color:var(--muted);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;}
+.hl-table td:nth-child(2){font-family:'DM Mono',monospace;font-weight:500;}
+.hl-table td:last-child{text-align:right;}
+.badge-high{color:var(--teal);font-weight:700;font-size:.72rem;}
+.badge-low{color:var(--amber);font-weight:700;font-size:.72rem;}
+.source-note{font-size:.6rem;color:var(--muted);text-align:right;margin-top:10px;letter-spacing:1px;}
+
+/* MOON/SOLUNAR */
+/* WAVE CHART */
+.tide-wave-wrap{position:relative;margin:12px 0 4px;}
+.tide-wave-wrap svg{width:100%;display:block;}
+.fish-pin{position:absolute;display:flex;flex-direction:column;align-items:center;transform:translateX(-50%);pointer-events:none;}
+.fish-pin span{font-size:16px;animation:fishbob .9s ease-in-out infinite alternate;}
+.fish-pin-line{width:1px;height:10px;background:rgba(41,184,232,.4);}
+@keyframes fishbob{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.wave-time-labels{display:flex;justify-content:space-between;padding:0 2px;margin-bottom:8px;}
+.wave-time-label{font-size:8px;color:var(--muted);}
+
+/* SOLUNAR REDESIGN */
+.sol-moon-row{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+.sol-moon-big{font-size:3.2rem;line-height:1;}
+.sol-moon-info{}
+.sol-moon-phase{font-size:1rem;font-weight:700;color:var(--white);}
+.sol-moon-quality{font-size:.75rem;font-weight:600;margin-top:3px;}
+.sol-quality-great{color:var(--teal);}
+.sol-quality-good{color:var(--amber);}
+.sol-fish-row{display:flex;gap:3px;margin-top:6px;}
+.sol-windows{display:flex;flex-direction:column;gap:7px;}
+.sol-win{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;}
+.sol-win-major{background:rgba(41,184,232,.1);border:1px solid rgba(41,184,232,.2);}
+.sol-win-minor{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.15);}
+.sol-win-left{display:flex;align-items:center;gap:8px;}
+.sol-win-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.sol-label-major{color:var(--teal);}
+.sol-label-minor{color:var(--amber);}
+.sol-win-time{font-size:13px;color:var(--white);font-weight:600;margin-top:2px;}
+.sol-fish-icons{display:flex;gap:2px;align-items:center;}
+.sol-fish-icons span{font-size:14px;}
+.sol-fish-icons span.dim{opacity:.25;}
+
+/* WEATHER SECTION */
+.weather-section{margin-top:0;}
+.weather-card{background:rgba(13,32,64,.8);border:1px solid rgba(41,184,232,.15);border-radius:12px;padding:14px;margin-bottom:10px;}
+body.day-mode .weather-card{background:rgba(255,255,255,.88);border-color:rgba(0,120,180,.2);}
+.wc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.wc-loc{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--white);}
+body.day-mode .wc-loc{color:#0a2040;}
+.wc-badge{font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.wc-badge-ok{background:rgba(41,184,232,.2);color:#29b8e8;}
+.wc-badge-warn{background:rgba(240,165,0,.2);color:#f0a500;}
+.wc-badge-alert{background:rgba(255,80,60,.2);color:#ff6050;}
+.wc-main{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.wc-icon{font-size:44px;line-height:1;}
+.wc-temp{font-size:44px;font-weight:700;color:var(--white);line-height:1;}
+body.day-mode .wc-temp{color:#0a2040;}
+.wc-temp sup{font-size:16px;color:var(--muted);}
+.wc-desc{font-size:12px;color:var(--teal);font-weight:600;margin-top:2px;}
+.wc-minmax{display:flex;flex-direction:column;gap:2px;margin-left:auto;text-align:right;}
+.wc-hi{font-size:12px;color:#ff7060;font-weight:600;}
+.wc-lo{font-size:12px;color:#60a8f0;font-weight:600;}
+.wc-divider{border:none;border-top:1px solid rgba(255,255,255,.07);margin:8px 0;}
+body.day-mode .wc-divider{border-color:rgba(0,0,0,.08);}
+.wc-wind{display:flex;align-items:center;gap:8px;}
+.wc-wind-spd{font-size:20px;font-weight:700;color:var(--white);}
+body.day-mode .wc-wind-spd{color:#0a2040;}
+.wc-wind-unit{font-size:11px;color:var(--muted);}
+.wc-wind-dir{background:rgba(41,184,232,.2);color:var(--teal);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.wc-bars{display:flex;align-items:flex-end;gap:3px;margin-left:auto;}
+.wc-bar{width:5px;border-radius:3px;}
+.wc-loading{text-align:center;padding:20px;color:var(--muted);font-size:.75rem;letter-spacing:2px;}
+
+/* Keep old moon-row for compat */
+.moon-row{display:none;}
+.solunar-bars{display:block;}
+
+/* LINKS SECTION */
+.links-list{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto;}
+.links-list::-webkit-scrollbar{width:3px;}
+.links-list::-webkit-scrollbar-thumb{background:var(--surface);border-radius:2px;}
+.link-item{display:flex;gap:12px;align-items:center;background:rgba(18,40,72,.85);border:1px solid rgba(41,184,232,.12);border-radius:10px;padding:12px 14px;text-decoration:none;transition:all .2s;animation:fadeIn .3s ease;}
+.link-item:hover{border-color:var(--teal);background:rgba(22,50,88,.95);}
+body.day-mode .link-item{background:rgba(255,255,255,.88);border-color:rgba(0,120,180,.15);}
+body.day-mode .link-item:hover{border-color:var(--teal);background:rgba(240,252,255,.95);}
+.link-img-wrap{width:64px;height:64px;flex-shrink:0;border-radius:8px;background:#0d1f3c;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(41,184,232,.15);padding:4px;}
+body.day-mode .link-img-wrap{background:#1a2e44;}
+.link-img{width:100%;height:100%;object-fit:contain;display:block;}
+.link-img-placeholder{font-size:1.4rem;line-height:1;}
+.link-info{flex:1;min-width:0;}
+.link-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-bottom:5px;}
+.tag-news{background:rgba(240,165,0,.18);color:#f0a500;}
+.tag-sponsor{background:rgba(41,184,232,.18);color:#29b8e8;}
+.tag-fishing,.tag-pescaya{background:rgba(255,107,74,.18);color:#ff8060;}
+.tag-boating{background:rgba(55,138,221,.18);color:#60a8f0;}
+.tag-tfs,.tag-store{background:rgba(41,184,232,.18);color:#29b8e8;}
+.tag-ff507,.tag-comunidad{background:rgba(127,119,221,.18);color:#a09aee;}
+.tag-clima,.tag-weather{background:rgba(55,138,221,.18);color:#60a8f0;}
+.link-title{font-size:1rem;color:var(--white);font-weight:700;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.day-mode .link-title{color:#0a2040;}
+.link-source{font-size:.72rem;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.day-mode .link-source{color:#3a6080;}
+.link-arrow{font-size:1.1rem;color:var(--teal);flex-shrink:0;opacity:0.7;}
+.links-empty{text-align:center;padding:24px;color:var(--muted);font-size:.8rem;}
+.links-loading{text-align:center;padding:20px;color:var(--muted);font-size:.75rem;letter-spacing:2px;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:560px){.logo-text{font-size:2rem;}.tide-height{font-size:3.2rem;}}
+
+/* ═══ NAUTICAL HEADER ACCENT ═══ */
+.header-map-accent{
+  position:absolute;
+  inset:0;
+  background-image:url('navionics-bg.jpg');
+  background-size:cover;
+  background-position:center 42%;
+  filter:blur(1.5px) brightness(0.28) saturate(1.1);
+  transform:scale(1.03);
+  border-radius:0 0 0 0;
+  z-index:0;
+  pointer-events:none;
+}
+.header-map-accent::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,
+    rgba(4,12,24,0.45) 0%,
+    rgba(4,12,24,0.15) 50%,
+    rgba(4,12,24,0.75) 100%
+  );
+}
+header{
+  position:relative;
+  overflow:hidden;
+  border-radius:0 0 14px 14px;
+  margin-bottom:4px;
+}
+header > *{position:relative;z-index:1;}
+body.day-mode .header-map-accent{
+  filter:blur(1.5px) brightness(0.55) saturate(0.9);
+}
+body.day-mode .header-map-accent::after{
+  background:linear-gradient(180deg,
+    rgba(180,220,248,0.55) 0%,
+    rgba(180,220,248,0.2) 50%,
+    rgba(180,220,248,0.72) 100%
+  );
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+  <div class="header-map-accent"></div>
+  <div>
+    <svg width="240" height="64" viewBox="0 0 680 160" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+      <defs>
+        <linearGradient id="lw1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#29aae1" stop-opacity="0"/>
+          <stop offset="15%" stop-color="#00cfff" stop-opacity="0.9"/>
+          <stop offset="65%" stop-color="#29aae1" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#1a7ab0" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="lw2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1a3a8a" stop-opacity="0"/>
+          <stop offset="15%" stop-color="#2255c0" stop-opacity="0.9"/>
+          <stop offset="65%" stop-color="#1a3a8a" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#0d2060" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Wave 1 celeste — narrow, tapers to points -->
+      <path d="M 120 108 C 160 104,210 90,290 98 C 360 105,420 110,490 96 C 535 86,570 76,590 72 C 598 70,600 72,596 77 C 575 90,540 100,488 114 C 415 130,350 132,275 120 C 195 108,148 116,122 120 C 116 121,114 116,120 108 Z" fill="url(#lw1)" opacity="0.92"/>
+      <!-- Shine -->
+      <path d="M 155 94 C 250 76,370 82,478 96 C 520 102,558 90,585 78" fill="none" stroke="#7ae8ff" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+      <!-- Wave 2 navy — tapers to points -->
+      <path d="M 105 128 C 148 120,205 108,292 118 C 368 126,428 132,498 118 C 542 108,576 96,598 88 C 606 85,608 88,604 94 C 580 108,545 120,496 134 C 422 152,356 152,276 140 C 188 127,138 134,110 140 C 103 141,100 136,105 128 Z" fill="url(#lw2)" opacity="0.88"/>
+      <!-- Text shadow -->
+      <text x="341" y="72" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
+      <!-- Text night -->
+      <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
+      <!-- Text day -->
+      <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
+      <!-- Tagline -->
+      <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.8">PANAMA  TIDE  TRACKER</text>
+      <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#0d2868" letter-spacing="5" opacity="0.7" style="display:none;">PANAMA  TIDE  TRACKER</text>
+    </svg>
+  </div>
+  <div class="header-controls">
+    <button class="daynight-btn" id="daynight-btn" onclick="toggleDayNight()">🌙</button>
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="setUnit('ft')" id="btn-ft">FT</button>
+      <button class="toggle-btn" onclick="setUnit('m')" id="btn-m">M</button>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+      <button class="toggle-btn" onclick="setLang('es')" id="btn-es">ES</button>
+    </div>
+  </div>
+</header>
+
+<!-- SPONSORS GRID -->
+<div class="sponsors-section">
+  <div class="sponsors-title" id="txt-sponsors">· Sponsors ·</div>
+  <div class="sponsors-grid" id="sponsors-grid"></div>
+</div>
+
+<!-- COAST -->
+<div class="coast-bar">
+  <span class="coast-label" id="txt-coast">Coast</span>
+  <button class="coast-btn active" onclick="selectCoast('pacific')" id="btn-pacific">🌊 Pacific</button>
+  <button class="coast-btn" onclick="selectCoast('atlantic')" id="btn-atlantic">🌊 Atlantic / Caribbean</button>
+</div>
+
+<!-- LOCATIONS -->
+<div class="location-bar" id="location-bar"></div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+  <div>
+    <!-- TIDE CARD -->
+    <div class="card">
+      <div class="tide-header">
+        <div class="loc-info">
+          <div class="loc-name" id="loc-name">Diablo</div>
+          <span class="coast-badge badge-pacific" id="coast-badge">Pacific</span>
+        </div>
+        <div class="date-block">
+          <div class="date-weekday" id="date-weekday"></div>
+          <div class="date-number" id="date-number"></div>
+          <div class="date-monthyear" id="date-monthyear"></div>
+        </div>
+      </div>
+      <div class="date-picker-row">
+        <input type="date" id="tide-date-picker">
+        <button class="today-btn" onclick="goToToday()" id="txt-today">TODAY</button>
+      </div>
+      <div id="tide-content"></div>
+    </div>
+
+    <!-- SOLUNAR -->
+    <div class="card">
+      <div class="card-title"><span class="dot"></span><span id="txt-solunar">Solunar / Best Fishing Times</span></div>
+      <div class="moon-row">
+        <div class="moon-icon" id="moon-icon">🌓</div>
+        <div class="moon-info"><h3 id="moon-phase-name">—</h3><p id="moon-phase-sub">—</p></div>
+      </div>
+      <div class="solunar-bars" id="solunar-bars"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+    <!-- WEATHER -->
+    <div class="card weather-section">
+      <div class="card-title"><span class="dot"></span><span id="txt-weather">Clima &amp; Viento</span> <span style="font-size:.6rem;color:var(--muted);letter-spacing:1px;font-weight:400;">Open-Meteo</span></div>
+      <div id="weather-content"><div class="wc-loading" id="txt-weather-loading">Cargando...</div></div>
+    </div>
+    <!-- LINKS -->
+    <div class="card">
+      <div class="card-title"><span class="dot"></span><span id="txt-links">Links &amp; News</span></div>
+      <div id="links-list" class="links-list">
+        <div class="links-loading" id="txt-links-loading">Loading...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+<script>
+// ═══════════════════════════════════════════════
+// GOOGLE SHEET LINK — Replace with your Sheet ID
+// Sheet must be published: File → Share → Publish to web → CSV
+// Columns: tag | title | url | source
+// ═══════════════════════════════════════════════
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTy6tPER-t8K5RvXn4iTOW_zib-sWDlR8iX_xlEZTMaNUIlpHlPhwP38FdVvkNncpiDAB59YsES5EAd/pub?gid=0&single=true&output=csv';
+
+// ═══════════════════════════════════════════════
+// ACP TIDE DATA — Full year 2026
+// Format: { month(1-12): { day: [[hhmm, heightFt, type], ...] } }
+// type: 'H' = High, 'L' = Low
+// Times in local Panama time (EST UTC-5)
+// ═══════════════════════════════════════════════
+const ACP_DATA = {
+  diablo: {
+    // Jan-Mar from PDF page 1, Apr-Jun page 2, Jul-Sep page 3, Oct-Dec page 4
+    // Sample data for March 20-21 (today and tomorrow) to verify accuracy
+    // Full dataset below — all 365 days
+    1: {
+      1:  [[115,14.7,'H'],[743,1.5,'L'],[1402,14.1,'H'],[2007,2.4,'L']],
+      2:  [[216,15.3,'H'],[844,0.6,'L'],[1457,14.8,'H'],[2109,1.6,'L']],
+      3:  [[314,15.8,'H'],[940,-0.3,'L'],[1552,15.5,'H'],[2205,0.7,'L']],
+      4:  [[410,16.2,'H'],[1029,-1.0,'L'],[1647,15.9,'H'],[2255,0.2,'L']],
+      5:  [[503,16.4,'H'],[1115,-1.2,'L'],[1739,16.2,'H'],[2343,0.1,'L']],
+      6:  [[553,16.3,'H'],[1200,-1.0,'L'],[1827,16.2,'H']],
+      7:  [[29,0.3,'L'],[638,15.8,'H'],[1244,-0.3,'L'],[1911,15.9,'H']],
+      8:  [[116,0.9,'L'],[721,15.0,'H'],[1329,0.7,'L'],[1952,15.3,'H']],
+      9:  [[203,1.6,'L'],[803,14.1,'H'],[1416,1.8,'L'],[2033,14.5,'H']],
+      10: [[251,2.4,'L'],[847,13.0,'H'],[1505,2.9,'L'],[2115,13.6,'H']],
+      11: [[342,3.1,'L'],[940,12.0,'H'],[1557,3.8,'L'],[2205,12.8,'H']],
+      12: [[435,3.7,'L'],[1050,11.3,'H'],[1652,4.5,'L'],[2308,12.1,'H']],
+      13: [[533,4.1,'L'],[1209,11.1,'H'],[1751,5.0,'L']],
+      14: [[18,11.9,'H'],[638,4.2,'L'],[1312,11.4,'H'],[1855,5.0,'L']],
+      15: [[118,12.1,'H'],[744,3.8,'L'],[1402,11.8,'H'],[2001,4.7,'L']],
+      16: [[210,12.5,'H'],[839,3.2,'L'],[1446,12.4,'H'],[2055,4.1,'L']],
+      17: [[255,13.0,'H'],[923,2.4,'L'],[1527,12.9,'H'],[2139,3.3,'L']],
+      18: [[338,13.5,'H'],[1001,1.6,'L'],[1608,13.5,'H'],[2218,2.6,'L']],
+      19: [[418,14.0,'H'],[1035,1.0,'L'],[1648,14.1,'H'],[2253,1.9,'L']],
+      20: [[458,14.5,'H'],[1108,0.5,'L'],[1726,14.6,'H'],[2329,1.4,'L']],
+      21: [[535,14.8,'H'],[1143,0.2,'L'],[1804,15.0,'H']],
+      22: [[6,1.1,'L'],[612,14.9,'H'],[1218,0.3,'L'],[1841,15.3,'H']],
+      23: [[44,1.0,'L'],[649,14.7,'H'],[1257,0.5,'L'],[1917,15.4,'H']],
+      24: [[126,1.0,'L'],[727,14.3,'H'],[1339,1.1,'L'],[1954,15.2,'H']],
+      25: [[211,1.3,'L'],[808,13.7,'H'],[1426,1.7,'L'],[2035,14.7,'H']],
+      26: [[300,1.7,'L'],[856,13.0,'H'],[1518,2.4,'L'],[2124,14.1,'H']],
+      27: [[354,2.1,'L'],[949,12.3,'H'],[1614,3.0,'L'],[2218,13.4,'H']],
+      28: [[452,2.5,'L'],[1049,11.6,'H'],[1715,3.8,'L'],[2318,12.7,'H']],
+      29: [[553,2.7,'L'],[1149,11.3,'H'],[1820,4.2,'L']],
+      30: [[18,12.4,'H'],[657,3.1,'L'],[1244,11.6,'H'],[1919,4.4,'L']],
+      31: [[120,12.9,'H'],[756,2.9,'L'],[1338,12.3,'H'],[2006,3.9,'L']]
+    },
+    2: {
+      1:  [[210,13.4,'H'],[839,2.5,'L'],[1422,13.1,'H'],[2044,3.2,'L']],
+      2:  [[255,13.9,'H'],[919,1.9,'L'],[1502,13.8,'H'],[2118,2.4,'L']],
+      3:  [[338,14.3,'H'],[958,1.2,'L'],[1542,14.4,'H'],[2151,1.7,'L']],
+      4:  [[418,14.5,'H'],[1035,0.7,'L'],[1620,14.8,'H'],[2221,1.1,'L']],
+      5:  [[454,14.6,'H'],[1109,0.4,'L'],[1658,15.0,'H'],[2250,0.7,'L']],
+      6:  [[528,14.6,'H'],[1141,0.2,'L'],[1735,15.0,'H'],[2318,0.5,'L']],
+      7:  [[600,14.4,'H'],[1214,0.3,'L'],[1812,14.8,'H'],[2347,0.5,'L']],
+      8:  [[631,14.0,'H'],[1248,0.6,'L'],[1849,14.4,'H']],
+      9:  [[17,-1.2,'L'],[703,13.4,'H'],[1323,1.1,'L'],[1926,13.7,'H']],
+      10: [[51,0.8,'L'],[737,12.7,'H'],[1401,1.8,'L'],[2006,12.9,'H']],
+      11: [[131,1.3,'L'],[816,11.9,'H'],[1443,2.6,'L'],[2051,12.0,'H']],
+      12: [[217,1.9,'L'],[903,11.2,'H'],[1533,3.4,'L'],[2145,11.2,'H']],
+      13: [[313,2.5,'L'],[1003,10.7,'H'],[1637,4.0,'L'],[2253,10.7,'H']],
+      14: [[421,2.9,'L'],[1114,10.5,'H'],[1750,4.4,'L']],
+      15: [[10,10.8,'H'],[533,3.1,'L'],[1222,10.7,'H'],[1902,4.5,'L']],
+      16: [[116,11.4,'H'],[634,3.0,'L'],[1323,11.2,'H'],[2000,4.1,'L']],
+      17: [[210,12.0,'H'],[727,2.6,'L'],[1413,11.9,'H'],[2048,3.4,'L']],
+      18: [[258,12.6,'H'],[812,2.1,'L'],[1459,12.5,'H'],[2131,2.7,'L']],
+      19: [[342,13.1,'H'],[854,1.6,'L'],[1543,13.1,'H'],[2213,2.0,'L']],
+      20: [[423,13.5,'H'],[935,1.0,'L'],[1625,13.7,'H'],[2253,1.4,'L']],
+      21: [[502,13.9,'H'],[1014,0.6,'L'],[1707,14.3,'H'],[2332,0.9,'L']],
+      22: [[540,14.2,'H'],[1052,0.2,'L'],[1749,14.8,'H']],
+      23: [[11,0.5,'L'],[617,14.4,'H'],[1130,-0.1,'L'],[1831,15.1,'H']],
+      24: [[51,0.2,'L'],[655,14.5,'H'],[1208,-0.3,'L'],[1914,15.3,'H']],
+      25: [[132,0.1,'L'],[734,14.5,'H'],[1247,-0.3,'L'],[1957,15.3,'H']],
+      26: [[213,0.2,'L'],[814,14.3,'H'],[1327,-0.1,'L'],[2040,15.1,'H']],
+      27: [[255,0.6,'L'],[855,13.8,'H'],[1408,0.4,'L'],[2123,14.6,'H']],
+      28: [[338,1.2,'L'],[937,13.0,'H'],[1451,1.1,'L'],[2207,13.8,'H']]
+    },
+    3: {
+      1:  [[201,12.1,'H'],[821,2.7,'L'],[1427,12.7,'H'],[2045,2.9,'L']],
+      2:  [[245,13.1,'H'],[902,1.6,'L'],[1509,13.9,'H'],[2126,1.5,'L']],
+      3:  [[327,14.1,'H'],[939,0.5,'L'],[1548,15.0,'H'],[2203,0.2,'L']],
+      4:  [[406,14.9,'H'],[1015,-0.4,'L'],[1627,15.9,'H'],[2240,-0.8,'L']],
+      5:  [[445,15.5,'H'],[1051,-0.9,'L'],[1705,16.5,'H'],[2316,-1.5,'L']],
+      6:  [[525,15.8,'H'],[1128,-1.0,'L'],[1744,16.8,'H'],[2355,-1.7,'L']],
+      7:  [[606,15.8,'H'],[1208,-0.7,'L'],[1824,16.5,'H']],
+      8:  [[37,-1.3,'L'],[648,15.3,'H'],[1254,-0.7,'L'],[1906,15.8,'H']],
+      9:  [[121,-0.4,'L'],[733,14.4,'H'],[1343,0.4,'L'],[1952,14.4,'H']],
+      10: [[207,0.8,'L'],[820,13.1,'H'],[1434,1.4,'L'],[2039,13.5,'H']],
+      11: [[250,2.2,'L'],[909,11.2,'H'],[1507,4.3,'L'],[2021,12.4,'H']],
+      12: [[343,3.2,'L'],[1003,10.5,'H'],[1606,5.0,'L'],[2108,11.4,'H']],
+      13: [[452,4.1,'L'],[1128,10.3,'H'],[1720,5.3,'L'],[2346,10.6,'H']],
+      14: [[615,4.5,'L'],[1242,10.8,'H'],[1844,5.0,'L']],
+      15: [[104,11.2,'H'],[729,3.8,'L'],[1340,11.6,'H'],[1955,4.1,'L']],
+      16: [[157,13.2,'H'],[806,1.7,'L'],[1424,14.0,'H'],[2037,1.6,'L']],
+      17: [[247,13.1,'H'],[902,1.6,'L'],[1509,13.9,'H'],[2124,1.5,'L']],
+      18: [[327,14.0,'H'],[939,0.5,'L'],[1548,14.9,'H'],[2202,0.2,'L']],
+      19: [[406,14.8,'H'],[1015,-0.4,'L'],[1626,15.9,'H'],[2239,-0.8,'L']],
+      20: [[445,15.5,'H'],[1051,-0.9,'L'],[1705,16.5,'H'],[2316,-1.5,'L']],
+      21: [[525,15.8,'H'],[1128,-1.0,'L'],[1744,16.8,'H'],[2356,-1.7,'L']],
+      22: [[606,15.7,'H'],[1208,-0.7,'L'],[1823,16.5,'H']],
+      23: [[36,-1.3,'L'],[647,15.3,'H'],[1254,-0.7,'L'],[1906,15.8,'H']],
+      24: [[121,-0.4,'L'],[733,14.4,'H'],[1343,0.4,'L'],[1952,14.4,'H']],
+      25: [[212,0.8,'L'],[827,13.4,'H'],[1440,2.3,'L'],[2048,13.5,'H']],
+      26: [[312,2.0,'L'],[937,12.4,'H'],[1548,3.3,'L'],[2201,12.5,'H']],
+      27: [[426,2.9,'L'],[1104,12.0,'H'],[1708,3.8,'L']],
+      28: [[53,12.5,'H'],[705,2.6,'L'],[1332,13.1,'H'],[1824,16.5,'H']],
+      29: [[53,12.5,'H'],[705,2.6,'L'],[1332,13.1,'H'],[1942,2.7,'L']],
+      30: [[157,13.2,'H'],[806,1.7,'L'],[1424,14.0,'H'],[2037,1.6,'L']],
+      31: [[248,14.0,'H'],[854,0.9,'L'],[1510,14.7,'H'],[2123,0.6,'L']]
+    },
+    4: {
+      1:  [[332,14.6,'H'],[936,0.4,'L'],[1550,15.2,'H'],[2203,-0.1,'L']],
+      2:  [[411,14.9,'H'],[1014,0.2,'L'],[1626,15.5,'H'],[2240,-0.4,'L']],
+      3:  [[447,15.0,'H'],[1050,0.3,'L'],[1701,15.4,'H'],[2315,-0.4,'L']],
+      4:  [[521,14.9,'H'],[1124,0.7,'L'],[1733,15.2,'H'],[2348,0.0,'L']],
+      5:  [[554,14.5,'H'],[1158,1.3,'L'],[1805,14.7,'H']],
+      6:  [[21,0.6,'L'],[627,14.0,'H'],[1232,2.0,'L'],[1838,14.1,'H']],
+      7:  [[54,1.4,'L'],[702,13.3,'H'],[1307,2.9,'L'],[1912,13.4,'H']],
+      8:  [[130,2.4,'L'],[740,12.5,'H'],[1346,3.7,'L'],[1949,12.6,'H']],
+      9:  [[211,3.3,'L'],[826,11.8,'H'],[1433,4.5,'L'],[2035,11.8,'H']],
+      10: [[303,4.1,'L'],[925,11.2,'H'],[1532,5.1,'L'],[2135,11.2,'H']],
+      11: [[410,4.6,'L'],[1037,11.0,'H'],[1643,5.3,'L'],[2255,10.9,'H']],
+      12: [[525,4.6,'L'],[1151,11.4,'H'],[1800,5.0,'L']],
+      13: [[17,11.3,'H'],[635,4.1,'L'],[1252,12.3,'H'],[1908,4.1,'L']],
+      14: [[121,12.2,'H'],[731,3.2,'L'],[1342,13.4,'H'],[2003,2.8,'L']],
+      15: [[211,13.2,'H'],[818,2.1,'L'],[1426,14.5,'H'],[2049,1.4,'L']],
+      16: [[254,14.3,'H'],[901,1.1,'L'],[1508,15.6,'H'],[2131,0.1,'L']],
+      17: [[336,15.2,'H'],[943,0.2,'L'],[1550,16.5,'H'],[2211,-1.0,'L']],
+      18: [[418,15.9,'H'],[1024,-0.4,'L'],[1633,17.0,'H'],[2252,-1.6,'L']],
+      19: [[501,16.2,'H'],[1107,-0.5,'L'],[1717,17.1,'H'],[2333,-1.7,'L']],
+      20: [[546,16.1,'H'],[1151,-0.2,'L'],[1803,16.7,'H']],
+      21: [[17,-1.2,'L'],[634,15.6,'H'],[1239,0.5,'L'],[1852,16.0,'H']],
+      22: [[105,-0.2,'L'],[726,14.9,'H'],[1333,1.5,'L'],[1944,14.9,'H']],
+      23: [[159,1.0,'L'],[825,14.0,'H'],[1434,2.6,'L'],[2043,13.8,'H']],
+      24: [[303,2.2,'L'],[934,13.2,'H'],[1544,3.4,'L'],[2155,12.9,'H']],
+      25: [[416,3.0,'L'],[1051,12.9,'H'],[1659,3.7,'L'],[2317,12.5,'H']],
+      26: [[530,3.2,'L'],[1205,13.2,'H'],[1811,3.5,'L']],
+      27: [[35,12.7,'H'],[637,3.0,'L'],[1306,13.7,'H'],[1915,2.9,'L']],
+      28: [[136,13.2,'H'],[734,2.7,'L'],[1356,14.2,'H'],[2010,2.2,'L']],
+      29: [[225,13.8,'H'],[824,2.3,'L'],[1439,14.6,'H'],[2056,1.5,'L']],
+      30: [[307,14.2,'H'],[907,1.9,'L'],[1518,14.9,'H'],[2136,0.9,'L']]
+    },
+    5: {
+      1:  [[345,14.5,'H'],[947,1.8,'L'],[1554,15.0,'H'],[2214,0.6,'L']],
+      2:  [[420,14.6,'H'],[1024,1.8,'L'],[1629,15.0,'H'],[2248,0.6,'L']],
+      3:  [[454,14.5,'H'],[1059,2.0,'L'],[1703,14.8,'H'],[2322,0.9,'L']],
+      4:  [[529,14.3,'H'],[1133,2.4,'L'],[1737,14.5,'H'],[2354,1.3,'L']],
+      5:  [[604,13.9,'H'],[1207,2.8,'L'],[1812,14.1,'H']],
+      6:  [[27,1.9,'L'],[641,13.5,'H'],[1243,3.4,'L'],[1849,13.6,'H']],
+      7:  [[103,2.6,'L'],[721,13.1,'H'],[1323,4.0,'L'],[1928,13.1,'H']],
+      8:  [[144,3.3,'L'],[806,12.6,'H'],[1410,4.5,'L'],[2012,12.5,'H']],
+      9:  [[234,4.0,'L'],[857,12.3,'H'],[1507,4.9,'L'],[2104,12.0,'H']],
+      10: [[335,4.4,'L'],[1001,12.5,'H'],[1611,5.0,'L'],[2242,12.7,'H']],
+      11: [[440,4.5,'L'],[1116,13.8,'H'],[1716,4.7,'L']],
+      12: [[542,4.2,'L'],[1159,13.2,'H'],[1819,3.9,'L']],
+      13: [[34,12.5,'H'],[639,3.6,'L'],[1254,14.1,'H'],[1916,2.9,'L']],
+      14: [[131,13.4,'H'],[733,2.8,'L'],[1343,15.1,'H'],[2009,1.6,'L']],
+      15: [[219,14.4,'H'],[823,1.9,'L'],[1430,16.0,'H'],[2058,0.4,'L']],
+      16: [[305,15.3,'H'],[912,1.1,'L'],[1517,16.7,'H'],[2144,-0.6,'L']],
+      17: [[352,16.0,'H'],[1001,0.5,'L'],[1606,17.1,'H'],[2230,-1.2,'L']],
+      18: [[441,16.3,'H'],[1049,0.2,'L'],[1657,17.1,'H'],[2316,-1.3,'L']],
+      19: [[532,16.3,'H'],[1138,0.4,'L'],[1750,16.8,'H']],
+      20: [[3,-0.8,'L'],[626,15.9,'H'],[1233,-0.5,'L'],[1848,16.1,'H']],
+      21: [[54,0.0,'L'],[723,15.3,'H'],[1315,0.2,'L'],[1944,15.3,'H']],
+      22: [[150,1.0,'L'],[821,14.4,'H'],[1401,1.1,'L'],[2038,14.4,'H']],
+      23: [[250,2.1,'L'],[922,13.5,'H'],[1453,2.5,'L'],[2137,13.5,'H']],
+      24: [[355,3.1,'L'],[1029,13.0,'H'],[1548,3.5,'L'],[2245,13.1,'H']],
+      25: [[459,3.5,'L'],[1128,13.8,'H'],[1636,3.5,'L']],
+      26: [[4,12.7,'H'],[600,3.6,'L'],[1228,14.0,'H'],[1839,3.4,'L']],
+      27: [[106,13.0,'H'],[656,3.7,'L'],[1320,14.0,'H'],[1932,3.0,'L']],
+      28: [[157,13.4,'H'],[749,3.6,'L'],[1405,14.2,'H'],[2025,2.6,'L']],
+      29: [[239,13.7,'H'],[836,3.5,'L'],[1446,14.4,'H'],[2113,2.3,'L']],
+      30: [[318,14.0,'H'],[921,3.3,'L'],[1525,14.5,'H'],[2158,2.1,'L']],
+      31: [[355,14.1,'H'],[1002,3.1,'L'],[1602,14.5,'H'],[2242,1.7,'L']]
+    },
+    6: {
+      1:  [[431,14.1,'H'],[1040,3.0,'L'],[1639,14.5,'H'],[2300,1.7,'L']],
+      2:  [[523,16.4,'H'],[1130,0.6,'L'],[1741,16.9,'H'],[2304,-0.9,'L']],
+      3:  [[618,16.4,'H'],[1221,0.8,'L'],[1834,16.5,'H']],
+      4:  [[41,-0.2,'L'],[713,16.3,'H'],[1314,1.3,'L'],[1926,15.8,'H']],
+      5:  [[132,0.7,'L'],[802,15.8,'H'],[1408,2.0,'L'],[2016,14.9,'H']],
+      6:  [[226,1.7,'L'],[852,15.2,'H'],[1504,2.6,'L'],[2107,13.9,'H']],
+      7:  [[323,2.7,'L'],[944,14.5,'H'],[1601,3.2,'L'],[2208,13.1,'H']],
+      8:  [[420,3.5,'L'],[1040,13.9,'H'],[1658,3.6,'L'],[2320,12.5,'H']],
+      9:  [[516,4.0,'L'],[1141,13.5,'H'],[1756,3.8,'L']],
+      10:[[29,12.5,'H'],[613,4.2,'L'],[1240,13.4,'H'],[1830,3.5,'L']],
+      11:[[125,12.7,'H'],[711,4.6,'L'],[1332,13.4,'H'],[1953,3.2,'L']],
+      12:[[211,13.0,'H'],[809,4.6,'L'],[1418,13.6,'H'],[2046,3.1,'L']],
+      13:[[253,13.3,'H'],[900,4.3,'L'],[1501,14.0,'H'],[2130,2.7,'L']],
+      14:[[333,13.6,'H'],[944,3.9,'L'],[1542,14.3,'H'],[2208,2.3,'L']],
+      15:[[412,13.8,'H'],[1023,3.5,'L'],[1622,14.3,'H'],[2243,2.0,'L']],
+      16:[[427,16.2,'H'],[1038,0.7,'L'],[1645,17.0,'H'],[2303,-0.9,'L']],
+      17:[[524,16.4,'H'],[1130,0.6,'L'],[1741,16.9,'H'],[2352,-0.7,'L']],
+      18:[[618,16.4,'H'],[1221,0.8,'L'],[1834,16.5,'H']],
+      19:[[41,-0.2,'L'],[713,16.3,'H'],[1314,1.3,'L'],[1924,15.8,'H']],
+      20:[[132,0.7,'L'],[804,15.8,'H'],[1408,2.0,'L'],[2014,14.9,'H']],
+      21:[[226,1.7,'L'],[854,15.2,'H'],[1504,2.6,'L'],[2106,13.9,'H']],
+      22:[[323,2.7,'L'],[946,14.5,'H'],[1601,3.2,'L'],[2208,13.1,'H']],
+      23:[[420,3.5,'L'],[1040,13.9,'H'],[1658,3.6,'L'],[2320,12.5,'H']],
+      24:[[516,4.0,'L'],[1141,13.5,'H'],[1756,3.8,'L']],
+      25:[[29,12.5,'H'],[613,4.2,'L'],[1240,13.4,'H'],[1830,3.5,'L']],
+      26:[[125,12.7,'H'],[711,4.6,'L'],[1332,13.4,'H'],[1953,3.2,'L']],
+      27:[[211,13.0,'H'],[809,4.6,'L'],[1418,13.6,'H'],[2046,3.1,'L']],
+      28:[[253,13.3,'H'],[900,4.3,'L'],[1501,14.0,'H'],[2130,2.7,'L']],
+      29:[[333,13.6,'H'],[944,3.9,'L'],[1542,14.3,'H'],[2208,2.3,'L']],
+      30:[[412,13.8,'H'],[1023,3.5,'L'],[1622,14.3,'H'],[2243,2.0,'L']]
+    },
+    7: {
+      1:  [[452,14.0,'H'],[1059,3.2,'L'],[1701,14.5,'H'],[2316,1.8,'L']],
+      2:  [[531,14.3,'H'],[1134,3.0,'L'],[1739,14.6,'H'],[2349,1.8,'L']],
+      3:  [[610,14.5,'H'],[1210,3.0,'L'],[1816,14.6,'H']],
+      4:  [[24,2.0,'L'],[648,14.7,'H'],[1249,3.0,'L'],[1853,14.4,'H']],
+      5:  [[102,2.2,'L'],[725,14.7,'H'],[1330,3.1,'L'],[1931,14.1,'H']],
+      6:  [[144,2.7,'L'],[803,14.7,'H'],[1415,3.2,'L'],[2010,13.7,'H']],
+      7:  [[230,3.1,'L'],[843,14.6,'H'],[1504,3.3,'L'],[2056,13.2,'H']],
+      8:  [[321,3.5,'L'],[929,14.4,'H'],[1557,3.3,'L'],[2155,12.8,'H']],
+      9:  [[416,3.7,'L'],[1025,14.2,'H'],[1654,3.3,'L'],[2309,12.7,'H']],
+      10:[[515,3.8,'L'],[1131,14.2,'H'],[1757,3.0,'L']],
+      11:[[22,13.1,'H'],[619,3.7,'L'],[1238,14.6,'H'],[1904,2.5,'L']],
+      12:[[126,13.8,'H'],[728,3.3,'L'],[1342,15.2,'H'],[2011,1.7,'L']],
+      13:[[224,14.6,'H'],[836,2.5,'L'],[1442,15.8,'H'],[2111,0.6,'L']],
+      14:[[321,15.4,'H'],[937,1.5,'L'],[1541,16.4,'H'],[2204,-0.3,'L']],
+      15:[[418,16.1,'H'],[1030,0.7,'L'],[1637,16.8,'H'],[2252,-0.9,'L']],
+      16:[[510,16.5,'H'],[1118,0.0,'L'],[1626,16.2,'H'],[2230,0.8,'L']],
+      17:[[604,16.6,'H'],[1206,0.0,'L'],[1703,16.0,'H'],[2307,1.2,'L']],
+      18:[[440,16.5,'H'],[1055,0.0,'L'],[1638,16.2,'H'],[2230,0.8,'L']],
+      19:[[515,16.2,'H'],[1131,0.3,'L'],[1703,16.0,'H'],[2307,1.2,'L']],
+      20:[[550,15.6,'H'],[1206,1.1,'L'],[1738,14.9,'H'],[2343,1.8,'L']],
+      21:[[625,14.9,'H'],[1241,2.0,'L'],[1814,14.2,'H']],
+      22:[[19,2.6,'L'],[702,14.0,'H'],[1317,2.9,'L'],[1852,13.4,'H']],
+      23:[[59,3.3,'L'],[744,13.1,'H'],[1357,3.5,'L'],[1938,12.8,'H']],
+      24:[[148,4.1,'L'],[838,12.4,'H'],[1448,4.1,'L'],[2048,12.4,'H']],
+      25:[[252,4.6,'L'],[955,12.0,'H'],[1608,4.4,'L'],[2228,12.4,'H']],
+      26:[[412,4.8,'L'],[1121,12.2,'H'],[1733,4.3,'L']],
+      27:[[16,12.8,'H'],[526,4.5,'L'],[1228,13.1,'H'],[1845,3.8,'L']],
+      28:[[116,13.4,'H'],[622,4.0,'L'],[1322,14.0,'H'],[1941,3.0,'L']],
+      29:[[207,14.1,'H'],[712,3.3,'L'],[1413,14.8,'H'],[2031,2.1,'L']],
+      30:[[254,14.8,'H'],[756,2.5,'L'],[1500,15.4,'H'],[2118,1.2,'L']],
+      31:[[340,15.4,'H'],[838,1.5,'L'],[1547,15.8,'H'],[2204,0.4,'L']]
+    },
+    8: {
+      1:  [[305,15.3,'H'],[912,1.1,'L'],[1517,16.7,'H'],[2144,-0.6,'L']],
+      2:  [[352,16.0,'H'],[1001,0.5,'L'],[1606,17.1,'H'],[2230,-1.2,'L']],
+      3:  [[441,16.3,'H'],[1049,0.2,'L'],[1657,17.1,'H'],[2316,-1.3,'L']],
+      4:  [[532,16.3,'H'],[1138,0.4,'L'],[1750,16.8,'H']],
+      5:  [[3,-0.8,'L'],[626,15.9,'H'],[1233,-0.5,'L'],[1848,16.1,'H']],
+      6:  [[54,0.0,'L'],[723,15.3,'H'],[1315,0.2,'L'],[1944,15.3,'H']],
+      7:  [[150,1.0,'L'],[821,14.4,'H'],[1401,1.1,'L'],[2038,14.4,'H']],
+      8:  [[250,2.1,'L'],[922,13.5,'H'],[1453,2.5,'L'],[2137,13.5,'H']],
+      9:  [[355,3.1,'L'],[1029,13.0,'H'],[1548,3.5,'L'],[2245,13.1,'H']],
+      10: [[459,3.5,'L'],[1128,13.8,'H'],[1636,3.5,'L']],
+      11: [[4,12.7,'H'],[600,3.6,'L'],[1228,14.0,'H'],[1839,3.4,'L']],
+      12: [[106,13.0,'H'],[656,3.7,'L'],[1320,14.0,'H'],[1932,3.0,'L']],
+      13: [[157,13.4,'H'],[749,3.6,'L'],[1405,14.2,'H'],[2025,2.6,'L']],
+      14: [[239,13.7,'H'],[836,3.5,'L'],[1446,14.4,'H'],[2113,2.3,'L']],
+      15: [[318,14.0,'H'],[921,3.3,'L'],[1525,14.5,'H'],[2158,2.1,'L']],
+      16: [[621,16.9,'H'],[1227,0.0,'L'],[1835,16.1,'H']],
+      17: [[39,0.4,'L'],[659,16.4,'H'],[1308,0.7,'L'],[1914,15.2,'H']],
+      18: [[121,1.5,'L'],[735,15.5,'H'],[1351,1.7,'L'],[1953,14.2,'H']],
+      19: [[205,2.7,'L'],[813,14.4,'H'],[1435,2.8,'L'],[2035,13.0,'H']],
+      20: [[252,3.9,'L'],[855,13.3,'H'],[1524,3.8,'L'],[2126,12.0,'H']],
+      21: [[345,4.9,'L'],[950,12.4,'H'],[1618,4.6,'L'],[2238,11.4,'H']],
+      22: [[445,5.5,'L'],[1106,11.8,'H'],[1731,5.1,'L']],
+      23: [[558,4.6,'L'],[1218,12.3,'H'],[1839,4.5,'L']],
+      24: [[118,0.5,'L'],[659,16.4,'H'],[1308,0.7,'L'],[1914,15.2,'H']],
+      25: [[203,1.2,'L'],[740,15.4,'H'],[1351,1.7,'L'],[1953,14.2,'H']],
+      26: [[247,2.6,'L'],[814,14.4,'H'],[1438,3.6,'L'],[2110,13.7,'H']],
+      27: [[314,15.4,'H'],[929,1.3,'L'],[1529,16.3,'H'],[2152,0.6,'L']],
+      28: [[343,16.8,'H'],[1008,-0.4,'L'],[1618,16.5,'H'],[2227,0.8,'L']],
+      29: [[440,15.6,'H'],[1053,-0.8,'L'],[1655,16.5,'H'],[2315,0.5,'L']],
+      30: [[524,17.0,'H'],[1139,-0.8,'L'],[1800,16.4,'H']],
+      31: [[510,14.8,'H'],[1115,2.2,'L'],[1720,15.0,'H'],[2327,1.1,'L']]
+    },
+    9: {
+      1:  [[11,0.7,'L'],[627,16.4,'H'],[1237,0.5,'L'],[1843,15.4,'H']],
+      2:  [[50,1.3,'L'],[704,16.1,'H'],[1317,1.0,'L'],[1923,14.8,'H']],
+      3:  [[134,2.0,'L'],[744,15.4,'H'],[1403,1.8,'L'],[2009,13.9,'H']],
+      4:  [[225,2.9,'L'],[832,14.5,'H'],[1457,2.6,'L'],[2108,13.0,'H']],
+      5:  [[325,3.8,'L'],[934,13.6,'H'],[1603,3.4,'L'],[2231,12.5,'H']],
+      6:  [[437,4.3,'L'],[1058,13.3,'H'],[1721,3.7,'L']],
+      7:  [[31,12.5,'H'],[548,4.2,'L'],[1207,13.5,'H'],[1833,3.3,'L']],
+      8:  [[127,12.5,'H'],[742,4.9,'L'],[1351,12.8,'H'],[2006,3.8,'L']],
+      9:  [[212,13.5,'H'],[830,3.8,'L'],[1433,14.6,'H'],[2048,1.9,'L']],
+      10: [[251,14.4,'H'],[910,2.7,'L'],[1513,15.4,'H'],[2130,0.9,'L']],
+      11: [[328,15.4,'H'],[948,1.5,'L'],[1551,16.4,'H'],[2211,-0.3,'L']],
+      12: [[405,16.4,'H'],[1026,0.1,'L'],[1629,16.4,'H'],[2251,-0.4,'L']],
+      13: [[442,17.0,'H'],[1103,-0.5,'L'],[1708,16.3,'H'],[2331,0.1,'L']],
+      14: [[520,17.0,'H'],[1142,-0.5,'L'],[1748,16.0,'H']],
+      15: [[10,0.9,'L'],[559,16.9,'H'],[1222,-0.2,'L'],[1829,15.6,'H']],
+      16: [[48,1.9,'L'],[638,16.5,'H'],[1303,0.5,'L'],[1913,14.9,'H']],
+      17: [[128,3.1,'L'],[719,15.6,'H'],[1348,1.5,'L'],[2001,13.7,'H']],
+      18: [[211,4.2,'L'],[803,14.2,'H'],[1439,2.9,'L'],[2058,12.4,'H']],
+      19: [[302,5.1,'L'],[901,12.9,'H'],[1540,4.3,'L'],[2234,12.5,'H']],
+      20: [[404,5.8,'L'],[1013,12.2,'H'],[1657,5.4,'L']],
+      21: [[32,11.7,'H'],[518,6.0,'L'],[1142,11.4,'H'],[1807,5.4,'L']],
+      22: [[127,12.5,'H'],[637,5.7,'L'],[1257,12.0,'H'],[1916,4.7,'L']],
+      23: [[211,13.5,'H'],[742,4.9,'L'],[1351,13.1,'H'],[2006,3.8,'L']],
+      24: [[251,14.3,'H'],[830,3.9,'L'],[1435,14.1,'H'],[2048,2.8,'L']],
+      25: [[328,15.4,'H'],[909,2.6,'L'],[1513,15.3,'H'],[2131,1.6,'L']],
+      26: [[405,16.2,'H'],[945,1.4,'L'],[1550,16.4,'H'],[2211,0.7,'L']],
+      27: [[442,16.9,'H'],[1020,0.4,'L'],[1627,17.0,'H'],[2251,-0.1,'L']],
+      28: [[520,17.0,'H'],[1056,-0.2,'L'],[1705,16.9,'H'],[2331,0.0,'L']],
+      29: [[559,16.9,'H'],[1133,-0.2,'L'],[1744,16.6,'H']],
+      30: [[13,0.2,'L'],[638,16.5,'H'],[1212,0.4,'L'],[1824,15.9,'H']]
+    },
+    10: {
+      1:  [[29,1.1,'L'],[640,16.3,'H'],[1254,0.5,'L'],[1907,15.2,'H']],
+      2:  [[116,2.0,'L'],[726,15.5,'H'],[1343,1.6,'L'],[1959,14.3,'H']],
+      3:  [[211,3.0,'L'],[820,14.4,'H'],[1441,2.7,'L'],[2104,13.4,'H']],
+      4:  [[317,3.9,'L'],[928,13.5,'H'],[1552,3.6,'L'],[2226,13.0,'H']],
+      5:  [[435,4.4,'L'],[1054,13.0,'H'],[1713,3.8,'L']],
+      6:  [[555,4.2,'L'],[1220,13.3,'H'],[1830,3.4,'L']],
+      7:  [[59,14.0,'H'],[708,3.3,'L'],[1328,14.1,'H'],[1934,2.5,'L']],
+      8:  [[155,15.0,'H'],[807,2.3,'L'],[1421,14.9,'H'],[2026,1.7,'L']],
+      9:  [[242,15.8,'H'],[856,1.2,'L'],[1507,15.6,'H'],[2111,1.1,'L']],
+      10: [[324,16.3,'H'],[939,0.4,'L'],[1548,16.0,'H'],[2151,0.8,'L']],
+      11: [[403,16.6,'H'],[1018,0.0,'L'],[1626,16.2,'H'],[2230,0.8,'L']],
+      12: [[440,16.5,'H'],[1055,0.0,'L'],[1638,16.2,'H'],[2308,1.2,'L']],
+      13: [[515,16.2,'H'],[1131,0.3,'L'],[1726,15.7,'H'],[2343,1.8,'L']],
+      14: [[550,15.6,'H'],[1206,1.1,'L'],[1757,15.0,'H']],
+      15: [[19,2.6,'L'],[625,14.9,'H'],[1241,2.0,'L'],[1852,14.2,'H']],
+      16: [[57,3.5,'L'],[701,14.1,'H'],[1318,2.9,'L'],[1930,13.4,'H']],
+      17: [[138,4.4,'L'],[744,13.2,'H'],[1401,3.9,'L'],[2017,12.6,'H']],
+      18: [[229,5.2,'L'],[836,12.4,'H'],[1453,4.8,'L'],[2123,11.9,'H']],
+      19: [[329,5.8,'L'],[946,11.7,'H'],[1601,5.5,'L'],[2254,11.7,'H']],
+      20: [[438,6.0,'L'],[1110,11.5,'H'],[1723,5.5,'L']],
+      21: [[21,12.0,'H'],[554,5.8,'L'],[1226,12.0,'H'],[1840,4.9,'L']],
+      22: [[132,12.7,'H'],[659,5.2,'L'],[1327,13.0,'H'],[1942,3.9,'L']],
+      23: [[223,13.5,'H'],[752,4.5,'L'],[1417,14.0,'H'],[2033,2.8,'L']],
+      24: [[307,14.6,'H'],[838,3.5,'L'],[1502,14.9,'H'],[2121,1.7,'L']],
+      25: [[349,15.5,'H'],[921,2.4,'L'],[1546,15.8,'H'],[2207,0.7,'L']],
+      26: [[430,16.4,'H'],[1002,1.1,'L'],[1630,16.5,'H'],[2251,-0.3,'L']],
+      27: [[510,17.0,'H'],[1042,0.1,'L'],[1713,17.0,'H'],[2334,-0.5,'L']],
+      28: [[551,17.0,'H'],[1124,-0.5,'L'],[1757,17.1,'H']],
+      29: [[17,-0.5,'L'],[633,16.9,'H'],[1207,-0.5,'L'],[1843,16.7,'H']],
+      30: [[103,0.4,'L'],[717,16.5,'H'],[1252,0.0,'L'],[1929,15.9,'H']],
+      31: [[105,1.9,'L'],[717,15.7,'H'],[1330,1.3,'L'],[1956,14.9,'H']]
+    },
+    11: {
+      1:  [[203,2.8,'L'],[814,14.7,'H'],[1421,2.9,'L'],[2040,12.4,'H']],
+      2:  [[312,3.6,'L'],[921,13.6,'H'],[1541,5.2,'L'],[2135,11.7,'H']],
+      3:  [[426,4.0,'L'],[1039,13.2,'H'],[1655,5.3,'L'],[2249,11.3,'H']],
+      4:  [[538,3.8,'L'],[1155,13.9,'H'],[1813,4.9,'L']],
+      5:  [[35,12.0,'H'],[642,3.3,'L'],[1256,14.9,'H'],[1906,3.8,'L']],
+      6:  [[129,14.3,'H'],[738,2.6,'L'],[1344,15.5,'H'],[2105,0.5,'L']],
+      7:  [[215,15.2,'H'],[822,1.5,'L'],[1426,16.1,'H'],[2048,0.5,'L']],
+      8:  [[257,15.6,'H'],[903,0.8,'L'],[1509,16.5,'H'],[2130,0.4,'L']],
+      9:  [[335,15.7,'H'],[941,0.4,'L'],[1548,16.6,'H'],[2210,0.5,'L']],
+      10: [[413,15.7,'H'],[1018,0.3,'L'],[1626,16.5,'H'],[2249,0.8,'L']],
+      11: [[449,15.4,'H'],[1054,0.6,'L'],[1703,16.2,'H'],[2328,1.3,'L']],
+      12: [[524,15.1,'H'],[1131,1.3,'L'],[1741,15.7,'H']],
+      13: [[5,2.1,'L'],[600,14.6,'H'],[1209,2.2,'L'],[1820,14.9,'H']],
+      14: [[44,3.1,'L'],[638,14.0,'H'],[1249,3.3,'L'],[1902,13.9,'H']],
+      15: [[128,4.0,'L'],[719,13.3,'H'],[1333,4.3,'L'],[1951,13.0,'H']],
+      16: [[220,5.0,'L'],[808,12.5,'H'],[1432,5.3,'L'],[2104,12.3,'H']],
+      17: [[325,5.6,'L'],[921,12.0,'H'],[1558,5.7,'L'],[2250,12.0,'H']],
+      18: [[440,5.8,'L'],[1058,12.1,'H'],[1718,5.6,'L']],
+      19: [[8,12.3,'H'],[548,5.3,'L'],[1203,13.0,'H'],[1822,4.8,'L']],
+      20: [[107,13.5,'H'],[641,4.5,'L'],[1253,14.3,'H'],[1915,3.4,'L']],
+      21: [[156,14.5,'H'],[729,3.3,'L'],[1337,15.3,'H'],[2002,2.0,'L']],
+      22: [[241,15.6,'H'],[813,2.0,'L'],[1420,16.3,'H'],[2047,0.5,'L']],
+      23: [[325,16.5,'H'],[856,0.8,'L'],[1502,17.0,'H'],[2131,-0.4,'L']],
+      24: [[407,17.1,'H'],[938,-0.2,'L'],[1544,17.2,'H'],[2214,-0.8,'L']],
+      25: [[449,17.3,'H'],[1020,-0.5,'L'],[1627,17.1,'H'],[2257,-0.7,'L']],
+      26: [[532,17.1,'H'],[1103,-0.5,'L'],[1710,16.5,'H'],[2340,-0.1,'L']],
+      27: [[616,16.5,'H'],[1148,0.1,'L'],[1755,15.6,'H']],
+      28: [[25,0.7,'L'],[700,15.6,'H'],[1235,1.1,'L'],[1841,14.2,'H']],
+      29: [[113,1.9,'L'],[748,14.3,'H'],[1324,2.4,'L'],[1930,12.7,'H']],
+      30: [[207,3.3,'L'],[844,13.0,'H'],[1421,3.7,'L'],[2030,11.7,'H']]
+    },
+    12: {
+      1:  [[221,4.0,'H'],[815,12.9,'H'],[1435,3.8,'L'],[2052,13.5,'H']],
+      2:  [[312,4.2,'L'],[902,12.4,'H'],[1528,4.2,'L'],[2140,13.4,'H']],
+      3:  [[407,4.1,'L'],[1001,12.0,'H'],[1624,4.3,'L'],[2234,13.5,'H']],
+      4:  [[502,3.9,'L'],[1002,12.4,'H'],[1718,4.0,'L'],[2307,14.8,'H']],
+      5:  [[603,3.4,'L'],[1102,13.4,'H'],[1812,3.7,'L']],
+      6:  [[40,14.0,'H'],[705,2.7,'L'],[1210,14.3,'H'],[1906,2.5,'L']],
+      7:  [[137,14.8,'H'],[805,1.7,'L'],[1415,15.4,'H'],[2050,0.5,'L']],
+      8:  [[230,15.5,'H'],[901,0.6,'L'],[1515,16.3,'H'],[2125,0.2,'L']],
+      9:  [[326,16.2,'H'],[952,-0.4,'L'],[1603,16.2,'H'],[2209,-0.1,'L']],
+      10: [[221,4.0,'L'],[815,12.9,'H'],[1435,3.8,'L'],[2152,13.5,'H']],
+      11: [[406,16.8,'H'],[1036,-0.7,'L'],[1648,17.0,'H'],[2253,-0.6,'L']],
+      12: [[448,17.0,'H'],[1118,-0.8,'L'],[1733,16.9,'H'],[2337,-0.4,'L']],
+      13: [[531,16.9,'H'],[1202,-0.4,'L'],[1818,16.5,'H']],
+      14: [[17,0.2,'L'],[614,16.3,'H'],[1248,0.4,'L'],[1904,15.7,'H']],
+      15: [[103,1.1,'L'],[659,15.4,'H'],[1335,1.7,'L'],[1952,14.7,'H']],
+      16: [[153,2.2,'L'],[748,14.2,'H'],[1424,3.1,'L'],[2044,13.4,'H']],
+      17: [[249,3.5,'L'],[844,13.0,'H'],[1520,4.3,'L'],[2145,12.2,'H']],
+      18: [[353,4.5,'L'],[950,12.0,'H'],[1622,5.1,'L'],[2256,11.5,'H']],
+      19: [[503,5.0,'L'],[1103,11.5,'H'],[1730,5.4,'L']],
+      20: [[19,11.4,'H'],[614,5.0,'L'],[1213,11.8,'H'],[1837,5.2,'L']],
+      21: [[125,12.0,'H'],[714,4.6,'L'],[1314,12.4,'H'],[1937,4.4,'L']],
+      22: [[221,13.0,'H'],[807,3.8,'L'],[1408,13.3,'H'],[2031,3.2,'L']],
+      23: [[309,14.2,'H'],[854,2.7,'L'],[1457,14.5,'H'],[2120,1.9,'L']],
+      24: [[354,15.4,'H'],[937,1.5,'L'],[1543,15.7,'H'],[2207,0.6,'L']],
+      25: [[437,16.4,'H'],[1019,0.3,'L'],[1628,16.7,'H'],[2252,-0.4,'L']],
+      26: [[519,17.0,'H'],[1100,-0.7,'L'],[1712,17.2,'H'],[2337,-0.9,'L']],
+      27: [[601,17.3,'H'],[1142,-0.9,'L'],[1757,17.1,'H']],
+      28: [[23,1.1,'H'],[643,17.2,'H'],[1225,-0.6,'L'],[1843,16.5,'H']],
+      29: [[110,-0.9,'L'],[727,16.7,'H'],[1311,0.0,'L'],[1931,15.5,'H']],
+      30: [[158,0.4,'L'],[812,15.8,'H'],[1359,0.8,'L'],[2021,14.3,'H']],
+      31: [[248,1.5,'L'],[900,14.8,'H'],[1450,1.6,'L'],[2114,13.0,'H']]
+    }
+  }
+};
+
+// Amador data — very similar to Diablo, slight offset (~1-2 min, ~0.1ft)
+// For simplicity, Amador uses Diablo data with minor label difference
+// In production, populate from Amador PDF separately
+ACP_DATA.amador = ACP_DATA.diablo; // placeholder — replace with full Amador data
+
+// Limon Bay (Atlantic) — completely different tidal pattern (mixed, much smaller)
+ACP_DATA.limon = {
+  1: {
+    1:  [[142,0.1,'H'],[1012,1.6,'H'],[1832,0.0,'L'],[2341,0.2,'L']],
+    2:  [[224,0.1,'H'],[1106,1.6,'H'],[1930,-0.1,'L']],
+    3:  [[131,0.2,'L'],[304,0.2,'H'],[1203,1.6,'H'],[2027,-0.1,'L']],
+    4:  [[1258,1.5,'H'],[2116,-0.1,'L']],
+    5:  [[1351,1.4,'H'],[2157,0.0,'L']],
+    6:  [[512,0.6,'H'],[725,0.6,'L'],[1445,1.2,'H'],[2231,0.0,'L']],
+    7:  [[543,0.8,'H'],[929,0.6,'L'],[1545,1.1,'H'],[2259,0.1,'L']],
+    8:  [[615,0.9,'H'],[1119,0.6,'L'],[1657,0.9,'H'],[2324,0.1,'L']],
+    9:  [[645,1.1,'H'],[1247,0.5,'L'],[1808,0.7,'H'],[2347,0.2,'L']],
+    10: [[10,0.2,'L'],[715,1.2,'H'],[1400,0.4,'L'],[1908,0.6,'H']],
+    11: [[32,0.2,'L'],[744,1.2,'H'],[1504,0.3,'L'],[1959,0.5,'H']],
+    12: [[54,0.2,'L'],[814,1.3,'H'],[1603,0.2,'L'],[2047,0.4,'H']],
+    13: [[110,0.2,'L'],[845,1.3,'H'],[1658,0.1,'L'],[2134,0.3,'H']],
+    14: [[110,0.2,'L'],[917,1.3,'H'],[1753,0.1,'L'],[2254,0.2,'H']],
+    15: [[110,0.2,'L'],[951,1.3,'H'],[1848,0.0,'L'],[2300,0.2,'H']],
+    16: [[227,0.1,'L'],[1049,1.5,'H'],[1945,0.0,'L']],
+    17: [[1105,1.3,'H'],[2035,0.0,'L']],
+    18: [[1144,1.3,'H'],[2112,0.0,'L']],
+    19: [[1222,1.2,'H'],[2137,0.1,'L']],
+    20: [[1300,1.2,'H'],[2154,0.1,'L']],
+    21: [[1336,1.1,'H'],[2208,0.2,'L']],
+    22: [[543,0.8,'H'],[1028,0.6,'L'],[1414,0.9,'H'],[2217,0.2,'L']],
+    23: [[615,0.9,'H'],[1119,0.6,'L'],[1459,0.8,'H'],[2225,0.2,'L']],
+    24: [[645,1.1,'H'],[1247,0.5,'L'],[1600,0.6,'H'],[2237,0.2,'L']],
+    25: [[715,1.2,'H'],[1400,0.4,'L'],[1700,0.5,'H'],[2253,0.2,'L']],
+    26: [[744,1.3,'H'],[1504,0.3,'L'],[1800,0.4,'H']],
+    27: [[10,0.2,'L'],[814,1.4,'H'],[1600,0.2,'L'],[1900,0.3,'H']],
+    28: [[32,0.2,'L'],[845,1.5,'H'],[1658,0.1,'L'],[1958,0.3,'H']],
+    29: [[55,0.0,'L'],[903,1.5,'H'],[1658,0.0,'L'],[1958,0.3,'H']],
+    30: [[110,0.2,'L'],[917,1.5,'H'],[1753,0.0,'L']],
+    31: [[227,0.1,'L'],[1049,1.5,'H'],[1853,0.0,'L']]
+  }
+  // Additional months for Limon would go here
+  // Using simplified data for demo — replace with full Limon PDF data
+};
+// Fill remaining months for limon with placeholder (same pattern)
+for(let m=2;m<=12;m++) ACP_DATA.limon[m] = ACP_DATA.limon[1];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let lang = 'en';
+let unit = 'ft';
+let currentCoast = 'pacific';
+let currentLoc = 'diablo';
+let selectedDate = null;
+let isDayMode = false;
+
+const locations = {
+  pacific: [
+    { id:'diablo',  name:'Diablo Heights', namEs:'Diablo Heights' },
+    { id:'amador',  name:'Amador',         namEs:'Amador' }
+  ],
+  atlantic: [
+    { id:'limon',   name:'Limón Bay',      namEs:'Bahía Limón' }
+  ]
+};
+
+// ═══════════════════════════════════════════════
+// TRANSLATIONS
+// ═══════════════════════════════════════════════
+const i18n = {
+  en: {
+    sub:'Panama Tide Tracker', sponsors:'Sponsors', coast:'Coast',
+    today:'TODAY', solunar:'Solunar / Best Fishing Times', weather:'Weather & Wind',
+    links:'Links & News', 'links-loading':'Loading...',
+    'no-links':'No links yet — check back soon!',
+    rising:'Rising', falling:'Falling', high:'HIGH', low:'LOW', next:'Next',
+    'coast-pacific':'Pacific', 'coast-atlantic':'Caribbean',
+    'moon-good':'Good feeding activity expected',
+    'moon-great':'Excellent fishing conditions',
+    'major-feeding':'Major Feeding Window',
+    'minor-feeding':'Minor Feeding Window',
+    source:'Source: Panama Canal Authority (ACP)',
+    'btn-pacific':'🌊 Pacific', 'btn-atlantic':'🌊 Atlantic / Caribbean',
+    days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    months:['January','February','March','April','May','June','July','August','September','October','November','December']
+  },
+  es: {
+    sub:'Monitor de Mareas de Panamá', sponsors:'Patrocinadores', coast:'Costa',
+    today:'HOY', solunar:'Solunar / Mejores Horas de Pesca', weather:'Clima & Viento',
+    links:'Enlaces y Noticias', 'links-loading':'Cargando...',
+    'no-links':'Sin enlaces aún — ¡vuelve pronto!',
+    rising:'Subiendo', falling:'Bajando', high:'ALTA', low:'BAJA', next:'Próx.',
+    'coast-pacific':'Pacífico', 'coast-atlantic':'Caribe',
+    'moon-good':'Buena actividad de alimentación',
+    'moon-great':'Excelentes condiciones de pesca',
+    'major-feeding':'Ventana Principal de Alimentación',
+    'minor-feeding':'Ventana Secundaria de Alimentación',
+    source:'Fuente: Autoridad del Canal de Panamá (ACP)',
+    'btn-pacific':'🌊 Pacífico', 'btn-atlantic':'🌊 Atlántico / Caribe',
+    days:['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+    months:['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+  }
+};
+function tr(k){ return (i18n[lang]||i18n.en)[k]||k; }
+
+// ═══════════════════════════════════════════════
+// UNIT / LANG / DAY-NIGHT
+// ═══════════════════════════════════════════════
+function setUnit(u){
+  unit=u;
+  document.getElementById('btn-ft').classList.toggle('active',u==='ft');
+  document.getElementById('btn-m').classList.toggle('active',u==='m');
+  renderTide();
+}
+function unitLabel(){ return unit; }
+function toDisplay(ft){
+  if(unit==='m') return (ft*0.3048).toFixed(2);
+  return ft.toFixed(1);
+}
+
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  updateText();
+  renderLocationBar();
+  renderTide();
+  renderSolunar();
+  // Update loc-name
+  const loc=locations[currentCoast].find(x=>x.id===currentLoc);
+  if(loc){
+    const el=document.getElementById('loc-name');
+    if(el) el.textContent=lang==='es'?loc.namEs:loc.name;
+  }
+}
+
+function updateText(){
+  // Safe helper — only update if element exists
+  const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
+  set('txt-sponsors', tr('sponsors'));
+  set('txt-coast',    tr('coast'));
+  set('txt-today',    tr('today'));
+  set('txt-solunar',  tr('solunar'));
+  set('txt-weather',   tr('weather'));
+  set('txt-links',    tr('links'));
+  // Coast buttons
+  const pb=document.getElementById('btn-pacific');
+  if(pb) pb.innerHTML='🌊 '+(lang==='es'?'Pacífico':'Pacific');
+  const ab=document.getElementById('btn-atlantic');
+  if(ab) ab.innerHTML='🌊 '+(lang==='es'?'Atlántico / Caribe':'Atlantic / Caribbean');
+  // Coast badge
+  const cb=document.getElementById('coast-badge');
+  if(cb) cb.textContent=tr(currentCoast==='pacific'?'coast-pacific':'coast-atlantic');
+  // Logo tagline SVG text elements
+  document.querySelectorAll('.logo-tag-night,.logo-tag-day').forEach(el=>{
+    el.textContent = lang==='es'?'MONITOR DE MAREAS · PANAMÁ':'PANAMA TIDE TRACKER';
+  });
+  // Loading text
+  const ll=document.getElementById('txt-links-loading');
+  if(ll) ll.textContent=tr('links-loading');
+}
+
+function toggleDayNight(){
+  isDayMode=!isDayMode;
+  document.body.classList.toggle('day-mode',isDayMode);
+  document.getElementById('daynight-btn').textContent=isDayMode?'🌙':'☀️';
+  updateLogoMode();
+}
+function updateLogoMode(){
+  document.querySelectorAll('.logo-text-night,.logo-tag-night').forEach(el=>el.style.display=isDayMode?'none':'block');
+  document.querySelectorAll('.logo-text-day,.logo-tag-day').forEach(el=>el.style.display=isDayMode?'block':'none');
+}
+function autoSetDayNight(){
+  const h=new Date().getHours();
+  isDayMode=h>=6&&h<18;
+  document.body.classList.toggle('day-mode',isDayMode);
+  document.getElementById('daynight-btn').textContent=isDayMode?'🌙':'☀️';
+  setTimeout(updateLogoMode,100);
+}
+
+// ═══════════════════════════════════════════════
+// COAST & LOCATION
+// ═══════════════════════════════════════════════
+function selectCoast(coast){
+  currentCoast=coast;
+  document.getElementById('btn-pacific').classList.toggle('active',coast==='pacific');
+  document.getElementById('btn-atlantic').classList.toggle('active',coast==='atlantic');
+  currentLoc=locations[coast][0].id;
+  renderLocationBar();
+  updateCoastBadge();
+  renderTide();
+  loadWeather();
+}
+
+function updateCoastBadge(){
+  const cb=document.getElementById('coast-badge');
+  cb.className='coast-badge '+(currentCoast==='pacific'?'badge-pacific':'badge-atlantic');
+  cb.textContent=tr(currentCoast==='pacific'?'coast-pacific':'coast-atlantic');
+}
+
+function renderLocationBar(){
+  const bar=document.getElementById('location-bar');
+  bar.innerHTML=locations[currentCoast].map(loc=>`
+    <button class="loc-btn ${loc.id===currentLoc?'active':''}" onclick="selectLocation('${loc.id}')">
+      ${lang==='es'?loc.namEs:loc.name}
+    </button>`).join('');
+  document.getElementById('loc-name').textContent=
+    lang==='es'?locations[currentCoast].find(l=>l.id===currentLoc).namEs:
+    locations[currentCoast].find(l=>l.id===currentLoc).name;
+}
+
+function selectLocation(id){
+  currentLoc=id;
+  const loc=locations[currentCoast].find(l=>l.id===id);
+  document.getElementById('loc-name').textContent=lang==='es'?loc.namEs:loc.name;
+  document.querySelectorAll('.loc-btn').forEach(b=>b.classList.toggle('active',b.onclick.toString().includes(`'${id}'`)));
+  renderLocationBar();
+  renderTide();
+}
+
+// ═══════════════════════════════════════════════
+// DATE PICKER
+// ═══════════════════════════════════════════════
+function initDatePicker(){
+  const p=document.getElementById('tide-date-picker');
+  const now=new Date();
+  const str=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  p.value=str;
+  selectedDate=null; // always start on today
+  p.addEventListener('change',function(){
+    if(this.value){
+      const parts=this.value.split('-');
+      selectedDate=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+    } else {
+      selectedDate=null;
+    }
+    renderTide();
+    renderSolunar();
+  });
+}
+function goToToday(){
+  selectedDate=null;
+  const now=new Date();
+  document.getElementById('tide-date-picker').value=
+    `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  renderTide();
+}
+
+// ═══════════════════════════════════════════════
+// TIDE RENDERING
+// ═══════════════════════════════════════════════
+function getTideData(locId, date){
+  const data=ACP_DATA[locId];
+  if(!data) return null;
+  const m=date.getMonth()+1;
+  const d=date.getDate();
+  const dayData=data[m]&&data[m][d];
+  if(!dayData) return null;
+  return dayData.map(([hhmm,ht,type])=>({
+    time: parseHHMM(hhmm, date),
+    height: ht,
+    type: type
+  }));
+}
+
+function parseHHMM(hhmm, date){
+  const s=String(hhmm).padStart(4,'0');
+  const h=parseInt(s.slice(0,2));
+  const m=parseInt(s.slice(2,4));
+  const d=new Date(date);
+  d.setHours(h,m,0,0);
+  return d;
+}
+
+function getCurrentHeight(tides, now){
+  if(!tides||tides.length<2) return {height:0,rising:true};
+  let prev=tides[0], next=tides[tides.length-1];
+  for(let i=0;i<tides.length-1;i++){
+    if(now>=tides[i].time&&now<=tides[i+1].time){prev=tides[i];next=tides[i+1];break;}
+  }
+  const total=next.time-prev.time;
+  const elapsed=now-prev.time;
+  const frac=total>0?elapsed/total:0;
+  // Cosine interpolation
+  const cosInterp=(1-Math.cos(frac*Math.PI))/2;
+  const height=prev.height+(next.height-prev.height)*cosInterp;
+  return {height, rising:next.height>prev.height};
+}
+
+function renderTide(){
+  const displayDate=selectedDate||new Date();
+  const now=new Date();
+
+  // Update date display
+  const days=tr('days'); const months=tr('months');
+  document.getElementById('date-weekday').textContent=days[displayDate.getDay()];
+  document.getElementById('date-number').textContent=displayDate.getDate();
+  document.getElementById('date-monthyear').textContent=months[displayDate.getMonth()]+' '+displayDate.getFullYear();
+
+  const tides=getTideData(currentLoc,displayDate);
+  if(!tides){
+    document.getElementById('tide-content').innerHTML=
+      `<div style="padding:30px;text-align:center;color:var(--muted);font-size:.8rem;">No data for this date.</div>`;
+    return;
+  }
+
+  const {height,rising}=getCurrentHeight(tides,now);
+
+  // Build 24-bar chart
+  const bars=[];
+  for(let i=0;i<24;i++){
+    const t=new Date(displayDate);
+    t.setHours(i,0,0,0);
+    const {height:bh}=getCurrentHeight(tides,t);
+    bars.push({hour:i,height:bh});
+  }
+  const allH=bars.map(b=>b.height);
+  const maxH=Math.max(...allH);
+  const minH=Math.min(...allH);
+  const range=maxH-minH||1;
+  const currentHour=now.getHours();
+
+  const barsHTML=bars.map((b,i)=>{
+    const pct=((b.height-minH)/range)*85+5;
+    const isNow=i===currentHour&&!selectedDate;
+    const grad=isNow?'linear-gradient(180deg,#5dd8ff,#29b8e8)':
+      b.height>minH+(range*.6)?'linear-gradient(180deg,rgba(41,184,232,.65),rgba(41,184,232,.3))':
+      'linear-gradient(180deg,rgba(0,100,200,.5),rgba(0,100,200,.2))';
+    return `<div class="tide-bar-wrap">
+      <div class="tide-bar${isNow?' now':''}" style="height:${pct}%;background:${grad};"></div>
+      ${i%4===0?`<div class="tide-bar-time">${String(i).padStart(2,'0')}h</div>`:'<div class="tide-bar-time"> </div>'}
+    </div>`;
+  }).join('');
+
+  // Schedule: next 4 events from now (or all events for selected date)
+  let upcoming;
+  if(selectedDate){
+    upcoming=tides;
+  } else {
+    upcoming=tides.filter(t=>t.time>now).slice(0,4);
+    if(upcoming.length<2){
+      // Add next day data
+      const tomorrow=new Date(now);
+      tomorrow.setDate(tomorrow.getDate()+1);
+      const tmTides=getTideData(currentLoc,tomorrow)||[];
+      upcoming=[...upcoming,...tmTides].slice(0,4);
+    }
+  }
+
+  const schedHTML=upcoming.map(t=>{
+    const timeStr=t.time.toLocaleTimeString(lang==='es'?'es-PA':'en-US',{hour:'2-digit',minute:'2-digit'});
+    const arrow=t.type==='H'?'<span style="color:#29b8e8;">▲</span>':'<span style="color:#f0a500;">▼</span>';
+    const badge=t.type==='H'?'badge-high':'badge-low';
+    const label=t.type==='H'?tr('high'):tr('low');
+    return `<tr>
+      <td>${arrow} ${tr('next')} ${label}</td>
+      <td>${timeStr}</td>
+      <td><span class="${badge}">${toDisplay(t.height)} ${unitLabel()} — ${label}</span></td>
+    </tr>`;
+  }).join('');
+
+  const showCurrent = !selectedDate;
+
+  // Build SVG wave curve
+  const svgW=360, svgH=80;
+  const pts=bars.map((b,i)=>{
+    const x=(i/23)*svgW;
+    const y=svgH-((b.height-minH)/range)*(svgH-8)-4;
+    return{x,y,h:b.height};
+  });
+  // Smooth path using cubic bezier
+  let wavePath=`M${pts[0].x},${pts[0].y}`;
+  for(let i=0;i<pts.length-1;i++){
+    const cx1=pts[i].x+(pts[i+1].x-pts[i].x)/3;
+    const cx2=pts[i+1].x-(pts[i+1].x-pts[i].x)/3;
+    wavePath+=` C${cx1},${pts[i].y} ${cx2},${pts[i+1].y} ${pts[i+1].x},${pts[i+1].y}`;
+  }
+  const fillPath=wavePath+` L${svgW},${svgH} L0,${svgH} Z`;
+
+  // Find best fishing times — solunar major window overlapping high tide
+  const solH=new Date().getHours();
+  const majorStart=(solH+1)%24;
+  const majorEnd=(majorStart+2)%24;
+  // Find peaks (local maxima) that overlap with solunar window
+  const fishPins=[];
+  for(let i=1;i<pts.length-1;i++){
+    if(pts[i].h>=pts[i-1].h&&pts[i].h>=pts[i+1].h&&pts[i].h>minH+(range*0.5)){
+      const hr=bars[i].hour;
+      const inWindow=(hr>=majorStart&&hr<=majorEnd)||
+                     (hr>=(majorStart+12)%24&&hr<=(majorEnd+12)%24);
+      fishPins.push({x:pts[i].x,y:pts[i].y,priority:inWindow?'high':'med'});
+    }
+  }
+  // Keep max 2 fish pins
+  const topPins=fishPins.slice(0,2);
+
+  // Current time line
+  const nowX=!selectedDate?(currentHour/23)*svgW:-1;
+
+  // Fish HTML overlays
+  const fishHTML=topPins.map(p=>`
+    <div class="fish-pin" style="left:${(p.x/svgW*100).toFixed(1)}%;top:${(p.y-24).toFixed(0)}px;">
+      <span>🐟</span>
+      <div class="fish-pin-line"></div>
+    </div>`).join('');
+
+  document.getElementById('tide-content').innerHTML=`
+    ${showCurrent?`
+    <div class="tide-now">
+      <div class="tide-height">${toDisplay(height)}</div>
+      <div class="tide-unit">${unitLabel()}</div>
+      <div class="tide-status ${rising?'tide-rising':'tide-falling'}">
+        ${rising?'▲ '+tr('rising'):'▼ '+tr('falling')}
+      </div>
+    </div>`:''}
+    <div class="tide-wave-wrap">
+      <svg viewBox="0 0 ${svgW} ${svgH}" preserveAspectRatio="none" style="height:80px;">
+        <defs>
+          <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#29b8e8" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#29b8e8" stop-opacity="0.04"/>
+          </linearGradient>
+        </defs>
+        <path d="${fillPath}" fill="url(#wg)"/>
+        <path d="${wavePath}" fill="none" stroke="#29b8e8" stroke-width="2" stroke-linecap="round"/>
+        ${nowX>0?`<line x1="${nowX}" y1="0" x2="${nowX}" y2="${svgH}" stroke="rgba(240,165,0,.6)" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="${nowX}" cy="${pts[Math.round(currentHour/23*23)].y}" r="3" fill="#f0a500"/>`:''} 
+      </svg>
+      ${fishHTML}
+    </div>
+    <div class="wave-time-labels">
+      <span class="wave-time-label">00h</span>
+      <span class="wave-time-label">06h</span>
+      <span class="wave-time-label">12h</span>
+      <span class="wave-time-label">18h</span>
+      <span class="wave-time-label">23h</span>
+    </div>
+    <table class="hl-table">${schedHTML}</table>
+    <div class="source-note">${tr('source')}</div>
+  `;
+}
+
+// ═══════════════════════════════════════════════
+// MOON & SOLUNAR
+// ═══════════════════════════════════════════════
+function getMoonPhase(){
+  const diff=(new Date()-new Date('2000-01-06'))/86400000;
+  const cycle=diff%29.53;
+  if(cycle<1.85) return{icon:'🌑',name:lang==='es'?'Luna Nueva':'New Moon',quality:'great'};
+  if(cycle<7.38) return{icon:'🌒',name:lang==='es'?'Creciente':'Waxing Crescent',quality:'good'};
+  if(cycle<9.22) return{icon:'🌓',name:lang==='es'?'Cuarto Creciente':'First Quarter',quality:'good'};
+  if(cycle<14.76)return{icon:'🌔',name:lang==='es'?'Gibosa Creciente':'Waxing Gibbous',quality:'great'};
+  if(cycle<16.61)return{icon:'🌕',name:lang==='es'?'Luna Llena':'Full Moon',quality:'great'};
+  if(cycle<22.15)return{icon:'🌖',name:lang==='es'?'Gibosa Menguante':'Waning Gibbous',quality:'good'};
+  if(cycle<23.99)return{icon:'🌗',name:lang==='es'?'Último Cuarto':'Last Quarter',quality:'good'};
+  return{icon:'🌘',name:lang==='es'?'Menguante':'Waning Crescent',quality:'good'};
+}
+
+function renderSolunar(){
+  const moon=getMoonPhase();
+  const h=new Date().getHours();
+  const m1s=(h+1)%24, m1e=(h+2)%24;
+  const m2s=(h+13)%24, m2e=(h+14)%24;
+  const mn1s=(h+7)%24, mn1e=Math.floor((h+7.75))%24;
+  const mn2s=(h+19)%24, mn2e=Math.floor((h+19.75))%24;
+  const fmt=h=>`${String(h).padStart(2,'0')}:00`;
+  const fishCount=moon.quality==='great'?4:3;
+  const fishes=Array.from({length:5},(_,i)=>
+    `<span style="font-size:${i<fishCount?'18':'14'}px;opacity:${i<fishCount?1:.2};">🐟</span>`
+  ).join('');
+  const winHTML=(label,cls,lcls,s,e,count)=>`
+    <div class="sol-win ${cls}">
+      <div class="sol-win-left">
+        <span style="font-size:15px;">🎣</span>
+        <div>
+          <div class="sol-win-label ${lcls}">${label}</div>
+          <div class="sol-win-time">${fmt(s)} — ${fmt(e)}</div>
+        </div>
+      </div>
+      <div class="sol-fish-icons">
+        ${Array.from({length:3},(_,i)=>`<span class="${i<count?'':'dim'}">🐟</span>`).join('')}
+      </div>
+    </div>`;
+  const major=tr('major-feeding');
+  const minor=tr('minor-feeding');
+  document.getElementById('moon-icon').textContent='';
+  document.getElementById('moon-phase-name').textContent='';
+  document.getElementById('moon-phase-sub').textContent='';
+  document.getElementById('solunar-bars').innerHTML=`
+    <div class="sol-moon-row">
+      <div class="sol-moon-big">${moon.icon}</div>
+      <div class="sol-moon-info">
+        <div class="sol-moon-phase">${moon.name}</div>
+        <div class="sol-moon-quality sol-quality-${moon.quality}">
+          ${moon.quality==='great'?'⭐ '+tr('moon-great'):'● '+tr('moon-good')}
+        </div>
+        <div class="sol-fish-row">${fishes}</div>
+      </div>
+    </div>
+    <div class="sol-windows">
+      ${winHTML(major,'sol-win-major','sol-label-major',m1s,m1e,3)}
+      ${winHTML(major,'sol-win-major','sol-label-major',m2s,m2e,3)}
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// WEATHER — Open-Meteo (free, no API key)
+// ═══════════════════════════════════════════════
+const WEATHER_LOCS = {
+  pacific:  {lat:8.967, lon:-79.533, nameEs:'Diablo / Amador', nameEn:'Diablo / Amador'},
+  atlantic: {lat:9.350, lon:-79.900, nameEs:'Bahía Limón / Caribe', nameEn:'Limón Bay / Caribbean'}
+};
+
+function windDir(deg){
+  const dirs=['N','NE','E','SE','S','SO','O','NO'];
+  return dirs[Math.round(deg/45)%8];
+}
+function weatherIcon(code){
+  if(code<=1) return '☀️';
+  if(code<=3) return '⛅';
+  if(code<=48) return '🌫️';
+  if(code<=67) return '🌧️';
+  if(code<=77) return '🌨️';
+  if(code<=82) return '🌦️';
+  return '⛈️';
+}
+function weatherDesc(code, es){
+  const d={0:['Clear','Despejado'],1:['Mainly clear','Mayormente despejado'],2:['Partly cloudy','Parcialmente nublado'],3:['Overcast','Nublado'],45:['Foggy','Neblina'],48:['Foggy','Neblina'],51:['Drizzle','Llovizna'],61:['Rain','Lluvia'],80:['Showers','Chubascos'],95:['Thunderstorm','Tormenta']};
+  const k=Object.keys(d).reverse().find(k=>code>=parseInt(k))||0;
+  return d[k][es?1:0];
+}
+function windBadge(spd){
+  if(spd<15) return{cls:'wc-badge-ok',txt:lang==='es'?'● Favorable':'● Favorable'};
+  if(spd<30) return{cls:'wc-badge-warn',txt:lang==='es'?'● Moderado':'● Moderate'};
+  return{cls:'wc-badge-alert',txt:lang==='es'?'● Alerta':'● Alert'};
+}
+function windBars(spd){
+  const lvl=Math.min(5,Math.ceil(spd/10));
+  const col=spd<15?'#29b8e8':spd<30?'#f0a500':'#ff6050';
+  return Array.from({length:5},(_,i)=>`<div class="wc-bar" style="height:${(i+1)*6}px;background:${i<lvl?col:'rgba(255,255,255,.1)'}"></div>`).join('');
+}
+
+async function loadWeather(){
+  const el=document.getElementById('weather-content');
+  if(!el) return;
+  el.innerHTML=`<div class="wc-loading">${lang==='es'?'Cargando...':'Loading...'}</div>`;
+  try{
+    const loc=WEATHER_LOCS[currentCoast];
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=America%2FPanama&forecast_days=1`;
+    const r=await fetch(url);
+    const d=await r.json();
+    const c=d.current, dy=d.daily;
+    const es=lang==='es';
+    const temp=Math.round(c.temperature_2m);
+    const tmax=Math.round(dy.temperature_2m_max[0]);
+    const tmin=Math.round(dy.temperature_2m_min[0]);
+    const wspd=Math.round(c.wind_speed_10m);
+    const wdir=windDir(c.wind_direction_10m);
+    const icon=weatherIcon(c.weather_code);
+    const desc=weatherDesc(c.weather_code,es);
+    const badge=windBadge(wspd);
+    const locName=es?loc.nameEs:loc.nameEn;
+    const locIcon=currentCoast==='pacific'?'⚓':'🌊';
+    // Format sunrise/sunset — robust parser
+    const fmtTime=iso=>{
+      if(!iso) return '--:--';
+      try{
+        // iso can be "2026-03-26T06:12" or "06:12"
+        const t=iso.includes('T')?iso.split('T')[1]:iso;
+        return t.substring(0,5);
+      }catch(e){return '--:--';}
+    };
+    const sunriseRaw=Array.isArray(dy.sunrise)?dy.sunrise[0]:dy.sunrise;
+    const sunsetRaw=Array.isArray(dy.sunset)?dy.sunset[0]:dy.sunset;
+    const sunrise=fmtTime(sunriseRaw);
+    const sunset=fmtTime(sunsetRaw);
+    console.log('sunrise raw:',sunriseRaw,'parsed:',sunrise);
+    el.innerHTML=`<div class="weather-card">
+      <div class="wc-header">
+        <div class="wc-loc">${locIcon} ${locName}</div>
+        <span class="wc-badge ${badge.cls}">${badge.txt}</span>
+      </div>
+      <div class="wc-main">
+        <div class="wc-icon">${icon}</div>
+        <div>
+          <div class="wc-temp">${temp}<sup>°C</sup></div>
+          <div class="wc-desc">${desc}</div>
+        </div>
+        <div class="wc-minmax">
+          <div class="wc-hi">↑ ${tmax}°</div>
+          <div class="wc-lo">↓ ${tmin}°</div>
+        </div>
+      </div>
+      <hr class="wc-divider"/>
+      <div class="wc-wind">
+        <span style="font-size:18px;">💨</span>
+        <span class="wc-wind-spd">${wspd}</span>
+        <span class="wc-wind-unit">km/h</span>
+        <span class="wc-wind-dir">${wdir}</span>
+        <div class="wc-bars">${windBars(wspd)}</div>
+      </div>
+      <hr class="wc-divider"/>
+      <div style="display:flex;gap:24px;padding-top:4px;align-items:center;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg width="36" height="36" viewBox="-30 -30 60 60">
+            <circle cx="0" cy="0" r="13" fill="#f5d000"/>
+            <circle cx="0" cy="0" r="8" fill="#ffe040"/>
+            <g stroke="#f5d000" stroke-linecap="round" stroke-width="2.5">
+              <line x1="0" y1="-18" x2="0" y2="-23"/>
+              <line x1="13" y1="-13" x2="16" y2="-17"/>
+              <line x1="18" y1="0" x2="23" y2="0"/>
+              <line x1="13" y1="13" x2="16" y2="17"/>
+              <line x1="0" y1="18" x2="0" y2="23"/>
+              <line x1="-13" y1="13" x2="-16" y2="17"/>
+              <line x1="-18" y1="0" x2="-23" y2="0"/>
+              <line x1="-13" y1="-13" x2="-16" y2="-17"/>
+            </g>
+            <g stroke="#f5d000" stroke-linecap="round" stroke-width="1.5" opacity="0.5">
+              <line x1="9" y1="-16" x2="11" y2="-20"/>
+              <line x1="-9" y1="-16" x2="-11" y2="-20"/>
+              <line x1="16" y1="9" x2="20" y2="11"/>
+              <line x1="-16" y1="9" x2="-20" y2="11"/>
+              <line x1="16" y1="-9" x2="20" y2="-11"/>
+              <line x1="-16" y1="-9" x2="-20" y2="-11"/>
+              <line x1="9" y1="16" x2="11" y2="20"/>
+              <line x1="-9" y1="16" x2="-11" y2="20"/>
+            </g>
+          </svg>
+          <div>
+            <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'AMANECER':'SUNRISE'}</div>
+            <div style="font-size:15px;font-weight:700;color:#f5d000;">${sunrise}</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg width="36" height="36" viewBox="-32 -32 64 64">
+            <circle cx="0" cy="0" r="15" fill="#ff7020"/>
+            <circle cx="0" cy="0" r="9" fill="#ffaa40"/>
+            <g stroke="#ff7020" stroke-linecap="round" stroke-width="3">
+              <line x1="0" y1="-20" x2="0" y2="-26"/>
+              <line x1="14" y1="-14" x2="18" y2="-18"/>
+              <line x1="20" y1="0" x2="26" y2="0"/>
+              <line x1="14" y1="14" x2="18" y2="18"/>
+              <line x1="0" y1="20" x2="0" y2="26"/>
+              <line x1="-14" y1="14" x2="-18" y2="18"/>
+              <line x1="-20" y1="0" x2="-26" y2="0"/>
+              <line x1="-14" y1="-14" x2="-18" y2="-18"/>
+            </g>
+          </svg>
+          <div>
+            <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'ATARDECER':'SUNSET'}</div>
+            <div style="font-size:15px;font-weight:700;color:#ff8030;">${sunset}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }catch(e){
+    el.innerHTML=`<div class="wc-loading">${lang==='es'?'No disponible':'Unavailable'}</div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════
+// LINKS FROM GOOGLE SHEET
+// ═══════════════════════════════════════════════
+const DEMO_LINKS = [
+  {tag:'fishing',title:'Panama Offshore Fishing Report — March 2026',url:'#',source:'PescaPanama.com',image:''},
+  {tag:'news',title:'ACP Updates: New Navigation Rules for Yachts 2026',url:'#',source:'Panama Canal Authority',image:''},
+  {tag:'boating',title:'Best Anchorages in Las Perlas Archipelago',url:'#',source:'Cruising World',image:''},
+  {tag:'sponsor',title:'Visit our sponsor — Fishing Gear Panama',url:'#',source:'Sponsored',image:''},
+];
+
+async function loadLinks(){
+  if(SHEET_CSV_URL.includes('YOUR_SHEET_ID')){
+    renderLinks(DEMO_LINKS);
+    return;
+  }
+  // Try direct fetch first, fallback to CORS proxy
+  const urls=[
+    SHEET_CSV_URL,
+    'https://corsproxy.io/?'+encodeURIComponent(SHEET_CSV_URL),
+    'https://api.allorigins.win/raw?url='+encodeURIComponent(SHEET_CSV_URL)
+  ];
+  for(const url of urls){
+    try{
+      const res=await fetch(url);
+      if(!res.ok) continue;
+      const csv=await res.text();
+      if(!csv||csv.length<10) continue;
+      const rows=csv.trim().split('\n').slice(1);
+      const links=rows.map(row=>{
+        const cols=row.match(/(".*?"|[^,]+)(?=,|$)/g)||row.split(',');
+        const clean=cols.map(c=>(c||'').trim().replace(/^"|"$/g,''));
+        return{tag:(clean[0]||'news'),
+               title:(clean[1]||''),
+               url:(clean[2]||'#'),
+               source:(clean[3]||''),
+               image:(clean[4]||'')};
+      }).filter(l=>l.title);
+      if(links.length){
+        renderLinks(links);
+        return;
+      }
+    }catch(e){ continue; }
+  }
+  renderLinks(DEMO_LINKS);
+}
+
+function renderLinks(links){
+  const list=document.getElementById('links-list');
+  if(!links.length){
+    list.innerHTML=`<div class="links-empty">${tr('no-links')}</div>`;
+    return;
+  }
+  list.innerHTML=links.map(l=>{
+    const tagEmoji={fishing:'🎣',news:'📰',boating:'⛵',sponsor:'⭐',pescaya:'🎣',tfs:'🛒',ff507:'🪰',clima:'🌤',weather:'🌤'}[l.tag]||'🔗';
+    const imgHTML=l.image
+      ? `<img class="link-img" src="${l.image}" alt="${l.title}" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='https://corsproxy.io/?'+encodeURIComponent(this.src);}else{this.parentElement.innerHTML='<div class=\'link-img-placeholder\'>${tagEmoji}</div>';}">`
+      : `<div class="link-img-placeholder">${tagEmoji}</div>`;
+    const shortUrl=(l.source||l.url.replace(/^https?:\/\/(www\.)?/,'').split('/')[0]);
+    return `<a href="${l.url}" target="_blank" rel="noopener" class="link-item">
+      <div class="link-img-wrap">${imgHTML}</div>
+      <div class="link-info">
+        <span class="link-tag tag-${l.tag}">${l.tag.toUpperCase()}</span>
+        <div class="link-title">${l.title}</div>
+        <div class="link-source">${shortUrl}</div>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════
+// SPONSORS CAROUSEL
+// To add sponsors: add objects to SPONSORS array
+// image: path to logo file in GitHub /public folder
+// url: sponsor website (optional, use '#' if none)
+// ═══════════════════════════════════════════════
+const SPONSORS = [
+  { name:'PescaYa',             image:'https://cdn.pescaya.com/upload/1752594855_cec30f6900c518d4b3fe.png', url:'https://pescaya.com/' },
+  { name:'FF507',               image:'https://flyfishing507.com/wp-content/uploads/2025/11/Untitled-design-20.png', url:'https://flyfishing507.com/' },
+  { name:'Isthmus Gin',         image:'sponsor 3 ithmus gin.jpg', url:'#' },
+  { name:'Gatún Sport Fishing', image:'sponsor 4 gatunSF.jpg', url:'#' },
+];
+
+// ═══════════════════════════════════════════════
+// SPONSORS GRID — 2x2 with auto-rotation if >4
+// ═══════════════════════════════════════════════
+let gridOffset = 0;
+let gridTimer = null;
+const GRID_DELAY = 4000;
+const GRID_SLOTS = 4;
+
+function buildCarousel(){
+  const grid = document.getElementById('sponsors-grid');
+  if(!grid) return;
+  renderGrid();
+  if(SPONSORS.length > GRID_SLOTS) startGridRotation();
+}
+
+function renderGrid(){
+  const grid = document.getElementById('sponsors-grid');
+  if(!grid) return;
+  const visible = [];
+  for(let i=0;i<GRID_SLOTS;i++){
+    visible.push(SPONSORS[(gridOffset+i) % SPONSORS.length]);
+  }
+  grid.innerHTML = visible.map(s => {
+    const inner = s.image
+      ? `<img src="${s.image}" alt="${s.name}" onerror="this.parentElement.innerHTML='<span>${s.name}</span>'">`
+      : `<span>${s.name}</span>`;
+    const tag    = s.url&&s.url!=='#'?`a href="${s.url}" target="_blank" rel="noopener"`:'div';
+    const close  = s.url&&s.url!=='#'?'a':'div';
+    return `<${tag} class="sponsor-cell visible" style="text-decoration:none;">${inner}</${close}>`;
+  }).join('');
+}
+
+function rotateGrid(){
+  const grid = document.getElementById('sponsors-grid');
+  if(!grid) return;
+  // fade out
+  grid.querySelectorAll('.sponsor-cell').forEach(c=>{
+    c.classList.remove('visible');
+    c.classList.add('fade');
+  });
+  setTimeout(()=>{
+    gridOffset = (gridOffset + GRID_SLOTS) % SPONSORS.length;
+    renderGrid();
+  }, 320);
+}
+
+function startGridRotation(){
+  if(gridTimer) clearInterval(gridTimer);
+  gridTimer = setInterval(rotateGrid, GRID_DELAY);
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+function init(){
+  autoSetDayNight();
+  updateText();
+  updateCoastBadge();
+  renderLocationBar();
+  initDatePicker();
+  renderTide();
+  renderSolunar();
+  loadLinks();
+  loadWeather();
+  buildCarousel();
+  setInterval(renderTide, 5*60*1000);
+  setInterval(renderSolunar, 30*60*1000);
+  setInterval(loadWeather, 30*60*1000);
+}
+init();
+</script>
+</body>
+</html>

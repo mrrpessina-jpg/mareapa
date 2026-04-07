@@ -10,14 +10,14 @@
 <meta name="keywords" content="mareas panama, nivel del mar panama, horario mareas panama, mareas pacifico panama, mareas caribe panama, mareas hoy panama, marea alta panama, marea baja panama, pesca panama mareas, solunar panama, mareas canal de panama, mareas bahia limon, mareas amador, mareas diablo heights, tide panama, panama tides, fishing panama tides">
 <meta name="author" content="MareasPro">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://mareaspro.com">
+<link rel="canonical" href="https://www.mareaspro.com">
 <meta name="language" content="es, en">
 <meta name="geo.region" content="PA">
 <meta name="geo.placename" content="Panama">
 
 <!-- ═══ OPEN GRAPH (WhatsApp, Facebook, Instagram) ═══ -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://mareaspro.com">
+<meta property="og:url" content="https://www.mareaspro.com">
 <meta property="og:title" content="MareasPro — Mareas Panamá en Tiempo Real">
 <meta property="og:description" content="Horario de mareas del Pacífico y Caribe panameño. Datos oficiales ACP, clima, viento y mejores horas de pesca. Gratis y sin anuncios.">
 <meta property="og:image" content="https://mrrpessina-jpg.github.io/mareapa/mareaspro-preview.jpg">
@@ -39,14 +39,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MareasPro">
-<!-- ═══ GOOGLE ANALYTICS ═══ -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-S3SNZ17QVH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-S3SNZ17QVH');
-</script>
+
 <!-- ═══ SCHEMA.ORG — tells Google what this app does ═══ -->
 <script type="application/ld+json">
 {
@@ -97,19 +90,23 @@ body.day-mode .toggle-btn.active{background:var(--teal);color:#061428;}
 .daynight-btn:hover{border-color:var(--teal);}
 body.day-mode .daynight-btn{background:rgba(255,255,255,0.88);border-color:rgba(0,120,180,.4);}
 
-/* SPONSORS GRID */
+/* SPONSORS TICKER */
 .sponsors-section{margin:18px 0;}
 .sponsors-title{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal);font-weight:700;text-align:center;margin-bottom:10px;}
-.sponsors-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.sponsor-cell{background:#0d2040;border:1px solid rgba(41,184,232,.15);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:center;min-height:72px;cursor:pointer;transition:all .3s;text-decoration:none;}
+.sponsors-track-wrap{
+  overflow:hidden;width:100%;position:relative;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+}
+.sponsors-track{display:flex;gap:14px;width:max-content;animation:ticker-scroll 20s linear infinite;}
+.sponsors-track:hover{animation-play-state:paused;}
+@keyframes ticker-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.sponsor-cell{background:rgba(13,32,64,0.82);border:1px solid rgba(41,184,232,.15);border-radius:10px;padding:12px 20px;display:flex;align-items:center;justify-content:center;min-height:64px;min-width:148px;cursor:pointer;transition:border-color .3s;text-decoration:none;flex-shrink:0;}
 .sponsor-cell:hover{border-color:var(--teal);}
-.sponsor-cell img{max-width:100%;max-height:44px;object-fit:contain;filter:brightness(.88);transition:all .3s;}
+.sponsor-cell img{max-width:120px;max-height:40px;object-fit:contain;filter:brightness(.88);transition:filter .3s;}
 .sponsor-cell:hover img{filter:brightness(1);}
 .sponsor-cell span{font-size:.6rem;color:rgba(41,184,232,.3);letter-spacing:2px;text-transform:uppercase;}
 body.day-mode .sponsor-cell{background:rgba(255,255,255,.85);border-color:rgba(0,120,180,.2);}
-/* fade transition for rotation */
-.sponsor-cell.fade{opacity:0;transition:opacity .3s;}
-.sponsor-cell.visible{opacity:1;transition:opacity .4s;}
 
 /* COAST */
 .coast-bar{display:flex;gap:10px;padding:18px 0 14px;align-items:center;flex-wrap:wrap;}
@@ -1595,54 +1592,21 @@ const SPONSORS = [
 ];
 
 // ═══════════════════════════════════════════════
-// SPONSORS GRID — 2x2 with auto-rotation if >4
 // ═══════════════════════════════════════════════
-let gridOffset = 0;
-let gridTimer = null;
-const GRID_DELAY = 4000;
-const GRID_SLOTS = 4;
-
+// SPONSORS TICKER — cinta infinita, sin jerarquía
+// ═══════════════════════════════════════════════
 function buildCarousel(){
-  const grid = document.getElementById('sponsors-grid');
-  if(!grid) return;
-  renderGrid();
-  if(SPONSORS.length > GRID_SLOTS) startGridRotation();
-}
-
-function renderGrid(){
-  const grid = document.getElementById('sponsors-grid');
-  if(!grid) return;
-  const visible = [];
-  for(let i=0;i<GRID_SLOTS;i++){
-    visible.push(SPONSORS[(gridOffset+i) % SPONSORS.length]);
-  }
-  grid.innerHTML = visible.map(s => {
+  const track = document.getElementById('sponsors-grid');
+  if(!track) return;
+  const all = [...SPONSORS, ...SPONSORS];
+  track.innerHTML = all.map(s => {
     const inner = s.image
       ? `<img src="${s.image}" alt="${s.name}" onerror="this.parentElement.innerHTML='<span>${s.name}</span>'">`
       : `<span>${s.name}</span>`;
-    const tag    = s.url&&s.url!=='#'?`a href="${s.url}" target="_blank" rel="noopener"`:'div';
-    const close  = s.url&&s.url!=='#'?'a':'div';
-    return `<${tag} class="sponsor-cell visible" style="text-decoration:none;">${inner}</${close}>`;
+    const tag   = s.url&&s.url!=='#' ? `a href="${s.url}" target="_blank" rel="noopener"` : 'div';
+    const close = s.url&&s.url!=='#' ? 'a' : 'div';
+    return `<${tag} class="sponsor-cell" style="text-decoration:none;">${inner}</${close}>`;
   }).join('');
-}
-
-function rotateGrid(){
-  const grid = document.getElementById('sponsors-grid');
-  if(!grid) return;
-  // fade out
-  grid.querySelectorAll('.sponsor-cell').forEach(c=>{
-    c.classList.remove('visible');
-    c.classList.add('fade');
-  });
-  setTimeout(()=>{
-    gridOffset = (gridOffset + GRID_SLOTS) % SPONSORS.length;
-    renderGrid();
-  }, 320);
-}
-
-function startGridRotation(){
-  if(gridTimer) clearInterval(gridTimer);
-  gridTimer = setInterval(rotateGrid, GRID_DELAY);
 }
 
 // ═══════════════════════════════════════════════

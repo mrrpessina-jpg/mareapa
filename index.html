@@ -847,6 +847,27 @@ const ACP_DATA = {
 // In production, populate from Amador PDF separately
 ACP_DATA.amador = ACP_DATA.diablo; // placeholder — replace with full Amador data
 
+// Río Bayano — same heights as Amador/Diablo, all times +60 minutes
+// Overflow flag (4th element) = 1 when event crosses midnight to next day
+function addMinutesToTideData(sourceData, minuteOffset) {
+  const result = {};
+  for (const m of Object.keys(sourceData)) {
+    result[m] = {};
+    for (const d of Object.keys(sourceData[m])) {
+      result[m][d] = sourceData[m][d].map(([hhmm, height, type]) => {
+        const s = String(hhmm).padStart(4, '0');
+        let totalMin = parseInt(s.slice(0,2))*60 + parseInt(s.slice(2,4)) + minuteOffset;
+        const overflow = totalMin >= 1440 ? 1 : 0;
+        const newH = Math.floor(totalMin / 60) % 24;
+        const newMin = totalMin % 60;
+        return [newH * 100 + newMin, height, type, overflow];
+      });
+    }
+  }
+  return result;
+}
+ACP_DATA.bayano = addMinutesToTideData(ACP_DATA.diablo, 60);
+
 // Limon Bay (Atlantic) — completely different tidal pattern (mixed, much smaller)
 ACP_DATA.limon = {
   1: {
@@ -901,7 +922,8 @@ let isDayMode = false;
 const locations = {
   pacific: [
     { id:'diablo',  name:'Diablo Heights', namEs:'Diablo Heights' },
-    { id:'amador',  name:'Amador',         namEs:'Amador' }
+    { id:'amador',  name:'Amador',         namEs:'Amador' },
+    { id:'bayano',  name:'Bayano River',   namEs:'Río Bayano' }
   ],
   atlantic: [
     { id:'limon',   name:'Limón Bay',      namEs:'Bahía Limón' }
@@ -1100,11 +1122,16 @@ function getTideData(locId, date){
   const d=date.getDate();
   const dayData=data[m]&&data[m][d];
   if(!dayData) return null;
-  return dayData.map(([hhmm,ht,type])=>({
-    time: parseHHMM(hhmm, date),
-    height: ht,
-    type: type
-  }));
+  return dayData.map((entry)=>{
+    const [hhmm, ht, type, overflow] = entry;
+    let tideDate = new Date(date);
+    if(overflow) tideDate.setDate(tideDate.getDate() + 1);
+    return {
+      time: parseHHMM(hhmm, tideDate),
+      height: ht,
+      type: type
+    };
+  });
 }
 
 function parseHHMM(hhmm, date){
@@ -1352,7 +1379,8 @@ function renderSolunar(){
 // ═══════════════════════════════════════════════
 const WEATHER_LOCS = {
   pacific:  {lat:8.967, lon:-79.533, nameEs:'Diablo / Amador', nameEn:'Diablo / Amador'},
-  atlantic: {lat:9.350, lon:-79.900, nameEs:'Bahía Limón / Caribe', nameEn:'Limón Bay / Caribbean'}
+  atlantic: {lat:9.350, lon:-79.900, nameEs:'Bahía Limón / Caribe', nameEn:'Limón Bay / Caribbean'},
+  bayano:   {lat:9.100, lon:-78.800, nameEs:'Río Bayano / Estuario', nameEn:'Bayano River / Estuary'}
 };
 
 function windDir(deg){
@@ -1389,7 +1417,7 @@ async function loadWeather(){
   if(!el) return;
   el.innerHTML=`<div class="wc-loading">${lang==='es'?'Cargando...':'Loading...'}</div>`;
   try{
-    const loc=WEATHER_LOCS[currentCoast];
+    const loc=WEATHER_LOCS[currentLoc==='bayano' ? 'bayano' : currentCoast];
     const url=`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=America%2FPanama&forecast_days=1`;
     const r=await fetch(url);
     const d=await r.json();

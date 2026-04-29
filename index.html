@@ -39,7 +39,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MareasPro">
-<link rel="manifest" href="/manifest.json">
+
 <!-- ═══ SCHEMA.ORG — tells Google what this app does ═══ -->
 <script type="application/ld+json">
 {
@@ -268,6 +268,18 @@ body.day-mode .link-source{color:#3a6080;}
 .links-loading{text-align:center;padding:20px;color:var(--muted);font-size:.75rem;letter-spacing:2px;}
 
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* PWA INSTALL BANNER */
+.pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#061428,#0d2240);border-top:1px solid rgba(41,184,232,.35);padding:14px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 -4px 24px rgba(0,0,0,.4);transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);}
+.pwa-banner.show{transform:translateY(0);}
+.pwa-banner-icon{width:44px;height:44px;border-radius:12px;overflow:hidden;flex-shrink:0;}
+.pwa-banner-icon img{width:100%;height:100%;object-fit:cover;}
+.pwa-banner-text{flex:1;}
+.pwa-banner-title{font-size:.88rem;font-weight:700;color:#e8f4f8;letter-spacing:.5px;}
+.pwa-banner-sub{font-size:.72rem;color:#29b8e8;margin-top:2px;}
+.pwa-banner-btn{padding:9px 18px;background:var(--teal);border:none;border-radius:8px;color:#061428;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.pwa-banner-btn:hover{background:#5dd8ff;}
+.pwa-banner-close{background:none;border:none;color:#6a8fa8;cursor:pointer;font-size:1.2rem;padding:4px;line-height:1;flex-shrink:0;}
+.pwa-banner-close:hover{color:#e8f4f8;}
 @media(max-width:560px){.logo-text{font-size:2rem;}.tide-height{font-size:3.2rem;}}
 
 /* ═══ NAUTICAL HEADER ACCENT ═══ */
@@ -431,6 +443,18 @@ body.day-mode .header-map-accent::after{
 </div>
 
 </div><!-- /app -->
+<!-- PWA INSTALL BANNER -->
+<div class="pwa-banner" id="pwa-banner">
+  <div class="pwa-banner-icon">
+    <img src="icon-192.png" alt="MareasPro">
+  </div>
+  <div class="pwa-banner-text">
+    <div class="pwa-banner-title">📱 Instala MareasPro GRATIS en tu teléfono</div>
+    <div class="pwa-banner-sub">Acceso rápido · Sin anuncios · Siempre disponible</div>
+  </div>
+  <button class="pwa-banner-btn" id="pwa-install-btn">Instalar</button>
+  <button class="pwa-banner-close" onclick="closePwaBanner()">✕</button>
+</div>
 <script>
 // ═══════════════════════════════════════════════
 // GOOGLE SHEET LINK — Replace with your Sheet ID
@@ -1082,7 +1106,6 @@ function selectLocation(id){
   document.querySelectorAll('.loc-btn').forEach(b=>b.classList.toggle('active',b.onclick.toString().includes(`'${id}'`)));
   renderLocationBar();
   renderTide();
-  loadWeather();
 }
 
 // ═══════════════════════════════════════════════
@@ -1610,8 +1633,8 @@ function renderLinks(links){
 const SPONSORS = [
   { name:'PescaYa',             image:'https://cdn.pescaya.com/upload/1752594855_cec30f6900c518d4b3fe.png', url:'https://pescaya.com/' },
   { name:'FF507',               image:'https://flyfishing507.com/wp-content/uploads/2025/11/Untitled-design-20.png', url:'https://flyfishing507.com/' },
-  { name:'Isthmus Gin',         image:'sponsor 3 ithmus gin.jpg', url:'https://www.instagram.com/isthmusdistilling/' },
-  { name:'Gatún Sport Fishing', image:'sponsor 4 gatunSF.jpg', url:'https://www.instagram.com/gatunsportfishing/' },
+  { name:'Isthmus Gin',         image:'sponsor 3 ithmus gin.jpg', url:'#' },
+  { name:'Gatún Sport Fishing', image:'sponsor 4 gatunSF.jpg', url:'#' },
 ];
 
 // ═══════════════════════════════════════════════
@@ -1680,6 +1703,41 @@ function init(){
   setInterval(loadWeather, 30*60*1000);
 }
 init();
+
+// ═══════════════════════════════════════════════
+// PWA INSTALL BANNER
+// ═══════════════════════════════════════════════
+let deferredPrompt = null;
+
+function closePwaBanner(){
+  document.getElementById('pwa-banner').classList.remove('show');
+  localStorage.setItem('pwa-banner-dismissed', '1');
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show banner if not dismissed before and not already installed
+  if(!localStorage.getItem('pwa-banner-dismissed')){
+    setTimeout(()=>{
+      document.getElementById('pwa-banner').classList.add('show');
+    }, 3000);
+  }
+});
+
+document.getElementById('pwa-install-btn').addEventListener('click', async () => {
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if(outcome === 'accepted'){
+    closePwaBanner();
+  }
+  deferredPrompt = null;
+});
+
+window.addEventListener('appinstalled', () => {
+  closePwaBanner();
+});
 </script>
 </body>
 </html>

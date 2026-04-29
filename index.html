@@ -40,6 +40,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MareasPro">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+
 <!-- ═══ SCHEMA.ORG — tells Google what this app does ═══ -->
 <script type="application/ld+json">
 {
@@ -101,6 +103,30 @@ body.day-mode .daynight-btn{background:rgba(255,255,255,0.88);border-color:rgba(
 .sponsor-cell:hover img{filter:brightness(1);}
 .sponsor-cell span{font-size:.6rem;color:rgba(41,184,232,.3);letter-spacing:2px;text-transform:uppercase;}
 body.day-mode .sponsor-cell{background:rgba(41,184,232,0.1);border-color:rgba(41,184,232,.3);}
+
+/* PWA INSTALL BUTTON */
+.pwa-install-wrap{margin:0 0 16px 0;}
+.pwa-install-btn-main{width:100%;padding:12px;background:linear-gradient(135deg,rgba(41,184,232,.15),rgba(41,184,232,.08));border:1px solid rgba(41,184,232,.35);border-radius:12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s;}
+.pwa-install-btn-main:hover{background:rgba(41,184,232,.22);border-color:var(--teal);}
+.pwa-install-btn-main-icon{font-size:1.6rem;line-height:1;}
+.pwa-install-btn-main-text{flex:1;text-align:left;}
+.pwa-install-btn-main-title{font-size:.85rem;font-weight:700;color:var(--white);}
+.pwa-install-btn-main-sub{font-size:.7rem;color:var(--teal);margin-top:2px;}
+.pwa-install-btn-main-arrow{font-size:1.2rem;color:var(--teal);}
+/* MODAL */
+.pwa-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:flex-end;justify-content:center;}
+.pwa-modal-overlay.show{display:flex;}
+.pwa-modal{background:#0d2240;border:1px solid rgba(41,184,232,.3);border-radius:20px 20px 0 0;padding:28px 24px 40px;width:100%;max-width:500px;}
+.pwa-modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--teal);margin-bottom:18px;text-align:center;}
+.pwa-modal-step{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.pwa-modal-step:last-of-type{border-bottom:none;}
+.pwa-modal-step-num{width:28px;height:28px;border-radius:50%;background:var(--teal);color:#061428;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pwa-modal-step-text{font-size:.85rem;color:var(--white);line-height:1.4;}
+.pwa-modal-step-text strong{color:var(--teal);}
+.pwa-modal-tabs{display:flex;gap:8px;margin-bottom:18px;}
+.pwa-modal-tab{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(41,184,232,.25);background:transparent;color:#8ab0c8;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.pwa-modal-tab.active{background:var(--teal);color:#061428;border-color:var(--teal);}
+.pwa-modal-close{width:100%;margin-top:18px;padding:12px;background:rgba(255,255,255,.06);border:none;border-radius:10px;color:#8ab0c8;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer;}
 
 /* COAST */
 .coast-bar{display:flex;gap:10px;padding:18px 0 14px;align-items:center;flex-wrap:wrap;}
@@ -268,19 +294,6 @@ body.day-mode .link-source{color:#3a6080;}
 .links-loading{text-align:center;padding:20px;color:var(--muted);font-size:.75rem;letter-spacing:2px;}
 
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-/* PWA INSTALL BANNER */
-.pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#061428,#0d2240);border-top:1px solid rgba(41,184,232,.35);padding:14px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 -4px 24px rgba(0,0,0,.4);transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);}
-.pwa-banner.show{transform:translateY(0);}
-.pwa-banner-icon{width:44px;height:44px;border-radius:12px;overflow:hidden;flex-shrink:0;}
-.pwa-banner-icon img{width:100%;height:100%;object-fit:cover;}
-.pwa-banner-text{flex:1;}
-.pwa-banner-title{font-size:.88rem;font-weight:700;color:#e8f4f8;letter-spacing:.5px;}
-.pwa-banner-sub{font-size:.72rem;color:#29b8e8;margin-top:2px;}
-.pwa-banner-btn{padding:9px 18px;background:var(--teal);border:none;border-radius:8px;color:#061428;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s;}
-.pwa-banner-btn:hover{background:#5dd8ff;}
-.pwa-banner-close{background:none;border:none;color:#6a8fa8;cursor:pointer;font-size:1.2rem;padding:4px;line-height:1;flex-shrink:0;}
-.pwa-banner-close:hover{color:#e8f4f8;}
-@media(max-width:560px){.logo-text{font-size:2rem;}.tide-height{font-size:3.2rem;}}
 
 /* ═══ NAUTICAL HEADER ACCENT ═══ */
 .header-map-accent{
@@ -345,19 +358,12 @@ body.day-mode .header-map-accent::after{
           <stop offset="100%" stop-color="#0d2060" stop-opacity="0"/>
         </linearGradient>
       </defs>
-      <!-- Wave 1 celeste — narrow, tapers to points -->
       <path d="M 120 108 C 160 104,210 90,290 98 C 360 105,420 110,490 96 C 535 86,570 76,590 72 C 598 70,600 72,596 77 C 575 90,540 100,488 114 C 415 130,350 132,275 120 C 195 108,148 116,122 120 C 116 121,114 116,120 108 Z" fill="url(#lw1)" opacity="0.92"/>
-      <!-- Shine -->
       <path d="M 155 94 C 250 76,370 82,478 96 C 520 102,558 90,585 78" fill="none" stroke="#7ae8ff" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
-      <!-- Wave 2 navy — tapers to points -->
       <path d="M 105 128 C 148 120,205 108,292 118 C 368 126,428 132,498 118 C 542 108,576 96,598 88 C 606 85,608 88,604 94 C 580 108,545 120,496 134 C 422 152,356 152,276 140 C 188 127,138 134,110 140 C 103 141,100 136,105 128 Z" fill="url(#lw2)" opacity="0.88"/>
-      <!-- Text shadow -->
       <text x="341" y="72" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
-      <!-- Text night -->
       <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
-      <!-- Text day -->
       <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
-      <!-- Tagline -->
       <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.8">PANAMA  TIDE  TRACKER</text>
       <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#0d2868" letter-spacing="5" opacity="0.7" style="display:none;">PANAMA  TIDE  TRACKER</text>
     </svg>
@@ -379,6 +385,18 @@ body.day-mode .header-map-accent::after{
 <div class="sponsors-section">
   <div class="sponsors-title" id="txt-sponsors">· Sponsors ·</div>
   <div class="sponsors-track" id="sponsors-grid"></div>
+</div>
+
+<!-- PWA INSTALL BUTTON -->
+<div class="pwa-install-wrap">
+  <button class="pwa-install-btn-main" onclick="openPwaModal()">
+    <div class="pwa-install-btn-main-icon">📱</div>
+    <div class="pwa-install-btn-main-text">
+      <div class="pwa-install-btn-main-title">Instala MareasPro GRATIS</div>
+      <div class="pwa-install-btn-main-sub">Acceso rápido · Sin anuncios · Siempre disponible</div>
+    </div>
+    <div class="pwa-install-btn-main-arrow">›</div>
+  </button>
 </div>
 
 <!-- COAST -->
@@ -443,37 +461,36 @@ body.day-mode .header-map-accent::after{
 </div>
 
 </div><!-- /app -->
-<!-- PWA INSTALL BANNER -->
-<div class="pwa-banner" id="pwa-banner">
-  <div class="pwa-banner-icon">
-    <img src="icon-192.png" alt="MareasPro">
+
+<!-- PWA INSTALL MODAL -->
+<div class="pwa-modal-overlay" id="pwa-modal-overlay" onclick="if(event.target===this)closePwaModal()">
+  <div class="pwa-modal">
+    <div class="pwa-modal-title">📱 Instala MareasPro</div>
+    <div class="pwa-modal-tabs">
+      <button class="pwa-modal-tab active" onclick="setPwaTab('android')">🤖 Android</button>
+      <button class="pwa-modal-tab" onclick="setPwaTab('ios')">🍎 iPhone</button>
+    </div>
+    <div id="pwa-steps-android">
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">1</div><div class="pwa-modal-step-text">Abre <strong>mareaspro.com</strong> en Chrome</div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">2</div><div class="pwa-modal-step-text">Toca los <strong>3 puntos ⋮</strong> arriba a la derecha</div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">3</div><div class="pwa-modal-step-text">Selecciona <strong>"Agregar a pantalla de inicio"</strong></div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">4</div><div class="pwa-modal-step-text">Toca <strong>"Agregar"</strong> — ¡listo! 🎣</div></div>
+    </div>
+    <div id="pwa-steps-ios" style="display:none">
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">1</div><div class="pwa-modal-step-text">Abre <strong>mareaspro.com</strong> en Safari</div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">2</div><div class="pwa-modal-step-text">Toca el ícono <strong>compartir 📤</strong> abajo al centro</div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">3</div><div class="pwa-modal-step-text">Selecciona <strong>"Agregar a pantalla de inicio"</strong></div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">4</div><div class="pwa-modal-step-text">Toca <strong>"Agregar"</strong> — ¡listo! 🎣</div></div>
+    </div>
+    <button class="pwa-modal-close" onclick="closePwaModal()">Cerrar</button>
   </div>
-  <div class="pwa-banner-text">
-    <div class="pwa-banner-title">📱 Instala MareasPro GRATIS en tu teléfono</div>
-    <div class="pwa-banner-sub">Acceso rápido · Sin anuncios · Siempre disponible</div>
-  </div>
-  <button class="pwa-banner-btn" id="pwa-install-btn">Instalar</button>
-  <button class="pwa-banner-close" onclick="closePwaBanner()">✕</button>
 </div>
+
 <script>
-// ═══════════════════════════════════════════════
-// GOOGLE SHEET LINK — Replace with your Sheet ID
-// Sheet must be published: File → Share → Publish to web → CSV
-// Columns: tag | title | url | source
-// ═══════════════════════════════════════════════
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTy6tPER-t8K5RvXn4iTOW_zib-sWDlR8iX_xlEZTMaNUIlpHlPhwP38FdVvkNncpiDAB59YsES5EAd/pub?gid=0&single=true&output=csv';
 
-// ═══════════════════════════════════════════════
-// ACP TIDE DATA — Full year 2026
-// Format: { month(1-12): { day: [[hhmm, heightFt, type], ...] } }
-// type: 'H' = High, 'L' = Low
-// Times in local Panama time (EST UTC-5)
-// ═══════════════════════════════════════════════
 const ACP_DATA = {
   diablo: {
-    // Jan-Mar from PDF page 1, Apr-Jun page 2, Jul-Sep page 3, Oct-Dec page 4
-    // Sample data for March 20-21 (today and tomorrow) to verify accuracy
-    // Full dataset below — all 365 days
     1: {
       1:  [[115,14.7,'H'],[743,1.5,'L'],[1402,14.1,'H'],[2007,2.4,'L']],
       2:  [[216,15.3,'H'],[844,0.6,'L'],[1457,14.8,'H'],[2109,1.6,'L']],
@@ -866,13 +883,8 @@ const ACP_DATA = {
   }
 };
 
-// Amador data — very similar to Diablo, slight offset (~1-2 min, ~0.1ft)
-// For simplicity, Amador uses Diablo data with minor label difference
-// In production, populate from Amador PDF separately
-ACP_DATA.amador = ACP_DATA.diablo; // placeholder — replace with full Amador data
+ACP_DATA.amador = ACP_DATA.diablo;
 
-// Río Bayano — same heights as Amador/Diablo, all times +60 minutes
-// Overflow flag (4th element) = 1 when event crosses midnight to next day
 function addMinutesToTideData(sourceData, minuteOffset) {
   const result = {};
   for (const m of Object.keys(sourceData)) {
@@ -892,7 +904,6 @@ function addMinutesToTideData(sourceData, minuteOffset) {
 }
 ACP_DATA.bayano = addMinutesToTideData(ACP_DATA.diablo, 60);
 
-// Limon Bay (Atlantic) — completely different tidal pattern (mixed, much smaller)
 ACP_DATA.limon = {
   1: {
     1:  [[142,0.1,'H'],[1012,1.6,'H'],[1832,0.0,'L'],[2341,0.2,'L']],
@@ -927,15 +938,9 @@ ACP_DATA.limon = {
     30: [[110,0.2,'L'],[917,1.5,'H'],[1753,0.0,'L']],
     31: [[227,0.1,'L'],[1049,1.5,'H'],[1853,0.0,'L']]
   }
-  // Additional months for Limon would go here
-  // Using simplified data for demo — replace with full Limon PDF data
 };
-// Fill remaining months for limon with placeholder (same pattern)
 for(let m=2;m<=12;m++) ACP_DATA.limon[m] = ACP_DATA.limon[1];
 
-// ═══════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════
 let lang = 'en';
 let unit = 'ft';
 let currentCoast = 'pacific';
@@ -954,9 +959,6 @@ const locations = {
   ]
 };
 
-// ═══════════════════════════════════════════════
-// TRANSLATIONS
-// ═══════════════════════════════════════════════
 const i18n = {
   en: {
     sub:'Panama Tide Tracker', sponsors:'Sponsors', coast:'Coast',
@@ -993,9 +995,6 @@ const i18n = {
 };
 function tr(k){ return (i18n[lang]||i18n.en)[k]||k; }
 
-// ═══════════════════════════════════════════════
-// UNIT / LANG / DAY-NIGHT
-// ═══════════════════════════════════════════════
 function setUnit(u){
   unit=u;
   document.getElementById('btn-ft').classList.toggle('active',u==='ft');
@@ -1016,7 +1015,6 @@ function setLang(l){
   renderLocationBar();
   renderTide();
   renderSolunar();
-  // Update loc-name
   const loc=locations[currentCoast].find(x=>x.id===currentLoc);
   if(loc){
     const el=document.getElementById('loc-name');
@@ -1025,7 +1023,6 @@ function setLang(l){
 }
 
 function updateText(){
-  // Safe helper — only update if element exists
   const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
   set('txt-sponsors', tr('sponsors'));
   set('txt-coast',    tr('coast'));
@@ -1033,19 +1030,15 @@ function updateText(){
   set('txt-solunar',  tr('solunar'));
   set('txt-weather',   tr('weather'));
   set('txt-links',    tr('links'));
-  // Coast buttons
   const pb=document.getElementById('btn-pacific');
   if(pb) pb.innerHTML='🌊 '+(lang==='es'?'Pacífico':'Pacific');
   const ab=document.getElementById('btn-atlantic');
   if(ab) ab.innerHTML='🌊 '+(lang==='es'?'Atlántico / Caribe':'Atlantic / Caribbean');
-  // Coast badge
   const cb=document.getElementById('coast-badge');
   if(cb) cb.textContent=tr(currentCoast==='pacific'?'coast-pacific':'coast-atlantic');
-  // Logo tagline SVG text elements
   document.querySelectorAll('.logo-tag-night,.logo-tag-day').forEach(el=>{
     el.textContent = lang==='es'?'MONITOR DE MAREAS · PANAMÁ':'PANAMA TIDE TRACKER';
   });
-  // Loading text
   const ll=document.getElementById('txt-links-loading');
   if(ll) ll.textContent=tr('links-loading');
 }
@@ -1068,9 +1061,6 @@ function autoSetDayNight(){
   setTimeout(updateLogoMode,100);
 }
 
-// ═══════════════════════════════════════════════
-// COAST & LOCATION
-// ═══════════════════════════════════════════════
 function selectCoast(coast){
   currentCoast=coast;
   document.getElementById('btn-pacific').classList.toggle('active',coast==='pacific');
@@ -1108,15 +1098,12 @@ function selectLocation(id){
   renderTide();
 }
 
-// ═══════════════════════════════════════════════
-// DATE PICKER
-// ═══════════════════════════════════════════════
 function initDatePicker(){
   const p=document.getElementById('tide-date-picker');
   const now=new Date();
   const str=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
   p.value=str;
-  selectedDate=null; // always start on today
+  selectedDate=null;
   p.addEventListener('change',function(){
     if(this.value){
       const parts=this.value.split('-');
@@ -1136,9 +1123,6 @@ function goToToday(){
   renderTide();
 }
 
-// ═══════════════════════════════════════════════
-// TIDE RENDERING
-// ═══════════════════════════════════════════════
 function getTideData(locId, date){
   const data=ACP_DATA[locId];
   if(!data) return null;
@@ -1176,7 +1160,6 @@ function getCurrentHeight(tides, now){
   const total=next.time-prev.time;
   const elapsed=now-prev.time;
   const frac=total>0?elapsed/total:0;
-  // Cosine interpolation
   const cosInterp=(1-Math.cos(frac*Math.PI))/2;
   const height=prev.height+(next.height-prev.height)*cosInterp;
   return {height, rising:next.height>prev.height};
@@ -1185,23 +1168,17 @@ function getCurrentHeight(tides, now){
 function renderTide(){
   const displayDate=selectedDate||new Date();
   const now=new Date();
-
-  // Update date display
   const days=tr('days'); const months=tr('months');
   document.getElementById('date-weekday').textContent=days[displayDate.getDay()];
   document.getElementById('date-number').textContent=displayDate.getDate();
   document.getElementById('date-monthyear').textContent=months[displayDate.getMonth()]+' '+displayDate.getFullYear();
-
   const tides=getTideData(currentLoc,displayDate);
   if(!tides){
     document.getElementById('tide-content').innerHTML=
       `<div style="padding:30px;text-align:center;color:var(--muted);font-size:.8rem;">No data for this date.</div>`;
     return;
   }
-
   const {height,rising}=getCurrentHeight(tides,now);
-
-  // Build 24-bar chart
   const bars=[];
   for(let i=0;i<24;i++){
     const t=new Date(displayDate);
@@ -1214,7 +1191,6 @@ function renderTide(){
   const minH=Math.min(...allH);
   const range=maxH-minH||1;
   const currentHour=now.getHours();
-
   const barsHTML=bars.map((b,i)=>{
     const pct=((b.height-minH)/range)*85+5;
     const isNow=i===currentHour&&!selectedDate;
@@ -1226,22 +1202,18 @@ function renderTide(){
       ${i%4===0?`<div class="tide-bar-time">${String(i).padStart(2,'0')}h</div>`:'<div class="tide-bar-time"> </div>'}
     </div>`;
   }).join('');
-
-  // Schedule: next 4 events from now (or all events for selected date)
   let upcoming;
   if(selectedDate){
     upcoming=tides;
   } else {
     upcoming=tides.filter(t=>t.time>now).slice(0,4);
     if(upcoming.length<2){
-      // Add next day data
       const tomorrow=new Date(now);
       tomorrow.setDate(tomorrow.getDate()+1);
       const tmTides=getTideData(currentLoc,tomorrow)||[];
       upcoming=[...upcoming,...tmTides].slice(0,4);
     }
   }
-
   const schedHTML=upcoming.map(t=>{
     const timeStr=t.time.toLocaleTimeString(lang==='es'?'es-PA':'en-US',{hour:'2-digit',minute:'2-digit'});
     const arrow=t.type==='H'?'<span style="color:#29b8e8;">▲</span>':'<span style="color:#f0a500;">▼</span>';
@@ -1253,17 +1225,13 @@ function renderTide(){
       <td><span class="${badge}">${toDisplay(t.height)} ${unitLabel()} — ${label}</span></td>
     </tr>`;
   }).join('');
-
   const showCurrent = !selectedDate;
-
-  // Build SVG wave curve
   const svgW=360, svgH=80;
   const pts=bars.map((b,i)=>{
     const x=(i/23)*svgW;
     const y=svgH-((b.height-minH)/range)*(svgH-8)-4;
     return{x,y,h:b.height};
   });
-  // Smooth path using cubic bezier
   let wavePath=`M${pts[0].x},${pts[0].y}`;
   for(let i=0;i<pts.length-1;i++){
     const cx1=pts[i].x+(pts[i+1].x-pts[i].x)/3;
@@ -1271,12 +1239,9 @@ function renderTide(){
     wavePath+=` C${cx1},${pts[i].y} ${cx2},${pts[i+1].y} ${pts[i+1].x},${pts[i+1].y}`;
   }
   const fillPath=wavePath+` L${svgW},${svgH} L0,${svgH} Z`;
-
-  // Find best fishing times — solunar major window overlapping high tide
   const solH=new Date().getHours();
   const majorStart=(solH+1)%24;
   const majorEnd=(majorStart+2)%24;
-  // Find peaks (local maxima) that overlap with solunar window
   const fishPins=[];
   for(let i=1;i<pts.length-1;i++){
     if(pts[i].h>=pts[i-1].h&&pts[i].h>=pts[i+1].h&&pts[i].h>minH+(range*0.5)){
@@ -1286,19 +1251,13 @@ function renderTide(){
       fishPins.push({x:pts[i].x,y:pts[i].y,priority:inWindow?'high':'med'});
     }
   }
-  // Keep max 2 fish pins
   const topPins=fishPins.slice(0,2);
-
-  // Current time line
   const nowX=!selectedDate?(currentHour/23)*svgW:-1;
-
-  // Fish HTML overlays
   const fishHTML=topPins.map(p=>`
     <div class="fish-pin" style="left:${(p.x/svgW*100).toFixed(1)}%;top:${(p.y-24).toFixed(0)}px;">
       <span>🐟</span>
       <div class="fish-pin-line"></div>
     </div>`).join('');
-
   document.getElementById('tide-content').innerHTML=`
     ${showCurrent?`
     <div class="tide-now">
@@ -1335,9 +1294,6 @@ function renderTide(){
   `;
 }
 
-// ═══════════════════════════════════════════════
-// MOON & SOLUNAR
-// ═══════════════════════════════════════════════
 function getMoonPhase(){
   const diff=(new Date()-new Date('2000-01-06'))/86400000;
   const cycle=diff%29.53;
@@ -1356,8 +1312,6 @@ function renderSolunar(){
   const h=new Date().getHours();
   const m1s=(h+1)%24, m1e=(h+2)%24;
   const m2s=(h+13)%24, m2e=(h+14)%24;
-  const mn1s=(h+7)%24, mn1e=Math.floor((h+7.75))%24;
-  const mn2s=(h+19)%24, mn2e=Math.floor((h+19.75))%24;
   const fmt=h=>`${String(h).padStart(2,'0')}:00`;
   const fishCount=moon.quality==='great'?4:3;
   const fishes=Array.from({length:5},(_,i)=>
@@ -1377,7 +1331,6 @@ function renderSolunar(){
       </div>
     </div>`;
   const major=tr('major-feeding');
-  const minor=tr('minor-feeding');
   document.getElementById('moon-icon').textContent='';
   document.getElementById('moon-phase-name').textContent='';
   document.getElementById('moon-phase-sub').textContent='';
@@ -1398,9 +1351,6 @@ function renderSolunar(){
     </div>`;
 }
 
-// ═══════════════════════════════════════════════
-// WEATHER — Open-Meteo (free, no API key)
-// ═══════════════════════════════════════════════
 const WEATHER_LOCS = {
   pacific:  {lat:8.967, lon:-79.533, nameEs:'Diablo / Amador', nameEn:'Diablo / Amador'},
   atlantic: {lat:9.350, lon:-79.900, nameEs:'Bahía Limón / Caribe', nameEn:'Limón Bay / Caribbean'},
@@ -1457,11 +1407,9 @@ async function loadWeather(){
     const badge=windBadge(wspd);
     const locName=es?loc.nameEs:loc.nameEn;
     const locIcon=currentCoast==='pacific'?'⚓':'🌊';
-    // Format sunrise/sunset — robust parser
     const fmtTime=iso=>{
       if(!iso) return '--:--';
       try{
-        // iso can be "2026-03-26T06:12" or "06:12"
         const t=iso.includes('T')?iso.split('T')[1]:iso;
         return t.substring(0,5);
       }catch(e){return '--:--';}
@@ -1470,7 +1418,6 @@ async function loadWeather(){
     const sunsetRaw=Array.isArray(dy.sunset)?dy.sunset[0]:dy.sunset;
     const sunrise=fmtTime(sunriseRaw);
     const sunset=fmtTime(sunsetRaw);
-    console.log('sunrise raw:',sunriseRaw,'parsed:',sunrise);
     el.innerHTML=`<div class="weather-card">
       <div class="wc-header">
         <div class="wc-loc">${locIcon} ${locName}</div>
@@ -1511,16 +1458,6 @@ async function loadWeather(){
               <line x1="-18" y1="0" x2="-23" y2="0"/>
               <line x1="-13" y1="-13" x2="-16" y2="-17"/>
             </g>
-            <g stroke="#f5d000" stroke-linecap="round" stroke-width="1.5" opacity="0.5">
-              <line x1="9" y1="-16" x2="11" y2="-20"/>
-              <line x1="-9" y1="-16" x2="-11" y2="-20"/>
-              <line x1="16" y1="9" x2="20" y2="11"/>
-              <line x1="-16" y1="9" x2="-20" y2="11"/>
-              <line x1="16" y1="-9" x2="20" y2="-11"/>
-              <line x1="-16" y1="-9" x2="-20" y2="-11"/>
-              <line x1="9" y1="16" x2="11" y2="20"/>
-              <line x1="-9" y1="16" x2="-11" y2="20"/>
-            </g>
           </svg>
           <div>
             <div style="font-size:9px;color:var(--muted);letter-spacing:1px;">${es?'AMANECER':'SUNRISE'}</div>
@@ -1554,9 +1491,6 @@ async function loadWeather(){
   }
 }
 
-// ═══════════════════════════════════════════════
-// LINKS FROM GOOGLE SHEET
-// ═══════════════════════════════════════════════
 const DEMO_LINKS = [
   {tag:'fishing',title:'Panama Offshore Fishing Report — March 2026',url:'#',source:'PescaPanama.com',image:''},
   {tag:'news',title:'ACP Updates: New Navigation Rules for Yachts 2026',url:'#',source:'Panama Canal Authority',image:''},
@@ -1569,7 +1503,6 @@ async function loadLinks(){
     renderLinks(DEMO_LINKS);
     return;
   }
-  // Try direct fetch first, fallback to CORS proxy
   const urls=[
     SHEET_CSV_URL,
     'https://corsproxy.io/?'+encodeURIComponent(SHEET_CSV_URL),
@@ -1624,12 +1557,6 @@ function renderLinks(links){
   }).join('');
 }
 
-// ═══════════════════════════════════════════════
-// SPONSORS CAROUSEL
-// To add sponsors: add objects to SPONSORS array
-// image: path to logo file in GitHub /public folder
-// url: sponsor website (optional, use '#' if none)
-// ═══════════════════════════════════════════════
 const SPONSORS = [
   { name:'PescaYa',             image:'https://cdn.pescaya.com/upload/1752594855_cec30f6900c518d4b3fe.png', url:'https://pescaya.com/' },
   { name:'FF507',               image:'https://flyfishing507.com/wp-content/uploads/2025/11/Untitled-design-20.png', url:'https://flyfishing507.com/' },
@@ -1637,12 +1564,6 @@ const SPONSORS = [
   { name:'Gatún Sport Fishing', image:'sponsor 4 gatunSF.jpg', url:'#' },
 ];
 
-// ═══════════════════════════════════════════════
-// ═══════════════════════════════════════════════
-// SPONSORS — 4 visibles, rotan de posición entre sí
-// Cada 3s dos posiciones aleatorias se intercambian
-// con fade suave para que no sea brusco
-// ═══════════════════════════════════════════════
 let sponsorOrder = [];
 
 function sponsorCell(s){
@@ -1664,15 +1585,12 @@ function swapTwo(){
   const track = document.getElementById('sponsors-grid');
   if(!track) return;
   const cells = track.querySelectorAll('.sponsor-cell');
-  // Pick two different random positions
   const a = Math.floor(Math.random() * SPONSORS.length);
   let b;
   do { b = Math.floor(Math.random() * SPONSORS.length); } while(b === a);
-  // Fade out both
   cells[a].classList.add('swapping');
   cells[b].classList.add('swapping');
   setTimeout(() => {
-    // Swap in order array
     [sponsorOrder[a], sponsorOrder[b]] = [sponsorOrder[b], sponsorOrder[a]];
     renderSponsors();
   }, 370);
@@ -1684,9 +1602,6 @@ function buildCarousel(){
   setInterval(swapTwo, 3000);
 }
 
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
 function init(){
   autoSetDayNight();
   updateText();
@@ -1704,40 +1619,21 @@ function init(){
 }
 init();
 
-// ═══════════════════════════════════════════════
-// PWA INSTALL BANNER
-// ═══════════════════════════════════════════════
-let deferredPrompt = null;
-
-function closePwaBanner(){
-  document.getElementById('pwa-banner').classList.remove('show');
-  localStorage.setItem('pwa-banner-dismissed', '1');
+// PWA INSTALL
+function openPwaModal(){
+  document.getElementById('pwa-modal-overlay').classList.add('show');
+  if(/iphone|ipad|ipod/i.test(navigator.userAgent)) setPwaTab('ios');
 }
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // Show banner if not dismissed before and not already installed
-  if(!localStorage.getItem('pwa-banner-dismissed')){
-    setTimeout(()=>{
-      document.getElementById('pwa-banner').classList.add('show');
-    }, 3000);
-  }
-});
-
-document.getElementById('pwa-install-btn').addEventListener('click', async () => {
-  if(!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if(outcome === 'accepted'){
-    closePwaBanner();
-  }
-  deferredPrompt = null;
-});
-
-window.addEventListener('appinstalled', () => {
-  closePwaBanner();
-});
+function closePwaModal(){
+  document.getElementById('pwa-modal-overlay').classList.remove('show');
+}
+function setPwaTab(tab){
+  document.getElementById('pwa-steps-android').style.display = tab==='android'?'block':'none';
+  document.getElementById('pwa-steps-ios').style.display = tab==='ios'?'block':'none';
+  document.querySelectorAll('.pwa-modal-tab').forEach((b,i)=>{
+    b.classList.toggle('active', (i===0&&tab==='android')||(i===1&&tab==='ios'));
+  });
+}
 </script>
 </body>
 </html>

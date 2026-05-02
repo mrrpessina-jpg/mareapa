@@ -495,14 +495,18 @@ body.day-mode .header-map-accent::after{
           <span class="wiz-opt-label" id="wiz-finde-label">Fin de semana</span>
           <span class="wiz-opt-sub" id="wiz-finde-sub"></span>
         </button>
-        <button class="wiz-opt wiz-opt-calendar" onclick="toggleCalendar()">
+        <div class="wiz-opt wiz-opt-calendar" onclick="toggleCalendar()" id="wiz-cal-btn">
           <span class="wiz-opt-icon">📆</span>
-          <span class="wiz-opt-label" id="wiz-cal-label">Elige una fecha</span>
-          <span class="wiz-opt-sub" id="wiz-cal-sub">Cualquier día del año</span>
-        </button>
-      </div>
-      <div id="wiz-calendar-wrap" style="display:none;margin-top:12px;">
-        <input type="date" id="wiz-date-input" class="wiz-date-input" onchange="wizPickDate('custom')">
+          <div style="flex:1;">
+            <span class="wiz-opt-label" id="wiz-cal-label">Elige una fecha</span>
+            <span class="wiz-opt-sub" id="wiz-cal-sub">Cualquier día del año</span>
+          </div>
+          <span style="font-size:1.2rem;color:var(--teal);" id="wiz-cal-arrow">▼</span>
+        </div>
+        <div id="wiz-calendar-wrap" style="display:none;margin-top:-6px;padding:14px 16px;background:rgba(41,184,232,.08);border:1.5px solid var(--teal);border-radius:0 0 14px 14px;">
+          <div style="font-size:.7rem;color:var(--teal);letter-spacing:1px;margin-bottom:8px;" id="wiz-cal-hint">Toca para seleccionar la fecha</div>
+          <input type="date" id="wiz-date-input" class="wiz-date-input" onchange="wizPickDate('custom')">
+        </div>
       </div>
     </div>
 
@@ -1209,8 +1213,15 @@ function toDisplay(ft){
 
 function setLang(l){
   lang=l;
-  document.getElementById('btn-en').classList.toggle('active',l==='en');
-  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  const be=document.getElementById('btn-en');
+  const bs=document.getElementById('btn-es');
+  if(be) be.classList.toggle('active',l==='en');
+  if(bs) bs.classList.toggle('active',l==='es');
+  const we=document.getElementById('wiz-btn-en');
+  const ws=document.getElementById('wiz-btn-es');
+  if(we) we.classList.toggle('active',l==='en');
+  if(ws) ws.classList.toggle('active',l==='es');
+  wizInit();
   updateText();
   renderLocationBar();
   renderTide();
@@ -1834,6 +1845,7 @@ function wizInit(){
   setTxt('wiz-cal-label',lang==='es'?'Elige una fecha':'Choose a date');
   setTxt('wiz-cal-sub',lang==='es'?'Cualquier día del año':'Any day of the year');
   setTxt('wiz-back-label',lang==='es'?'Volver':'Back');
+  setTxt('wiz-cal-hint',lang==='es'?'Toca para seleccionar la fecha':'Tap to select a date');
   checkLastQuery();
 }
 
@@ -1892,8 +1904,15 @@ function wizBack(){
 
 function toggleCalendar(){
   const wrap=document.getElementById('wiz-calendar-wrap');
-  wrap.style.display=wrap.style.display==='none'?'block':'none';
-  if(wrap.style.display==='block') document.getElementById('wiz-date-input').focus();
+  const arrow=document.getElementById('wiz-cal-arrow');
+  const hint=document.getElementById('wiz-cal-hint');
+  const btn=document.getElementById('wiz-cal-btn');
+  const isOpen=wrap.style.display==='block';
+  wrap.style.display=isOpen?'none':'block';
+  if(arrow) arrow.textContent=isOpen?'▼':'▲';
+  if(hint) hint.textContent=lang==='es'?'Toca para seleccionar la fecha':'Tap to select a date';
+  if(btn) btn.style.borderRadius=isOpen?'14px':'14px 14px 0 0';
+  if(!isOpen) document.getElementById('wiz-date-input').focus();
 }
 
 function wizPickDate(type){

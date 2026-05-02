@@ -60,6 +60,7 @@
 }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root {
   --ocean:#0a1628; --mid:#0d2240; --surface:#122d52;
@@ -103,6 +104,55 @@ body.day-mode .daynight-btn{background:rgba(255,255,255,0.88);border-color:rgba(
 .sponsor-cell:hover img{filter:brightness(1);}
 .sponsor-cell span{font-size:.6rem;color:rgba(41,184,232,.3);letter-spacing:2px;text-transform:uppercase;}
 body.day-mode .sponsor-cell{background:rgba(41,184,232,0.1);border-color:rgba(41,184,232,.3);}
+
+/* FISHING ASSISTANT */
+.fishing-assistant{margin:0 0 16px 0;}
+.fa-title{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal);font-weight:700;text-align:center;margin-bottom:10px;}
+.fa-steps{display:flex;flex-direction:column;gap:0;}
+.fa-step{display:none;}
+.fa-step.fa-active{display:block;}
+.fa-question{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:10px;text-align:center;}
+.fa-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.fa-options.triple{grid-template-columns:1fr 1fr 1fr;}
+.fa-opt{background:rgba(6,20,40,0.82);border:1px solid rgba(41,184,232,.2);border-radius:10px;padding:10px 8px;cursor:pointer;text-align:center;transition:all .2s;}
+.fa-opt:hover{border-color:var(--teal);background:rgba(41,184,232,.08);}
+.fa-opt.fa-selected{border:1.5px solid var(--teal);background:rgba(41,184,232,.15);}
+.fa-opt-icon{font-size:1.3rem;margin-bottom:4px;}
+.fa-opt-label{font-size:.72rem;font-weight:600;color:var(--white);}
+.fa-opt-sub{font-size:.6rem;color:var(--muted);margin-top:2px;}
+.fa-calendar-wrap{margin-top:8px;}
+.fa-calendar-wrap input[type=date]{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(41,184,232,.2);border-radius:8px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.78rem;padding:10px;outline:none;cursor:pointer;}
+body.day-mode .fa-opt{background:rgba(255,255,255,0.85);color:#1a5080;}
+body.day-mode .fa-opt.fa-selected{background:rgba(41,184,232,.2);}
+
+/* SHARE SECTION */
+.share-section{margin:0 0 18px 0;background:var(--card);backdrop-filter:blur(12px);border:1px solid rgba(41,184,232,.12);border-radius:16px;padding:18px 22px;}
+.share-title{font-size:.75rem;font-weight:600;color:var(--white);text-align:center;margin-bottom:4px;}
+.share-sub{font-size:.65rem;color:var(--muted);text-align:center;margin-bottom:14px;}
+.share-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.share-btn{border-radius:10px;padding:12px 8px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:none;transition:all .2s;}
+.share-btn-galeria{background:rgba(41,184,232,.12);border:1px solid rgba(41,184,232,.35);}
+.share-btn-galeria:hover{background:rgba(41,184,232,.22);}
+.share-btn-wp{background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.35);}
+.share-btn-wp:hover{background:rgba(37,211,102,.22);}
+.share-btn-label{font-size:.75rem;font-weight:600;}
+.share-btn-galeria .share-btn-label{color:#29b8e8;}
+.share-btn-wp .share-btn-label{color:#25d366;}
+
+/* HIDDEN SHARE CARD — rendered offscreen for image capture */
+#share-card{position:absolute;left:-9999px;top:0;width:375px;background:#061428;padding:20px;font-family:'DM Sans',sans-serif;}
+#share-card .sc-logo{font-size:1.4rem;font-weight:700;color:#e8f4f8;letter-spacing:1px;margin-bottom:4px;}
+#share-card .sc-logo span{color:#29b8e8;}
+#share-card .sc-tagline{font-size:.55rem;letter-spacing:4px;color:#6a8fa8;text-transform:uppercase;margin-bottom:16px;}
+#share-card .sc-block{background:rgba(18,45,82,0.9);border:1px solid rgba(41,184,232,.2);border-radius:12px;padding:14px;margin-bottom:10px;}
+#share-card .sc-block-title{font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#29b8e8;margin-bottom:10px;}
+#share-card .sc-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+#share-card .sc-row:last-child{border-bottom:none;}
+#share-card .sc-label{font-size:.7rem;color:#6a8fa8;}
+#share-card .sc-val{font-size:.78rem;font-weight:600;color:#e8f4f8;}
+#share-card .sc-high{color:#29b8e8;}
+#share-card .sc-low{color:#f0a500;}
+#share-card .sc-url{font-size:.55rem;color:#6a8fa8;text-align:center;margin-top:14px;letter-spacing:2px;}
 
 /* PWA INSTALL BUTTON */
 .pwa-install-wrap{margin:0 0 16px 0;}
@@ -399,6 +449,52 @@ body.day-mode .header-map-accent::after{
   </button>
 </div>
 
+<!-- FISHING ASSISTANT -->
+<div class="fishing-assistant">
+  <div class="fa-title">🎣 ¿A dónde vas a pescar?</div>
+  <div class="fa-steps">
+    <div class="fa-step fa-active" id="fa-step1">
+      <div class="fa-question">¿Dónde vas a pescar?</div>
+      <div class="fa-options triple">
+        <div class="fa-opt" onclick="faPickZone('pacific')">
+          <div class="fa-opt-icon">🌊</div>
+          <div class="fa-opt-label">Pacífico</div>
+          <div class="fa-opt-sub">Diablo · Amador</div>
+        </div>
+        <div class="fa-opt" onclick="faPickZone('atlantic')">
+          <div class="fa-opt-icon">⚓</div>
+          <div class="fa-opt-label">Atlántico</div>
+          <div class="fa-opt-sub">Bahía Limón</div>
+        </div>
+        <div class="fa-opt" onclick="faPickZone('bayano')">
+          <div class="fa-opt-icon">🏞️</div>
+          <div class="fa-opt-label">Bayano</div>
+          <div class="fa-opt-sub">Río / Estuario</div>
+        </div>
+      </div>
+    </div>
+    <div class="fa-step" id="fa-step2">
+      <div class="fa-question">¿Cuándo vas a pescar?</div>
+      <div class="fa-options">
+        <div class="fa-opt" onclick="faPickDate('hoy')">
+          <div class="fa-opt-icon">📅</div>
+          <div class="fa-opt-label">Hoy</div>
+          <div class="fa-opt-sub" id="fa-today-label"></div>
+        </div>
+        <div class="fa-opt" onclick="faPickDate('finde')">
+          <div class="fa-opt-icon">🗓️</div>
+          <div class="fa-opt-label">Fin de semana</div>
+          <div class="fa-opt-sub" id="fa-finde-label"></div>
+        </div>
+      </div>
+      <div class="fa-calendar-wrap" style="margin-top:10px;">
+        <div style="font-size:.65rem;color:var(--muted);text-align:center;margin-bottom:6px;letter-spacing:1px;">O elige una fecha</div>
+        <input type="date" id="fa-date-input" onchange="faPickDate('custom')">
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- COAST -->
 <div class="coast-bar">
   <span class="coast-label" id="txt-coast">Coast</span>
@@ -450,6 +546,22 @@ body.day-mode .header-map-accent::after{
       <div class="card-title"><span class="dot"></span><span id="txt-weather">Clima &amp; Viento</span> <span style="font-size:.6rem;color:var(--muted);letter-spacing:1px;font-weight:400;">Open-Meteo</span></div>
       <div id="weather-content"><div class="wc-loading" id="txt-weather-loading">Cargando...</div></div>
     </div>
+    <!-- SHARE SECTION -->
+    <div class="share-section">
+      <div class="share-title">¿Quieres guardar un resumen de esta info?</div>
+      <div class="share-sub">Guárdalo antes de salir · Funciona sin señal</div>
+      <div class="share-btns">
+        <button class="share-btn share-btn-galeria" onclick="saveToGallery()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#29b8e8" stroke-width="2" stroke-linecap="round"><path d="M12 15V3M7 10l5 5 5-5"/><rect x="3" y="17" width="18" height="4" rx="2"/></svg>
+          <span class="share-btn-label">Guardar en galería</span>
+        </button>
+        <button class="share-btn share-btn-wp" onclick="shareWhatsApp()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#25d366"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.1-1.34A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm4.64 13.41c-.19.54-1.12 1.03-1.54 1.09-.42.06-.96.09-1.55-.1-.36-.11-.82-.26-1.4-.51-2.46-1.06-4.07-3.54-4.19-3.71-.12-.17-.98-1.3-.98-2.49 0-1.18.62-1.77.84-2.01.22-.24.48-.3.64-.3.16 0 .32 0 .46.01.15.01.35-.06.55.42.2.49.68 1.68.74 1.8.06.12.1.27.02.43-.08.16-.12.26-.24.4-.12.14-.25.32-.36.43-.12.12-.24.24-.1.48.14.24.62.99 1.33 1.6.91.8 1.68 1.05 1.92 1.17.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.18.46.28.06.1.06.58-.13 1.12z"/></svg>
+          <span class="share-btn-label">Compartir WhatsApp</span>
+        </button>
+      </div>
+    </div>
+
     <!-- LINKS -->
     <div class="card">
       <div class="card-title"><span class="dot"></span><span id="txt-links">Links &amp; News</span></div>
@@ -461,6 +573,25 @@ body.day-mode .header-map-accent::after{
 </div>
 
 </div><!-- /app -->
+
+<!-- HIDDEN SHARE CARD for image capture -->
+<div id="share-card">
+  <div class="sc-logo">Mareas<span>Pro</span></div>
+  <div class="sc-tagline">Panama Tide Tracker · mareaspro.com</div>
+  <div class="sc-block" id="sc-tides-block">
+    <div class="sc-block-title">🌊 Mareas</div>
+    <div id="sc-tides-rows"></div>
+  </div>
+  <div class="sc-block" id="sc-weather-block">
+    <div class="sc-block-title">☀️ Clima &amp; Viento</div>
+    <div id="sc-weather-rows"></div>
+  </div>
+  <div class="sc-block" id="sc-moon-block">
+    <div class="sc-block-title">🌕 Luna &amp; Solunar</div>
+    <div id="sc-moon-rows"></div>
+  </div>
+  <div class="sc-url">mareaspro.com · Datos ACP Panamá</div>
+</div>
 
 <!-- PWA INSTALL MODAL -->
 <div class="pwa-modal-overlay" id="pwa-modal-overlay" onclick="if(event.target===this)closePwaModal()">
@@ -1608,6 +1739,7 @@ function init(){
   updateCoastBadge();
   renderLocationBar();
   initDatePicker();
+  faInit();
   renderTide();
   renderSolunar();
   loadLinks();
@@ -1618,6 +1750,159 @@ function init(){
   setInterval(loadWeather, 30*60*1000);
 }
 init();
+
+// FISHING ASSISTANT
+let faZone = null;
+
+function faInit(){
+  const now = new Date();
+  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  document.getElementById('fa-today-label').textContent =
+    days[now.getDay()]+' '+now.getDate()+' '+months[now.getMonth()];
+  const nextSat = new Date(now);
+  nextSat.setDate(now.getDate() + (6 - now.getDay() + 7) % 7 || 7);
+  const nextSun = new Date(nextSat);
+  nextSun.setDate(nextSat.getDate()+1);
+  document.getElementById('fa-finde-label').textContent =
+    'Sáb '+nextSat.getDate()+' — Dom '+nextSun.getDate()+' '+months[nextSat.getMonth()];
+  const minDate = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  document.getElementById('fa-date-input').min = minDate;
+  document.getElementById('fa-date-input').value = '';
+}
+
+function faPickZone(zone){
+  faZone = zone;
+  document.querySelectorAll('#fa-step1 .fa-opt').forEach(o=>o.classList.remove('fa-selected'));
+  event.currentTarget.classList.add('fa-selected');
+  selectCoast(zone === 'bayano' ? 'pacific' : zone);
+  if(zone === 'bayano') selectLocation('bayano');
+  setTimeout(()=>{
+    document.getElementById('fa-step1').classList.remove('fa-active');
+    document.getElementById('fa-step2').classList.add('fa-active');
+    document.querySelector('.fa-title').textContent = '🗓️ ¿Cuándo vas a pescar?';
+  }, 300);
+}
+
+function faPickDate(type){
+  const now = new Date();
+  if(type === 'hoy'){
+    selectedDate = null;
+    const str = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    document.getElementById('tide-date-picker').value = str;
+    renderTide();
+    document.querySelectorAll('#fa-step2 .fa-opt').forEach(o=>o.classList.remove('fa-selected'));
+    event.currentTarget.classList.add('fa-selected');
+  } else if(type === 'finde'){
+    const nextSat = new Date(now);
+    nextSat.setDate(now.getDate() + (6 - now.getDay() + 7) % 7 || 7);
+    selectedDate = nextSat;
+    const str = `${nextSat.getFullYear()}-${String(nextSat.getMonth()+1).padStart(2,'0')}-${String(nextSat.getDate()).padStart(2,'0')}`;
+    document.getElementById('tide-date-picker').value = str;
+    renderTide();
+    document.querySelectorAll('#fa-step2 .fa-opt').forEach(o=>o.classList.remove('fa-selected'));
+    event.currentTarget.classList.add('fa-selected');
+  } else if(type === 'custom'){
+    const val = document.getElementById('fa-date-input').value;
+    if(!val) return;
+    const parts = val.split('-');
+    selectedDate = new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+    document.getElementById('tide-date-picker').value = val;
+    renderTide();
+    document.querySelectorAll('#fa-step2 .fa-opt').forEach(o=>o.classList.remove('fa-selected'));
+  }
+  document.querySelector('.fishing-assistant').style.opacity = '0.6';
+  setTimeout(()=>{ document.querySelector('.fishing-assistant').style.opacity = '1'; },400);
+  document.querySelector('.main-grid').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// SHARE / SAVE
+function buildShareCard(){
+  const displayDate = selectedDate || new Date();
+  const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const tides = getTideData(currentLoc, displayDate);
+  const loc = locations[currentCoast].find(l=>l.id===currentLoc);
+  const locName = lang==='es'?loc.namEs:loc.name;
+
+  let tidesHTML = `<div class="sc-row"><span class="sc-label" style="color:#29b8e8;font-size:.65rem;">${locName} · ${days[displayDate.getDay()]} ${displayDate.getDate()} ${months[displayDate.getMonth()]}</span></div>`;
+  if(tides){
+    tides.forEach(t=>{
+      const timeStr = t.time.toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'});
+      const isHigh = t.type==='H';
+      tidesHTML += `<div class="sc-row">
+        <span class="sc-label">${isHigh?'▲ Alta':'▼ Baja'}</span>
+        <span class="sc-val ${isHigh?'sc-high':'sc-low'}">${timeStr} · ${toDisplay(t.height)} ${unitLabel()}</span>
+      </div>`;
+    });
+  }
+  document.getElementById('sc-tides-rows').innerHTML = tidesHTML;
+
+  const weatherEl = document.getElementById('weather-content');
+  const temp = weatherEl.querySelector('.wc-temp');
+  const desc = weatherEl.querySelector('.wc-desc');
+  const windSpd = weatherEl.querySelector('.wc-wind-spd');
+  const windDir = weatherEl.querySelector('.wc-wind-dir');
+  const sunrise = weatherEl.querySelectorAll('[style*="f5d000"]')[1];
+  const sunset  = weatherEl.querySelectorAll('[style*="ff8030"]')[1];
+  document.getElementById('sc-weather-rows').innerHTML = `
+    <div class="sc-row"><span class="sc-label">Temperatura</span><span class="sc-val">${temp?temp.textContent.trim():'-'}</span></div>
+    <div class="sc-row"><span class="sc-label">Condición</span><span class="sc-val">${desc?desc.textContent:'-'}</span></div>
+    <div class="sc-row"><span class="sc-label">Viento</span><span class="sc-val">${windSpd?windSpd.textContent:'-'} km/h ${windDir?windDir.textContent:''}</span></div>
+    <div class="sc-row"><span class="sc-label">Amanecer / Atardecer</span><span class="sc-val">${sunrise?sunrise.textContent:'-'} / ${sunset?sunset.textContent:'-'}</span></div>
+  `;
+
+  const moon = getMoonPhase();
+  const h = new Date().getHours();
+  const m1s=(h+1)%24,m1e=(h+2)%24,m2s=(h+13)%24,m2e=(h+14)%24;
+  const fmt=h=>`${String(h).padStart(2,'0')}:00`;
+  document.getElementById('sc-moon-rows').innerHTML = `
+    <div class="sc-row"><span class="sc-label">Fase lunar</span><span class="sc-val">${moon.icon} ${moon.name}</span></div>
+    <div class="sc-row"><span class="sc-label">Actividad</span><span class="sc-val sc-high">${moon.quality==='great'?'⭐ Excelente':'● Buena'}</span></div>
+    <div class="sc-row"><span class="sc-label">Ventana principal</span><span class="sc-val">${fmt(m1s)} — ${fmt(m1e)}</span></div>
+    <div class="sc-row"><span class="sc-label">Ventana secundaria</span><span class="sc-val">${fmt(m2s)} — ${fmt(m2e)}</span></div>
+  `;
+}
+
+async function saveToGallery(){
+  buildShareCard();
+  const card = document.getElementById('share-card');
+  card.style.left = '-9999px';
+  card.style.position = 'absolute';
+  document.body.appendChild(card);
+  try{
+    const canvas = await html2canvas(card, {backgroundColor:'#061428', scale:2, useCORS:true});
+    const link = document.createElement('a');
+    link.download = 'mareaspro-mareas.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch(e){
+    alert('No se pudo generar la imagen. Intenta de nuevo.');
+  }
+}
+
+async function shareWhatsApp(){
+  buildShareCard();
+  const card = document.getElementById('share-card');
+  try{
+    const canvas = await html2canvas(card, {backgroundColor:'#061428', scale:2, useCORS:true});
+    canvas.toBlob(async(blob)=>{
+      if(navigator.share && navigator.canShare({files:[new File([blob],'mareaspro.png',{type:'image/png'})]})){
+        await navigator.share({
+          files:[new File([blob],'mareaspro.png',{type:'image/png'})],
+          title:'MareasPro — Mareas Panamá',
+          text:'Mira las mareas de hoy en MareasPro 🎣 mareaspro.com'
+        });
+      } else {
+        const url = `https://wa.me/?text=${encodeURIComponent('🎣 Mareas Panamá — MareasPro\nmareaspro.com\n\nConsulta mareas, clima y solunar en tiempo real.')}`;
+        window.open(url,'_blank');
+      }
+    },'image/png');
+  } catch(e){
+    const url = `https://wa.me/?text=${encodeURIComponent('🎣 Mareas Panamá — MareasPro\nmareaspro.com')}`;
+    window.open(url,'_blank');
+  }
+}
 
 // PWA INSTALL
 function openPwaModal(){

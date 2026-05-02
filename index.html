@@ -653,17 +653,17 @@ body.day-mode .header-map-accent::after{
 
 <div id="share-card" style="position:absolute;left:-9999px;top:0;width:375px;background:#061428;padding:20px;font-family:Arial,sans-serif;">
   <div style="font-size:22px;font-weight:700;color:#e8f4f8;margin-bottom:4px;">Mareas<span style="color:#29b8e8;">Pro</span></div>
-  <div style="font-size:9px;letter-spacing:3px;color:#6a8fa8;text-transform:uppercase;margin-bottom:14px;">Panama Tide Tracker</div>
+  <div id="sc-tagline" style="font-size:9px;letter-spacing:3px;color:#6a8fa8;text-transform:uppercase;margin-bottom:14px;">Panama Tide Tracker</div>
   <div id="sc-block1" style="background:rgba(18,45,82,0.9);border:1px solid rgba(41,184,232,.2);border-radius:10px;padding:12px;margin-bottom:8px;">
-    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Mareas</div>
+    <div id="sc-title1" style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Mareas</div>
     <div id="sc-tides-rows"></div>
   </div>
   <div id="sc-block2" style="background:rgba(18,45,82,0.9);border:1px solid rgba(41,184,232,.2);border-radius:10px;padding:12px;margin-bottom:8px;">
-    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Clima y Viento</div>
+    <div id="sc-title2" style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Clima y Viento</div>
     <div id="sc-weather-rows"></div>
   </div>
   <div id="sc-block3" style="background:rgba(18,45,82,0.9);border:1px solid rgba(41,184,232,.2);border-radius:10px;padding:12px;margin-bottom:8px;">
-    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Luna y Solunar</div>
+    <div id="sc-title3" style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Luna y Solunar</div>
     <div id="sc-moon-rows"></div>
   </div>
   <div style="font-size:9px;color:#6a8fa8;text-align:center;margin-top:10px;letter-spacing:2px;">mareaspro.com</div>
@@ -1981,38 +1981,48 @@ function goToWizard(){
 
 // SHARE
 function buildShareCard(){
+  const es=lang==='es';
   const displayDate=selectedDate||new Date();
-  const months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const days=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const months=es?['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']:['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const days=es?['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado']:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const tides=getTideData(currentLoc,displayDate);
   const loc=locations[currentCoast].find(l=>l.id===currentLoc);
-  const locName=lang==='es'?loc.namEs:loc.name;
+  const locName=es?loc.namEs:loc.name;
   const row=(label,val,col)=>'<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px;"><span style="color:#6a8fa8;">'+label+'</span><span style="font-weight:600;color:'+(col||'#e8f4f8')+';">'+val+'</span></div>';
+
+  // Translate block titles
+  document.getElementById('sc-tagline').textContent='Panama Tide Tracker';
+  document.getElementById('sc-title1').textContent=es?'Mareas':'Tides';
+  document.getElementById('sc-title2').textContent=es?'Clima y Viento':'Weather & Wind';
+  document.getElementById('sc-title3').textContent=es?'Luna y Solunar':'Moon & Solunar';
+
   let tidesHTML='<div style="font-size:10px;color:#29b8e8;padding:4px 0;">'+locName+' · '+days[displayDate.getDay()]+' '+displayDate.getDate()+' '+months[displayDate.getMonth()]+'</div>';
   if(tides){
     tides.forEach(function(t){
-      var timeStr=t.time.toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'});
+      var timeStr=t.time.toLocaleTimeString(es?'es-PA':'en-US',{hour:'2-digit',minute:'2-digit'});
       var isH=t.type==='H';
-      tidesHTML+=row(isH?'Alta':'Baja',timeStr+' · '+toDisplay(t.height)+' '+unitLabel(),isH?'#29b8e8':'#f0a500');
+      tidesHTML+=row(isH?(es?'Alta':'High'):(es?'Baja':'Low'),timeStr+' · '+toDisplay(t.height)+' '+unitLabel(),isH?'#29b8e8':'#f0a500');
     });
   }
   document.getElementById('sc-tides-rows').innerHTML=tidesHTML;
+
   const wxEl=document.getElementById('weather-content');
   const temp=wxEl.querySelector('.wc-temp');
   const desc=wxEl.querySelector('.wc-desc');
   const wspd=wxEl.querySelector('.wc-wind-spd');
   const wdir=wxEl.querySelector('.wc-wind-dir');
   document.getElementById('sc-weather-rows').innerHTML=
-    row('Temperatura',temp?temp.textContent.trim():'-')+
-    row('Condición',desc?desc.textContent:'-')+
-    row('Viento',(wspd?wspd.textContent:'-')+' km/h '+(wdir?wdir.textContent:''));
+    row(es?'Temperatura':'Temperature',temp?temp.textContent.trim():'-')+
+    row(es?'Condición':'Condition',desc?desc.textContent:'-')+
+    row(es?'Viento':'Wind',(wspd?wspd.textContent:'-')+' km/h '+(wdir?wdir.textContent:''));
+
   const moon=getMoonPhase();
   const h=new Date().getHours();
   const fmt=function(x){return String(x).padStart(2,'0')+':00';};
   document.getElementById('sc-moon-rows').innerHTML=
-    row('Fase lunar',moon.icon+' '+moon.name)+
-    row('Actividad',moon.quality==='great'?'Excelente':'Buena','#29b8e8')+
-    row('Mejor ventana',fmt((h+1)%24)+' — '+fmt((h+2)%24));
+    row(es?'Fase lunar':'Moon phase',moon.icon+' '+moon.name)+
+    row(es?'Actividad':'Activity',moon.quality==='great'?(es?'Excelente':'Excellent'):(es?'Buena':'Good'),'#29b8e8')+
+    row(es?'Mejor ventana':'Best window',fmt((h+1)%24)+' — '+fmt((h+2)%24));
 }
 
 async function saveToGallery(){

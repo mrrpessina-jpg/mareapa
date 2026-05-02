@@ -376,20 +376,20 @@ body.day-mode .link-source{color:#3a6080;}
   background-image:url('navionics-bg.jpg');
   background-size:cover;
   background-position:center 42%;
-  filter:blur(1.5px) brightness(0.28) saturate(1.1);
+  filter:blur(0.5px) brightness(0.45) saturate(1.2);
   transform:scale(1.03);
-  border-radius:0 0 0 0;
   z-index:0;
   pointer-events:none;
+  transition:filter .6s;
 }
 .header-map-accent::after{
   content:'';
   position:absolute;
   inset:0;
   background:linear-gradient(180deg,
-    rgba(4,12,24,0.45) 0%,
-    rgba(4,12,24,0.15) 50%,
-    rgba(4,12,24,0.75) 100%
+    rgba(4,12,24,0.35) 0%,
+    rgba(4,12,24,0.05) 50%,
+    rgba(4,12,24,0.55) 100%
   );
 }
 header{
@@ -400,13 +400,14 @@ header{
 }
 header > *{position:relative;z-index:1;}
 body.day-mode .header-map-accent{
-  filter:blur(1.5px) brightness(0.55) saturate(0.9);
+  background-image:url('navionics-bg-day.jpg');
+  filter:blur(0.5px) brightness(0.75) saturate(1.0);
 }
 body.day-mode .header-map-accent::after{
   background:linear-gradient(180deg,
-    rgba(180,220,248,0.55) 0%,
-    rgba(180,220,248,0.2) 50%,
-    rgba(180,220,248,0.72) 100%
+    rgba(6,20,40,0.25) 0%,
+    rgba(6,20,40,0.05) 50%,
+    rgba(6,20,40,0.35) 100%
   );
 }
 </style>
@@ -438,10 +439,10 @@ body.day-mode .header-map-accent::after{
           <path d="M 155 94 C 250 76,370 82,478 96 C 520 102,558 90,585 78" fill="none" stroke="#7ae8ff" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
           <path d="M 105 128 C 148 120,205 108,292 118 C 368 126,428 132,498 118 C 542 108,576 96,598 88 C 606 85,608 88,604 94 C 580 108,545 120,496 134 C 422 152,356 152,276 140 C 188 127,138 134,110 140 C 103 141,100 136,105 128 Z" fill="url(#lw2b)" opacity="0.88"/>
           <text x="341" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
-          <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
-          <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
-          <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.8">PANAMA  TIDE  TRACKER</text>
-          <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#0d2868" letter-spacing="5" opacity="0.7" style="display:none;">PANAMA  TIDE  TRACKER</text>
+          <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2" style="filter:drop-shadow(0 2px 8px rgba(0,40,80,0.7));">MareasPro</text>
+          <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2" style="display:none;filter:drop-shadow(0 2px 10px rgba(0,40,100,0.8));">MareasPro</text>
+          <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.9">PANAMA  TIDE  TRACKER</text>
+          <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="white" letter-spacing="5" opacity="0.85" style="display:none;">PANAMA  TIDE  TRACKER</text>
         </svg>
       </div>
       <div class="wizard-toggles" style="position:relative;z-index:1;">
@@ -539,10 +540,10 @@ body.day-mode .header-map-accent::after{
       <path d="M 155 94 C 250 76,370 82,478 96 C 520 102,558 90,585 78" fill="none" stroke="#7ae8ff" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
       <path d="M 105 128 C 148 120,205 108,292 118 C 368 126,428 132,498 118 C 542 108,576 96,598 88 C 606 85,608 88,604 94 C 580 108,545 120,496 134 C 422 152,356 152,276 140 C 188 127,138 134,110 140 C 103 141,100 136,105 128 Z" fill="url(#lw2)" opacity="0.88"/>
       <text x="341" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
-      <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
-      <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
-      <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.8">PANAMA  TIDE  TRACKER</text>
-      <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#0d2868" letter-spacing="5" opacity="0.7" style="display:none;">PANAMA  TIDE  TRACKER</text>
+      <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2" style="filter:drop-shadow(0 2px 8px rgba(0,40,80,0.7));">MareasPro</text>
+      <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2" style="display:none;filter:drop-shadow(0 2px 10px rgba(0,40,100,0.8));">MareasPro</text>
+      <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.9">PANAMA  TIDE  TRACKER</text>
+      <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="white" letter-spacing="5" opacity="0.85" style="display:none;">PANAMA  TIDE  TRACKER</text>
     </svg>
   </div>
   <div class="header-controls">

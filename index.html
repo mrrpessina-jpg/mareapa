@@ -105,7 +105,31 @@ body.day-mode .daynight-btn{background:rgba(255,255,255,0.88);border-color:rgba(
 .sponsor-cell span{font-size:.6rem;color:rgba(41,184,232,.3);letter-spacing:2px;text-transform:uppercase;}
 body.day-mode .sponsor-cell{background:rgba(41,184,232,0.1);border-color:rgba(41,184,232,.3);}
 
-/* FISHING ASSISTANT */
+/* WIZARD SCREENS */
+.wizard-screen{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;}
+.main-screen{position:relative;z-index:1;}
+.wizard-wrap{max-width:480px;margin:0 auto;padding:0 20px 40px;width:100%;}
+.wizard-header{display:flex;align-items:center;justify-content:space-between;padding:20px 0 24px;border-bottom:1px solid rgba(41,184,232,.15);margin-bottom:28px;position:relative;overflow:hidden;border-radius:0 0 14px 14px;}
+.wizard-toggles{display:flex;gap:8px;align-items:center;}
+.wiz-step{}
+.wiz-question{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--white);text-align:center;margin-bottom:20px;}
+.wiz-options{display:flex;flex-direction:column;gap:12px;}
+.wiz-opt{background:rgba(6,20,40,0.85);border:1px solid rgba(41,184,232,.25);border-radius:14px;padding:16px 20px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all .2s;text-align:left;width:100%;}
+.wiz-opt:hover{border-color:var(--teal);background:rgba(41,184,232,.1);}
+.wiz-opt-calendar{border-color:rgba(41,184,232,.4);background:rgba(41,184,232,.06);}
+.wiz-opt-icon{font-size:1.8rem;flex-shrink:0;}
+.wiz-opt-label{font-size:1rem;font-weight:600;color:var(--white);display:block;line-height:1.2;}
+.wiz-opt-sub{font-size:.72rem;color:var(--muted);display:block;margin-top:3px;}
+body.day-mode .wiz-opt{background:rgba(255,255,255,0.88);border-color:rgba(0,120,180,.25);}
+body.day-mode .wiz-opt:hover{background:rgba(41,184,232,.12);}
+.wiz-back-btn{background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;padding:0 0 16px;display:flex;align-items:center;gap:4px;font-family:'DM Sans',sans-serif;}
+.wiz-back-btn:hover{color:var(--teal);}
+.wiz-date-input{width:100%;background:rgba(41,184,232,.08);border:1.5px solid var(--teal);border-radius:12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;padding:14px 16px;outline:none;cursor:pointer;}
+.last-query-btn{width:100%;padding:10px 16px;background:rgba(41,184,232,.08);border:1px solid rgba(41,184,232,.3);border-radius:10px;color:var(--teal);font-family:'DM Sans',sans-serif;font-size:.75rem;cursor:pointer;text-align:left;transition:all .2s;letter-spacing:.5px;}
+.last-query-btn:hover{background:rgba(41,184,232,.15);}
+.wiz-mini-btn{padding:5px 12px;background:rgba(41,184,232,.12);border:1px solid rgba(41,184,232,.3);border-radius:8px;color:var(--teal);font-family:'DM Sans',sans-serif;font-size:.72rem;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.wiz-mini-btn:hover{background:rgba(41,184,232,.22);}
+
 .fishing-assistant{margin:0 0 16px 0;}
 .fa-title{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal);font-weight:700;text-align:center;margin-bottom:10px;}
 .fa-steps{display:flex;flex-direction:column;gap:0;}
@@ -388,6 +412,105 @@ body.day-mode .header-map-accent::after{
 </style>
 </head>
 <body>
+
+<!-- SCREEN 1: WIZARD ZONA -->
+<div id="screen-wizard" class="wizard-screen">
+  <div class="wizard-wrap">
+    <header class="wizard-header">
+      <div class="header-map-accent"></div>
+      <div style="position:relative;z-index:1;">
+        <svg width="200" height="54" viewBox="0 0 680 160" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <defs>
+            <linearGradient id="lw1b" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#29aae1" stop-opacity="0"/>
+              <stop offset="15%" stop-color="#00cfff" stop-opacity="0.9"/>
+              <stop offset="65%" stop-color="#29aae1" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#1a7ab0" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="lw2b" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#1a3a8a" stop-opacity="0"/>
+              <stop offset="15%" stop-color="#2255c0" stop-opacity="0.9"/>
+              <stop offset="65%" stop-color="#1a3a8a" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#0d2060" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M 120 108 C 160 104,210 90,290 98 C 360 105,420 110,490 96 C 535 86,570 76,590 72 C 598 70,600 72,596 77 C 575 90,540 100,488 114 C 415 130,350 132,275 120 C 195 108,148 116,122 120 C 116 121,114 116,120 108 Z" fill="url(#lw1b)" opacity="0.92"/>
+          <path d="M 155 94 C 250 76,370 82,478 96 C 520 102,558 90,585 78" fill="none" stroke="#7ae8ff" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+          <path d="M 105 128 C 148 120,205 108,292 118 C 368 126,428 132,498 118 C 542 108,576 96,598 88 C 606 85,608 88,604 94 C 580 108,545 120,496 134 C 422 152,356 152,276 140 C 188 127,138 134,110 140 C 103 141,100 136,105 128 Z" fill="url(#lw2b)" opacity="0.88"/>
+          <text x="341" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
+          <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
+          <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
+          <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.8">PANAMA  TIDE  TRACKER</text>
+          <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#0d2868" letter-spacing="5" opacity="0.7" style="display:none;">PANAMA  TIDE  TRACKER</text>
+        </svg>
+      </div>
+      <div class="wizard-toggles" style="position:relative;z-index:1;">
+        <button class="daynight-btn" id="wiz-daynight-btn" onclick="toggleDayNight()">🌙</button>
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="setLang('en')" id="wiz-btn-en">EN</button>
+          <button class="toggle-btn" onclick="setLang('es')" id="wiz-btn-es">ES</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- LAST QUERY BUTTON (shown from 2nd visit) -->
+    <div id="last-query-wrap" style="display:none;margin-bottom:12px;">
+      <button class="last-query-btn" onclick="loadLastQuery()" id="last-query-btn">🎣 Última consulta: —</button>
+    </div>
+
+    <!-- STEP 1: ZONA -->
+    <div class="wiz-step" id="wiz-step1">
+      <div class="wiz-question" id="wiz-q1">¿Dónde vas a pescar?</div>
+      <div class="wiz-options">
+        <button class="wiz-opt" onclick="wizPickZone('pacific')">
+          <span class="wiz-opt-icon">🌊</span>
+          <span class="wiz-opt-label" id="wiz-pacific-label">Pacífico</span>
+          <span class="wiz-opt-sub">Diablo · Amador · Perlas</span>
+        </button>
+        <button class="wiz-opt" onclick="wizPickZone('atlantic')">
+          <span class="wiz-opt-icon">⚓</span>
+          <span class="wiz-opt-label" id="wiz-atlantic-label">Atlántico</span>
+          <span class="wiz-opt-sub">Bahía Limón · Portobelo</span>
+        </button>
+        <button class="wiz-opt" onclick="wizPickZone('bayano')">
+          <span class="wiz-opt-icon">🏞️</span>
+          <span class="wiz-opt-label" id="wiz-bayano-label">Río Bayano</span>
+          <span class="wiz-opt-sub">Estuario · Interior</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: FECHA -->
+    <div class="wiz-step" id="wiz-step2" style="display:none;">
+      <button class="wiz-back-btn" onclick="wizBack()">← <span id="wiz-back-label">Volver</span></button>
+      <div class="wiz-question" id="wiz-q2">¿Cuándo vas a pescar?</div>
+      <div class="wiz-options">
+        <button class="wiz-opt" onclick="wizPickDate('hoy')">
+          <span class="wiz-opt-icon">📅</span>
+          <span class="wiz-opt-label" id="wiz-hoy-label">Hoy</span>
+          <span class="wiz-opt-sub" id="wiz-today-sub"></span>
+        </button>
+        <button class="wiz-opt" onclick="wizPickDate('finde')">
+          <span class="wiz-opt-icon">🗓️</span>
+          <span class="wiz-opt-label" id="wiz-finde-label">Fin de semana</span>
+          <span class="wiz-opt-sub" id="wiz-finde-sub"></span>
+        </button>
+        <button class="wiz-opt wiz-opt-calendar" onclick="toggleCalendar()">
+          <span class="wiz-opt-icon">📆</span>
+          <span class="wiz-opt-label" id="wiz-cal-label">Elige una fecha</span>
+          <span class="wiz-opt-sub" id="wiz-cal-sub">Cualquier día del año</span>
+        </button>
+      </div>
+      <div id="wiz-calendar-wrap" style="display:none;margin-top:12px;">
+        <input type="date" id="wiz-date-input" class="wiz-date-input" onchange="wizPickDate('custom')">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCREEN 2: MAIN APP -->
+<div id="screen-main" class="main-screen" style="display:none;">
 <div class="app">
 
 <header>
@@ -411,14 +534,15 @@ body.day-mode .header-map-accent::after{
       <path d="M 120 108 C 160 104,210 90,290 98 C 360 105,420 110,490 96 C 535 86,570 76,590 72 C 598 70,600 72,596 77 C 575 90,540 100,488 114 C 415 130,350 132,275 120 C 195 108,148 116,122 120 C 116 121,114 116,120 108 Z" fill="url(#lw1)" opacity="0.92"/>
       <path d="M 155 94 C 250 76,370 82,478 96 C 520 102,558 90,585 78" fill="none" stroke="#7ae8ff" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
       <path d="M 105 128 C 148 120,205 108,292 118 C 368 126,428 132,498 118 C 542 108,576 96,598 88 C 606 85,608 88,604 94 C 580 108,545 120,496 134 C 422 152,356 152,276 140 C 188 127,138 134,110 140 C 103 141,100 136,105 128 Z" fill="url(#lw2)" opacity="0.88"/>
-      <text x="341" y="72" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
-      <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
-      <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
+      <text x="341" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="#000" opacity="0.15" letter-spacing="2">MareasPro</text>
+      <text class="logo-text-night" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="white" letter-spacing="2">MareasPro</text>
+      <text class="logo-text-day" x="340" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="#0d2868" letter-spacing="2" style="display:none;">MareasPro</text>
       <text class="logo-tag-night" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#29aae1" letter-spacing="5" opacity="0.8">PANAMA  TIDE  TRACKER</text>
       <text class="logo-tag-day" x="340" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#0d2868" letter-spacing="5" opacity="0.7" style="display:none;">PANAMA  TIDE  TRACKER</text>
     </svg>
   </div>
   <div class="header-controls">
+    <button class="wiz-mini-btn" onclick="goToWizard()" id="new-query-btn">🎣 Nueva consulta</button>
     <button class="daynight-btn" id="daynight-btn" onclick="toggleDayNight()">🌙</button>
     <div class="toggle-group">
       <button class="toggle-btn active" onclick="setUnit('ft')" id="btn-ft">FT</button>
@@ -437,64 +561,6 @@ body.day-mode .header-map-accent::after{
   <div class="sponsors-track" id="sponsors-grid"></div>
 </div>
 
-<!-- PWA INSTALL BUTTON -->
-<div class="pwa-install-wrap">
-  <button class="pwa-install-btn-main" onclick="openPwaModal()">
-    <div class="pwa-install-btn-main-icon">📱</div>
-    <div class="pwa-install-btn-main-text">
-      <div class="pwa-install-btn-main-title">Instala MareasPro GRATIS</div>
-      <div class="pwa-install-btn-main-sub">Acceso rápido · Sin anuncios · Siempre disponible</div>
-    </div>
-    <div class="pwa-install-btn-main-arrow">›</div>
-  </button>
-</div>
-
-<!-- FISHING ASSISTANT -->
-<div class="fishing-assistant">
-  <div class="fa-title">🎣 ¿A dónde vas a pescar?</div>
-  <div class="fa-steps">
-    <div class="fa-step fa-active" id="fa-step1">
-      <div class="fa-question">¿Dónde vas a pescar?</div>
-      <div class="fa-options triple">
-        <div class="fa-opt" onclick="faPickZone('pacific')">
-          <div class="fa-opt-icon">🌊</div>
-          <div class="fa-opt-label">Pacífico</div>
-          <div class="fa-opt-sub">Diablo · Amador</div>
-        </div>
-        <div class="fa-opt" onclick="faPickZone('atlantic')">
-          <div class="fa-opt-icon">⚓</div>
-          <div class="fa-opt-label">Atlántico</div>
-          <div class="fa-opt-sub">Bahía Limón</div>
-        </div>
-        <div class="fa-opt" onclick="faPickZone('bayano')">
-          <div class="fa-opt-icon">🏞️</div>
-          <div class="fa-opt-label">Bayano</div>
-          <div class="fa-opt-sub">Río / Estuario</div>
-        </div>
-      </div>
-    </div>
-    <div class="fa-step" id="fa-step2">
-      <div class="fa-question">¿Cuándo vas a pescar?</div>
-      <div class="fa-options">
-        <div class="fa-opt" onclick="faPickDate('hoy')">
-          <div class="fa-opt-icon">📅</div>
-          <div class="fa-opt-label">Hoy</div>
-          <div class="fa-opt-sub" id="fa-today-label"></div>
-        </div>
-        <div class="fa-opt" onclick="faPickDate('finde')">
-          <div class="fa-opt-icon">🗓️</div>
-          <div class="fa-opt-label">Fin de semana</div>
-          <div class="fa-opt-sub" id="fa-finde-label"></div>
-        </div>
-      </div>
-      <div class="fa-calendar-wrap" style="margin-top:10px;">
-        <div style="font-size:.65rem;color:var(--muted);text-align:center;margin-bottom:6px;letter-spacing:1px;">O elige una fecha</div>
-        <input type="date" id="fa-date-input" onchange="faPickDate('custom')">
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- COAST -->
 <div class="coast-bar">
   <span class="coast-label" id="txt-coast">Coast</span>
@@ -508,7 +574,6 @@ body.day-mode .header-map-accent::after{
 <!-- MAIN GRID -->
 <div class="main-grid">
   <div>
-    <!-- TIDE CARD -->
     <div class="card">
       <div class="tide-header">
         <div class="loc-info">
@@ -527,8 +592,6 @@ body.day-mode .header-map-accent::after{
       </div>
       <div id="tide-content"></div>
     </div>
-
-    <!-- SOLUNAR -->
     <div class="card">
       <div class="card-title"><span class="dot"></span><span id="txt-solunar">Solunar / Best Fishing Times</span></div>
       <div class="moon-row">
@@ -538,31 +601,39 @@ body.day-mode .header-map-accent::after{
       <div class="solunar-bars" id="solunar-bars"></div>
     </div>
   </div>
-
-  <!-- RIGHT COLUMN -->
   <div>
-    <!-- WEATHER -->
     <div class="card weather-section">
       <div class="card-title"><span class="dot"></span><span id="txt-weather">Clima &amp; Viento</span> <span style="font-size:.6rem;color:var(--muted);letter-spacing:1px;font-weight:400;">Open-Meteo</span></div>
       <div id="weather-content"><div class="wc-loading" id="txt-weather-loading">Cargando...</div></div>
     </div>
+
     <!-- SHARE SECTION -->
     <div class="share-section">
-      <div class="share-title">¿Quieres guardar un resumen de esta info?</div>
-      <div class="share-sub">Guárdalo antes de salir · Funciona sin señal</div>
+      <div class="share-title" id="share-title-txt">¿Quieres guardar un resumen de esta info?</div>
+      <div class="share-sub" id="share-sub-txt">Guárdalo antes de salir · Funciona sin señal</div>
       <div class="share-btns">
         <button class="share-btn share-btn-galeria" onclick="saveToGallery()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#29b8e8" stroke-width="2" stroke-linecap="round"><path d="M12 15V3M7 10l5 5 5-5"/><rect x="3" y="17" width="18" height="4" rx="2"/></svg>
-          <span class="share-btn-label">Guardar en galería</span>
+          <span class="share-btn-label" id="share-gallery-txt">Guardar en galería</span>
         </button>
         <button class="share-btn share-btn-wp" onclick="shareWhatsApp()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#25d366"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.1-1.34A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm4.64 13.41c-.19.54-1.12 1.03-1.54 1.09-.42.06-.96.09-1.55-.1-.36-.11-.82-.26-1.4-.51-2.46-1.06-4.07-3.54-4.19-3.71-.12-.17-.98-1.3-.98-2.49 0-1.18.62-1.77.84-2.01.22-.24.48-.3.64-.3.16 0 .32 0 .46.01.15.01.35-.06.55.42.2.49.68 1.68.74 1.8.06.12.1.27.02.43-.08.16-.12.26-.24.4-.12.14-.25.32-.36.43-.12.12-.24.24-.1.48.14.24.62.99 1.33 1.6.91.8 1.68 1.05 1.92 1.17.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.18.46.28.06.1.06.58-.13 1.12z"/></svg>
-          <span class="share-btn-label">Compartir WhatsApp</span>
+          <span class="share-btn-label" id="share-wp-txt">Compartir WhatsApp</span>
+        </button>
+      </div>
+      <!-- PWA INSTALL -->
+      <div style="margin-top:10px;">
+        <button class="pwa-install-btn-main" onclick="openPwaModal()">
+          <div class="pwa-install-btn-main-icon">📱</div>
+          <div class="pwa-install-btn-main-text">
+            <div class="pwa-install-btn-main-title" id="pwa-install-title">Instala MareasPro GRATIS</div>
+            <div class="pwa-install-btn-main-sub" id="pwa-install-sub">Acceso rápido · Sin anuncios · Siempre disponible</div>
+          </div>
+          <div class="pwa-install-btn-main-arrow">›</div>
         </button>
       </div>
     </div>
 
-    <!-- LINKS -->
     <div class="card">
       <div class="card-title"><span class="dot"></span><span id="txt-links">Links &amp; News</span></div>
       <div id="links-list" class="links-list">
@@ -572,46 +643,44 @@ body.day-mode .header-map-accent::after{
   </div>
 </div>
 
-</div><!-- /app -->
 
-<!-- HIDDEN SHARE CARD for image capture -->
-<div id="share-card">
-  <div class="sc-logo">Mareas<span>Pro</span></div>
-  <div class="sc-tagline">Panama Tide Tracker · mareaspro.com</div>
-  <div class="sc-block" id="sc-tides-block">
-    <div class="sc-block-title">🌊 Mareas</div>
+
+<div id="share-card" style="position:absolute;left:-9999px;top:0;width:375px;background:#061428;padding:20px;font-family:Arial,sans-serif;">
+  <div style="font-size:22px;font-weight:700;color:#e8f4f8;margin-bottom:4px;">Mareas<span style="color:#29b8e8;">Pro</span></div>
+  <div style="font-size:9px;letter-spacing:3px;color:#6a8fa8;text-transform:uppercase;margin-bottom:14px;">Panama Tide Tracker</div>
+  <div id="sc-block1" style="background:rgba(18,45,82,0.9);border:1px solid rgba(41,184,232,.2);border-radius:10px;padding:12px;margin-bottom:8px;">
+    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Mareas</div>
     <div id="sc-tides-rows"></div>
   </div>
-  <div class="sc-block" id="sc-weather-block">
-    <div class="sc-block-title">☀️ Clima &amp; Viento</div>
+  <div id="sc-block2" style="background:rgba(18,45,82,0.9);border:1px solid rgba(41,184,232,.2);border-radius:10px;padding:12px;margin-bottom:8px;">
+    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Clima y Viento</div>
     <div id="sc-weather-rows"></div>
   </div>
-  <div class="sc-block" id="sc-moon-block">
-    <div class="sc-block-title">🌕 Luna &amp; Solunar</div>
+  <div id="sc-block3" style="background:rgba(18,45,82,0.9);border:1px solid rgba(41,184,232,.2);border-radius:10px;padding:12px;margin-bottom:8px;">
+    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#29b8e8;margin-bottom:8px;">Luna y Solunar</div>
     <div id="sc-moon-rows"></div>
   </div>
-  <div class="sc-url">mareaspro.com · Datos ACP Panamá</div>
+  <div style="font-size:9px;color:#6a8fa8;text-align:center;margin-top:10px;letter-spacing:2px;">mareaspro.com</div>
 </div>
 
-<!-- PWA INSTALL MODAL -->
 <div class="pwa-modal-overlay" id="pwa-modal-overlay" onclick="if(event.target===this)closePwaModal()">
   <div class="pwa-modal">
-    <div class="pwa-modal-title">📱 Instala MareasPro</div>
+    <div class="pwa-modal-title">Instala MareasPro</div>
     <div class="pwa-modal-tabs">
-      <button class="pwa-modal-tab active" onclick="setPwaTab('android')">🤖 Android</button>
-      <button class="pwa-modal-tab" onclick="setPwaTab('ios')">🍎 iPhone</button>
+      <button class="pwa-modal-tab active" onclick="setPwaTab('android')">Android</button>
+      <button class="pwa-modal-tab" onclick="setPwaTab('ios')">iPhone</button>
     </div>
     <div id="pwa-steps-android">
       <div class="pwa-modal-step"><div class="pwa-modal-step-num">1</div><div class="pwa-modal-step-text">Abre <strong>mareaspro.com</strong> en Chrome</div></div>
-      <div class="pwa-modal-step"><div class="pwa-modal-step-num">2</div><div class="pwa-modal-step-text">Toca los <strong>3 puntos ⋮</strong> arriba a la derecha</div></div>
-      <div class="pwa-modal-step"><div class="pwa-modal-step-num">3</div><div class="pwa-modal-step-text">Selecciona <strong>"Agregar a pantalla de inicio"</strong></div></div>
-      <div class="pwa-modal-step"><div class="pwa-modal-step-num">4</div><div class="pwa-modal-step-text">Toca <strong>"Agregar"</strong> — ¡listo! 🎣</div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">2</div><div class="pwa-modal-step-text">Toca los <strong>3 puntos</strong> arriba a la derecha</div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">3</div><div class="pwa-modal-step-text">Selecciona <strong>Agregar a pantalla de inicio</strong></div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">4</div><div class="pwa-modal-step-text">Toca <strong>Agregar</strong> — listo!</div></div>
     </div>
     <div id="pwa-steps-ios" style="display:none">
       <div class="pwa-modal-step"><div class="pwa-modal-step-num">1</div><div class="pwa-modal-step-text">Abre <strong>mareaspro.com</strong> en Safari</div></div>
-      <div class="pwa-modal-step"><div class="pwa-modal-step-num">2</div><div class="pwa-modal-step-text">Toca el ícono <strong>compartir 📤</strong> abajo al centro</div></div>
-      <div class="pwa-modal-step"><div class="pwa-modal-step-num">3</div><div class="pwa-modal-step-text">Selecciona <strong>"Agregar a pantalla de inicio"</strong></div></div>
-      <div class="pwa-modal-step"><div class="pwa-modal-step-num">4</div><div class="pwa-modal-step-text">Toca <strong>"Agregar"</strong> — ¡listo! 🎣</div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">2</div><div class="pwa-modal-step-text">Toca el icono <strong>compartir</strong> abajo al centro</div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">3</div><div class="pwa-modal-step-text">Selecciona <strong>Agregar a pantalla de inicio</strong></div></div>
+      <div class="pwa-modal-step"><div class="pwa-modal-step-num">4</div><div class="pwa-modal-step-text">Toca <strong>Agregar</strong> — listo!</div></div>
     </div>
     <button class="pwa-modal-close" onclick="closePwaModal()">Cerrar</button>
   </div>
@@ -1733,13 +1802,222 @@ function buildCarousel(){
   setInterval(swapTwo, 3000);
 }
 
+
+// WIZARD
+let wizZone = null;
+
+function wizInit(){
+  const now = new Date();
+  const daysEs=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const daysEn=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const msEs=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const msEn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const ds=lang==='es'?daysEs:daysEn;
+  const ms=lang==='es'?msEs:msEn;
+  const setTxt=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt;};
+  setTxt('wiz-today-sub',ds[now.getDay()]+' '+now.getDate()+' '+ms[now.getMonth()]);
+  const nextSat=new Date(now);
+  nextSat.setDate(now.getDate()+((6-now.getDay()+7)%7||7));
+  const nextSun=new Date(nextSat);
+  nextSun.setDate(nextSat.getDate()+1);
+  setTxt('wiz-finde-sub',(lang==='es'?'Sáb':'Sat')+' '+nextSat.getDate()+' — '+(lang==='es'?'Dom':'Sun')+' '+nextSun.getDate()+' '+ms[nextSat.getMonth()]);
+  const minDate=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  const di=document.getElementById('wiz-date-input');
+  if(di){di.min=minDate;di.value='';}
+  setTxt('wiz-q1',lang==='es'?'¿Dónde vas a pescar?':'Where are you fishing?');
+  setTxt('wiz-q2',lang==='es'?'¿Cuándo vas a pescar?':'When are you fishing?');
+  setTxt('wiz-pacific-label',lang==='es'?'Pacífico':'Pacific');
+  setTxt('wiz-atlantic-label',lang==='es'?'Atlántico':'Atlantic');
+  setTxt('wiz-bayano-label',lang==='es'?'Río Bayano':'Bayano River');
+  setTxt('wiz-hoy-label',lang==='es'?'Hoy':'Today');
+  setTxt('wiz-finde-label',lang==='es'?'Fin de semana':'This weekend');
+  setTxt('wiz-cal-label',lang==='es'?'Elige una fecha':'Choose a date');
+  setTxt('wiz-cal-sub',lang==='es'?'Cualquier día del año':'Any day of the year');
+  setTxt('wiz-back-label',lang==='es'?'Volver':'Back');
+  checkLastQuery();
+}
+
+function checkLastQuery(){
+  try{
+    const last=localStorage.getItem('mp_last_query');
+    if(!last) return;
+    const q=JSON.parse(last);
+    const wrap=document.getElementById('last-query-wrap');
+    const btn=document.getElementById('last-query-btn');
+    if(!wrap||!btn) return;
+    const zn={pacific:lang==='es'?'Pacífico':'Pacific',atlantic:lang==='es'?'Atlántico':'Atlantic',bayano:lang==='es'?'Río Bayano':'Bayano'}[q.zone]||q.zone;
+    btn.textContent='🎣 '+(lang==='es'?'Última consulta':'Last query')+': '+zn+' · '+q.dateLabel;
+    wrap.style.display='block';
+  }catch(e){}
+}
+
+function saveLastQuery(zone,dateLabel,dateStr,dateType){
+  try{localStorage.setItem('mp_last_query',JSON.stringify({zone,dateLabel,dateStr,dateType}));}catch(e){}
+}
+
+function loadLastQuery(){
+  try{
+    const last=localStorage.getItem('mp_last_query');
+    if(!last) return;
+    const q=JSON.parse(last);
+    wizZone=q.zone;
+    selectCoast(q.zone==='bayano'?'pacific':q.zone);
+    if(q.zone==='bayano') selectLocation('bayano');
+    if(q.dateType==='hoy'){
+      selectedDate=null;
+      const now=new Date();
+      document.getElementById('tide-date-picker').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+    } else {
+      const parts=q.dateStr.split('-');
+      selectedDate=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+      document.getElementById('tide-date-picker').value=q.dateStr;
+    }
+    goToMain();
+  }catch(e){}
+}
+
+function wizPickZone(zone){
+  wizZone=zone;
+  document.getElementById('wiz-step1').style.display='none';
+  document.getElementById('wiz-step2').style.display='block';
+  selectCoast(zone==='bayano'?'pacific':zone);
+  if(zone==='bayano') selectLocation('bayano');
+}
+
+function wizBack(){
+  document.getElementById('wiz-step2').style.display='none';
+  document.getElementById('wiz-step1').style.display='block';
+  document.getElementById('wiz-calendar-wrap').style.display='none';
+}
+
+function toggleCalendar(){
+  const wrap=document.getElementById('wiz-calendar-wrap');
+  wrap.style.display=wrap.style.display==='none'?'block':'none';
+  if(wrap.style.display==='block') document.getElementById('wiz-date-input').focus();
+}
+
+function wizPickDate(type){
+  const now=new Date();
+  const msEs=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const msEn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const ms=lang==='es'?msEs:msEn;
+  let dateLabel='',dateStr='';
+  if(type==='hoy'){
+    selectedDate=null;
+    dateStr=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+    document.getElementById('tide-date-picker').value=dateStr;
+    dateLabel=(lang==='es'?'Hoy ':'Today ')+now.getDate()+' '+ms[now.getMonth()];
+  } else if(type==='finde'){
+    const nextSat=new Date(now);
+    nextSat.setDate(now.getDate()+((6-now.getDay()+7)%7||7));
+    selectedDate=nextSat;
+    dateStr=nextSat.getFullYear()+'-'+String(nextSat.getMonth()+1).padStart(2,'0')+'-'+String(nextSat.getDate()).padStart(2,'0');
+    document.getElementById('tide-date-picker').value=dateStr;
+    dateLabel=(lang==='es'?'Sáb':'Sat')+' '+nextSat.getDate()+' '+ms[nextSat.getMonth()];
+  } else if(type==='custom'){
+    const val=document.getElementById('wiz-date-input').value;
+    if(!val) return;
+    const parts=val.split('-');
+    selectedDate=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+    dateStr=val;
+    document.getElementById('tide-date-picker').value=val;
+    dateLabel=selectedDate.getDate()+' '+ms[selectedDate.getMonth()];
+  }
+  saveLastQuery(wizZone,dateLabel,dateStr,type);
+  goToMain();
+}
+
+function goToMain(){
+  document.getElementById('screen-wizard').style.display='none';
+  document.getElementById('screen-main').style.display='block';
+  renderTide();
+  renderSolunar();
+  loadWeather();
+  loadLinks();
+  buildCarousel();
+}
+
+function goToWizard(){
+  document.getElementById('screen-main').style.display='none';
+  document.getElementById('screen-wizard').style.display='flex';
+  document.getElementById('wiz-step1').style.display='block';
+  document.getElementById('wiz-step2').style.display='none';
+  document.getElementById('wiz-calendar-wrap').style.display='none';
+  wizInit();
+}
+
+// SHARE
+function buildShareCard(){
+  const displayDate=selectedDate||new Date();
+  const months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const days=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const tides=getTideData(currentLoc,displayDate);
+  const loc=locations[currentCoast].find(l=>l.id===currentLoc);
+  const locName=lang==='es'?loc.namEs:loc.name;
+  const row=(label,val,col)=>'<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px;"><span style="color:#6a8fa8;">'+label+'</span><span style="font-weight:600;color:'+(col||'#e8f4f8')+';">'+val+'</span></div>';
+  let tidesHTML='<div style="font-size:10px;color:#29b8e8;padding:4px 0;">'+locName+' · '+days[displayDate.getDay()]+' '+displayDate.getDate()+' '+months[displayDate.getMonth()]+'</div>';
+  if(tides){
+    tides.forEach(function(t){
+      var timeStr=t.time.toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'});
+      var isH=t.type==='H';
+      tidesHTML+=row(isH?'Alta':'Baja',timeStr+' · '+toDisplay(t.height)+' '+unitLabel(),isH?'#29b8e8':'#f0a500');
+    });
+  }
+  document.getElementById('sc-tides-rows').innerHTML=tidesHTML;
+  const wxEl=document.getElementById('weather-content');
+  const temp=wxEl.querySelector('.wc-temp');
+  const desc=wxEl.querySelector('.wc-desc');
+  const wspd=wxEl.querySelector('.wc-wind-spd');
+  const wdir=wxEl.querySelector('.wc-wind-dir');
+  document.getElementById('sc-weather-rows').innerHTML=
+    row('Temperatura',temp?temp.textContent.trim():'-')+
+    row('Condición',desc?desc.textContent:'-')+
+    row('Viento',(wspd?wspd.textContent:'-')+' km/h '+(wdir?wdir.textContent:''));
+  const moon=getMoonPhase();
+  const h=new Date().getHours();
+  const fmt=function(x){return String(x).padStart(2,'0')+':00';};
+  document.getElementById('sc-moon-rows').innerHTML=
+    row('Fase lunar',moon.icon+' '+moon.name)+
+    row('Actividad',moon.quality==='great'?'Excelente':'Buena','#29b8e8')+
+    row('Mejor ventana',fmt((h+1)%24)+' — '+fmt((h+2)%24));
+}
+
+async function saveToGallery(){
+  buildShareCard();
+  try{
+    const canvas=await html2canvas(document.getElementById('share-card'),{backgroundColor:'#061428',scale:2,useCORS:true,logging:false});
+    const link=document.createElement('a');
+    link.download='mareaspro-mareas.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  }catch(e){alert(lang==='es'?'No se pudo generar la imagen.':'Could not generate image.');}
+}
+
+async function shareWhatsApp(){
+  buildShareCard();
+  try{
+    const canvas=await html2canvas(document.getElementById('share-card'),{backgroundColor:'#061428',scale:2,useCORS:true,logging:false});
+    canvas.toBlob(async function(blob){
+      const file=new File([blob],'mareaspro.png',{type:'image/png'});
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:'MareasPro',text:'Mareas Panama · mareaspro.com'});
+      } else {
+        window.open('https://wa.me/?text='+encodeURIComponent('Mareas Panama - MareasPro\nmareaspro.com'),'_blank');
+      }
+    },'image/png');
+  }catch(e){
+    window.open('https://wa.me/?text='+encodeURIComponent('Mareas Panama - MareasPro\nmareaspro.com'),'_blank');
+  }
+}
+
+
 function init(){
   autoSetDayNight();
   updateText();
   updateCoastBadge();
   renderLocationBar();
   initDatePicker();
-  faInit();
+  wizInit();
   renderTide();
   renderSolunar();
   loadLinks();

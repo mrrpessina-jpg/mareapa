@@ -1237,23 +1237,32 @@ function setLang(l){
 
 function updateText(){
   const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
+  const es=lang==='es';
   set('txt-sponsors', tr('sponsors'));
   set('txt-coast',    tr('coast'));
   set('txt-today',    tr('today'));
   set('txt-solunar',  tr('solunar'));
   set('txt-weather',   tr('weather'));
   set('txt-links',    tr('links'));
+  set('share-title-txt', es?'¿Quieres guardar un resumen de esta info?':'Want to save a summary of this info?');
+  set('share-sub-txt',   es?'Guárdalo antes de salir · Funciona sin señal':'Save before heading out · Works offline');
+  set('share-gallery-txt', es?'Guardar en galería':'Save to gallery');
+  set('share-wp-txt',      es?'Compartir WhatsApp':'Share on WhatsApp');
+  set('pwa-install-title', es?'Instala MareasPro GRATIS':'Install MareasPro FREE');
+  set('pwa-install-sub',   es?'Acceso rápido · Sin anuncios · Siempre disponible':'Quick access · No ads · Always available');
   const pb=document.getElementById('btn-pacific');
-  if(pb) pb.innerHTML='🌊 '+(lang==='es'?'Pacífico':'Pacific');
+  if(pb) pb.innerHTML='🌊 '+(es?'Pacífico':'Pacific');
   const ab=document.getElementById('btn-atlantic');
-  if(ab) ab.innerHTML='🌊 '+(lang==='es'?'Atlántico / Caribe':'Atlantic / Caribbean');
+  if(ab) ab.innerHTML='🌊 '+(es?'Atlántico / Caribe':'Atlantic / Caribbean');
   const cb=document.getElementById('coast-badge');
   if(cb) cb.textContent=tr(currentCoast==='pacific'?'coast-pacific':'coast-atlantic');
   document.querySelectorAll('.logo-tag-night,.logo-tag-day').forEach(el=>{
-    el.textContent = lang==='es'?'MONITOR DE MAREAS · PANAMÁ':'PANAMA TIDE TRACKER';
+    el.textContent = es?'MONITOR DE MAREAS · PANAMÁ':'PANAMA TIDE TRACKER';
   });
   const ll=document.getElementById('txt-links-loading');
   if(ll) ll.textContent=tr('links-loading');
+  const nq=document.getElementById('new-query-btn');
+  if(nq) nq.textContent=es?'🎣 Nueva consulta':'🎣 New query';
 }
 
 function toggleDayNight(){

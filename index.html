@@ -507,7 +507,8 @@ body.day-mode .header-map-accent::after{
         </div>
         <div id="wiz-calendar-wrap" style="display:none;margin-top:-6px;padding:14px 16px;background:rgba(41,184,232,.08);border:1.5px solid var(--teal);border-radius:0 0 14px 14px;">
           <div style="font-size:.7rem;color:var(--teal);letter-spacing:1px;margin-bottom:8px;" id="wiz-cal-hint">Toca para seleccionar la fecha</div>
-          <input type="date" id="wiz-date-input" class="wiz-date-input" onchange="wizPickDate('custom')">
+          <input type="date" id="wiz-date-input" class="wiz-date-input" onchange="iosDateChange()">
+          <button id="wiz-cal-confirm" onclick="wizPickDate('custom')" style="display:none;width:100%;margin-top:10px;padding:11px;background:var(--teal);border:none;border-radius:10px;color:#061428;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;" id="wiz-cal-confirm-btn">✓ Confirmar fecha</button>
         </div>
       </div>
     </div>
@@ -1919,6 +1920,26 @@ function wizBack(){
   document.getElementById('wiz-step2').style.display='none';
   document.getElementById('wiz-step1').style.display='block';
   document.getElementById('wiz-calendar-wrap').style.display='none';
+}
+
+function iosDateChange(){
+  const val=document.getElementById('wiz-date-input').value;
+  if(!val) return;
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(isIOS){
+    const btn=document.getElementById('wiz-cal-confirm-btn');
+    if(btn){
+      const parts=val.split('-');
+      const d=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+      const msEs=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+      const msEn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const ms=lang==='es'?msEs:msEn;
+      btn.textContent='✓ '+(lang==='es'?'Confirmar':'Confirm')+' — '+d.getDate()+' '+ms[d.getMonth()];
+      btn.style.display='block';
+    }
+  } else {
+    wizPickDate('custom');
+  }
 }
 
 function toggleCalendar(){
